@@ -1,3 +1,6 @@
+### **Integrated Management Systems — Developer / Systems Support Specialist employed from 2011-2012**
+- Administered server networks and provided customer support.  
+- Built SQL Server 2008 data architectures and VB.NET applications.  
 - Designed websites using HTML/CSS.
 - Ported legacy Cobol applications to .NET and SQL Server.
 
@@ -26,12 +29,3 @@
 
 ### **Automation & Scripting**
 - PowerShell, Bash, Azure CLI  
-- Python for automation and ML experimentation  
-
-### **Observability & Reliability**
-- Logging, metrics, diagnostics  
-- Rollout safety and feature‑flag governance  
-- On‑call readiness and production support  
-
-### **Leadership & Collaboration**
-- Mentoring senior engineers  

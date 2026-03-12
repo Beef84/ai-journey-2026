@@ -1,3 +1,12 @@
+- Python for automation and ML experimentation  
+
+### **Observability & Reliability**
+- Logging, metrics, diagnostics  
+- Rollout safety and feature‑flag governance  
+- On‑call readiness and production support  
+
+### **Leadership & Collaboration**
+- Mentoring senior engineers  
 - Leading technical initiatives and platform adoption  
 - Cross‑team collaboration with DevOps, cloud, product, and security  
 - Strong documentation and structured SDLC practices  
@@ -19,7 +28,4 @@ In addition to my established background in distributed systems and cloud automa
 - Serverless AI backends  
 - CloudFront‑routed API architectures  
 - Fully automated IaC + CI/CD AI platforms  
-
-This work demonstrates end‑to‑end ownership of a modern AI system — architecture, infrastructure, backend, frontend, automation, and documentation.
-
----
+- Use of agent‑enabled AI orchestration frameworks like ClaudeCode and GitHub Copilot for automation and development acceleration

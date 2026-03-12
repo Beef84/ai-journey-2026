@@ -1,3 +1,8 @@
+- Automated deployments, release orchestration, rollback strategies  
+- Monitoring, diagnostics, incident management  
+
+### **Automation & Scripting**
+- PowerShell, Bash, Azure CLI  
 - Python for automation and ML experimentation  
 
 ### **Observability & Reliability**
@@ -28,4 +33,3 @@ In addition to my established background in distributed systems and cloud automa
 - Serverless AI backends  
 - CloudFront‑routed API architectures  
 - Fully automated IaC + CI/CD AI platforms  
-- Use of agent‑enabled AI orchestration frameworks like ClaudeCode and GitHub Copilot for automation and development acceleration

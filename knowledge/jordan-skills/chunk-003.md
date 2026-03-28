@@ -1,3 +1,14 @@
+### **Automation & Scripting**
+- PowerShell  
+- Bash  
+- Azure CLI  
+- AWS CLI  
+- Python (automation + ML experimentation)  
+
+### **Operational Excellence**
+- Monitoring and diagnostics  
+- Incident response and on‑call readiness  
+- Root‑cause analysis  
 - Production support for real‑time systems  
 - Observability design (logs, metrics, traces)  
 
@@ -11,12 +22,12 @@
 - Retrieval‑augmented generation (RAG) patterns  
 - Vector store architecture (S3 Vector Store)  
 - Embedding models (Titan V2)  
-- Foundation model integration (Nova Pro)  
+- Foundation model integration (Nova Pro, SageMaker models)  
 
 ### **Serverless Architecture**
-- AWS Lambda (Node.js)  
+- AWS Lambda (Node.js / Python)  
 - API Gateway (HTTP API)  
-- CloudFront routing and behaviors  
+- CloudFront routing and behaviors (OAC)  
 - S3 static hosting with OAC  
 - Serverless security and IAM boundary design  
 
@@ -33,12 +44,3 @@
 
 ### **Frontend Technologies**
 - Razor Pages  
-- ASP.NET Core MVC  
-- React (SPA architecture)  
-- TypeScript/JavaScript fundamentals  
-- UI integration with serverless backends  
-- API consumption and state management  
-
-### **Frontend Infrastructure**
-- S3 static hosting  
-- CloudFront CDN distribution  

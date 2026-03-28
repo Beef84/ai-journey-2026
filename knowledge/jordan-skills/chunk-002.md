@@ -1,4 +1,6 @@
-- AWS (Bedrock, Lambda, API Gateway, CloudFront, S3, IAM, Route53, ACM)  
+- Azure (App Service, API Management, Functions, Container Apps, Azure SQL, Cosmos DB, Data Factory, Service Bus, Key Vault)  
+- Cloud‑agnostic patterns applicable to AWS/GCP  
+- AWS (Bedrock, Lambda, API Gateway, CloudFront OAC, S3, SNS/SQS, DynamoDB, OpenSearch, Step Functions, SageMaker, Bedrock Agents)  
 
 ### **Containerization & Orchestration**
 - Docker  
@@ -11,6 +13,7 @@
 - Bicep  
 - ARM templates  
 - Terraform concepts and patterns  
+- CDK / CloudFormation  
 - Modular IaC design  
 - Environment provisioning and configuration governance  
 - Cloud resource automation and lifecycle management  
@@ -31,14 +34,3 @@
 - Release orchestration and deployment automation  
 - Rollback strategies and safe deployment patterns  
 - Artifact management and versioning  
-
-### **Automation & Scripting**
-- PowerShell  
-- Bash  
-- Azure CLI  
-- Python (automation + ML experimentation)  
-
-### **Operational Excellence**
-- Monitoring and diagnostics  
-- Incident response and on‑call readiness  
-- Root‑cause analysis  

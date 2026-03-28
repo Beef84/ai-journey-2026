@@ -6,7 +6,7 @@
 # **1. Distributed Systems & Backend Engineering**
 
 ### **Core Backend Development**
-- C#, .NET, .NET Core, ASP.NET Core  
+- C#, .NET (explicit experience with .NET 6/7/8 and .NET Framework), ASP.NET Core  
 - REST API design and implementation  
 - Microservices and modular backend architectures  
 - Event‑driven and message‑driven systems  
@@ -34,5 +34,3 @@
 # **2. Cloud, Infrastructure, and Platform Engineering**
 
 ### **Cloud Platforms**
-- Azure (AKS, App Service, API Management, Functions, SQL Database)  
-- Cloud‑agnostic patterns applicable to AWS/GCP  

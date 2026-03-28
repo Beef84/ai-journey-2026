@@ -1,6 +1,3 @@
-- Developed migration tooling for Azure DevOps projects, reducing operational overhead and improving maintainability.  
-- Mentored engineers and guided architecture decisions across multiple teams.
-
 ### **UPMC — Associate Engineer Contractor employed from 2017-2021**
 - Built HL7 integrations and enterprise service‑bus components using C# and NServiceBus.  
 - Delivered microservices, REST APIs, and SQL‑backed backend systems.  
@@ -15,3 +12,5 @@
 - Contributed to RFID tagging and handheld device integrations.
 
 ### **United States Investigative Services — Application Developer employed for 6 months from April 2012- October 2012**
+- Maintained and developed intranet/extranet applications in a SOA environment.  
+- Applied design patterns and Agile practices to support applications used by 2,000+ employees.

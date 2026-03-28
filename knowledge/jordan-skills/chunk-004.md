@@ -1,3 +1,12 @@
+- ASP.NET Core MVC  
+- React (SPA architecture)  
+- TypeScript/JavaScript fundamentals  
+- UI integration with serverless backends  
+- API consumption and state management  
+
+### **Frontend Infrastructure**
+- S3 static hosting  
+- CloudFront CDN distribution  
 - TLS, caching, routing, and behavior configuration  
 - CORS and security headers  
 
@@ -32,12 +41,3 @@
 ### **Cross‑Team Collaboration**
 - Working with DevOps, cloud, product, and security teams  
 - Coordinating across backend, frontend, and infrastructure groups  
-- Translating business requirements into technical architecture  
-
-### **Documentation & SDLC Discipline**
-- Architecture documentation  
-- Design decision records  
-- Workflow and governance documentation  
-- Structured, maintainable SDLC practices  
-
----

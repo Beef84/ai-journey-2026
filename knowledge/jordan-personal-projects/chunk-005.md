@@ -1,0 +1,6 @@
+Cost is a constant consideration, especially with AI workloads. I use Claude in planning mode to run cost analyses on architectural options, comparing compute footprints, storage patterns, and ingestion throughput under different scaling models. This helps me validate whether a design is financially viable before I commit to it. I’m also building the infrastructure using CDK‑driven CloudFormation stacks, which allows me to model, test, and refine the architecture programmatically while keeping costs visible and predictable.
+
+### Trade-offs considered
+Before finalizing the architecture, I evaluated several competing designs: single‑tenant versus multi‑tenant databases, monolithic versus distributed ingestion, single versus dual agent models, and shared versus per‑tenant vector stores. I documented the trade‑offs behind each option, including isolation guarantees, operational complexity, performance characteristics, and cost implications. This documentation sits alongside the infrastructure and DevOps standards I’m writing for the platform, ensuring that my future self and future contributors understand not just what the architecture is, but why it is that way.
+
+### Result

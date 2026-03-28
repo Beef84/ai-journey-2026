@@ -1,6 +1,3 @@
-- Maintained and developed intranet/extranet applications in a SOA environment.  
-- Applied design patterns and Agile practices to support applications used by 2,000+ employees.
-
 ### **Integrated Management Systems — Developer / Systems Support Specialist employed from 2011-2012**
 - Administered server networks and provided customer support.  
 - Built SQL Server 2008 data architectures and VB.NET applications.  
@@ -27,3 +24,8 @@
 ### **DevOps & CI/CD**
 - Azure DevOps Pipelines (YAML, templates, automation modules)  
 - Git, GitHub, SCM workflows  
+- Automated deployments, release orchestration, rollback strategies  
+- Monitoring, diagnostics, incident management  
+
+### **Automation & Scripting**
+- PowerShell, Bash, Azure CLI  

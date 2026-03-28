@@ -1,3 +1,13 @@
+- Translating business requirements into technical architecture  
+
+### **Documentation & SDLC Discipline**
+- Architecture documentation  
+- Design decision records  
+- Workflow and governance documentation  
+- Structured, maintainable SDLC practices  
+
+---
+
 # **8. Machine Learning & Continuous Learning**
 
 ### **ML & AI Foundations**
@@ -6,8 +16,7 @@
 - Ongoing ML and PyTorch study  
 - Understanding of ML workflows, model evaluation, and data preparation  
 
-### **AI Engineering Expansion**
-- Building AI‑native systems  
+### **AI Engineering Expansion**n- Building AI‑native systems  
 - Integrating LLMs into production environments  
 - Designing retrieval pipelines and agent workflows  
 
@@ -27,8 +36,3 @@
 - Improved reliability and onboarding speed  
 
 ### **Feature‑Flag Platform Enablement**
-- Built Angular/.NET wrappers and API services for LaunchDarkly  
-- Enabled safe rollouts and real‑time visibility  
-- Standardized feature‑flag usage across distributed systems  
-
-### **Containerized Production Systems**

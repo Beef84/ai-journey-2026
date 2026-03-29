@@ -1,0 +1,4 @@
+[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Isolation and data boundaries]
+
+### Isolation and data boundaries
+To enforce tenant isolation, I’m using tenant‑scoped S3 prefixes, vector‑database namespaces, and row‑level isolation in relational storage. The ingestion pipeline is also tenant‑scoped, so transcription, chunking, summarization, and embedding workloads remain fully separated even though they run on shared compute. This gives each user a private data boundary without the operational and financial overhead of dedicated per‑tenant infrastructure.

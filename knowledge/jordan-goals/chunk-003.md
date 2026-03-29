@@ -1,3 +1,17 @@
+[Source: Jordan Goals]
+
+# Medium‑Term Goals (3–12 Months)
+
+1. Continue the 12‑month AWS certification plan
+- Maintain momentum and complete the remaining certifications toward the 12‑cert roadmap.
+
+2. Secure the new role and expand contributions
+- Accept a position that lets me lead AI infrastructure efforts and apply Developer/ML Associate skills in production.
+
+3. Formalize Beef AI Software and early product planning
+- Develop a plan for early offerings (Your Life MVP and Finance SaaS), initial pricing model, and go‑to‑market considerations.
+
+4. Evolve the Your Life prototype into a demonstrable product
 - Build the prototype into a demonstrable prototype suitable for early users and investor conversations; continue patent coordination as needed.
 
 5. Release the Finance app as a SaaS offering
@@ -7,23 +21,3 @@
 - Progress from experiments to early prototypes, exploring model architectures and agent orchestration for multi‑track composition.
 
 ---
-
-# Future Vision (12+ Months)
-
-1. Convert provisional patent and launch Your Life
-- File the non‑provisional patent (if pursued), finalize the product for wider release, and launch Your Life publicly.
-
-2. Grow Beef AI Software and product lineup
-- Operate and grow the company, support early customers, iterate product features, and expand offerings.
-
-3. Mature the Finance SaaS and scale users
-- Grow the Finance app user base and iterate toward a sustainable SaaS business.
-
-4. Build a mature agentic music production product
-- Move from research to a product capable of supporting creative workflows and real user scenarios.
-
----
-
-# Certification Roadmap (one per month)
-
-Order is flexible but Developer – Associate and ML Engineer – Associate are first priorities:

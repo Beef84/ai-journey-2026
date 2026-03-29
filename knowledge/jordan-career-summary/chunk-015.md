@@ -1,9 +1,6 @@
-- Designed and developed a Windows‑based GUI for corporate signage teams, enabling drag‑and‑drop placement of template objects whose metadata was later consumed by backend services.
-- Built a WCF service responsible for merging template metadata with real‑time item, pricing, and promotion data sourced from SQL Server and multiple distributed systems.
-- Architected and delivered corporate and store‑facing intranet applications (C#, ASP.NET) that generated sign data and integrated with pricing, item, and promotional databases.
-- Ensured consistent behavior across desktop, intranet, and mobile channels, aligning UI, API, and data‑layer contracts.
+[Source: Jordan Career Summary | Section: Dick's Sporting Goods — Production incident: signage system > Investigation and root cause]
 
-### Distributed Systems, Data Flow & Performance
-- Designed the backend workflow that orchestrated template metadata, pricing data, and rendering logic into final printable PDF signage — effectively a distributed pipeline with multiple integration points.
-- Tuned SQL Server queries, caching patterns, and service interactions to support high‑volume, time‑sensitive signage generation across hundreds of stores.
-- Ensured the platform scaled reliably during peak retail cycles, balancing performance, cost, and operational constraints.
+### Investigation and root cause
+I started by combing through the logs to pinpoint exactly where the failures occurred, then reviewed that section of the code with a fine‑toothed comb. When I couldn’t find anything suspicious, I pulled in a principal developer to review the service with me, and he also couldn’t identify a flaw in the logic. At that point, we built penetration tests to generate PDFs at scale until we could reliably reproduce the failure. Once we could trigger it consistently, we still lacked a clear root cause — the logs showed the same failure pattern as production, but nothing in our code explained it.
+
+The next step was to involve the vendor of the .NET PDF library the system relied on. After sharing our logs, test results, and all the troubleshooting we had done, their support team identified the underlying issue: a Microsoft package method their library used to generate temporary files had a known problem where it failed to clean up temp files. Over time, this caused the temp directory to hit its maximum file count, which in turn caused the library to fail silently in exactly the way we were seeing.

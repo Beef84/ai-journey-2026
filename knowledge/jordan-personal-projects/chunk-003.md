@@ -1,10 +1,13 @@
-- Built with EF Core, SQL Server, and a Razor‑based UI, with custom forecasting and budgeting logic
-- Repo hosted in Azure DevOps; application self‑hosted at home using Windows/IIS
-- Used daily for budgeting, forecasting, and financial planning
+[Source: Jordan Personal Projects | Section: Your Life — Multi‑Tenant AI SaaS Platform (In Development)]
 
-## Deep Dive Into the Multi-tenant architecture of Your Life
+## Your Life — Multi‑Tenant AI SaaS Platform (In Development)
 
-### Overview
-I’m currently designing the multi‑tenant architecture for Your Life, a SaaS platform built around the idea that every user should have their own private digital universe supported by persistent AI agents that carry context forward. Because the platform spans private, collaborative, community, and public layers, multi‑tenancy and distributed system design are central to every decision I make. The system is evolving with privacy, isolation, and predictable scaling as first‑class architectural principles.
-
-### Isolation and data boundaries
+- Architected around three independently scalable planes:
+  - Control Plane: identity, tenant provisioning, metadata, configuration, and global orchestration
+  - Tenant Plane: user‑facing APIs, private agents, ingestion endpoints, and tenant‑isolated data stores
+  - AI Plane: ingestion, embeddings, analytics, and generative AI workflows
+- AI Plane integrates AWS Rekognition, Translate, Transcribe, and SageMaker foundational models, exposed through TypeScript services and both TypeScript and Python SDKs
+- Uses Lambda, API Gateway, S3, SNS/SQS, DynamoDB, OpenSearch/Vector DB, and Step Functions for orchestration
+- React frontend for user interaction and agent experiences
+- Infrastructure managed through AWS CodeCommit, CloudFormation, CodePipeline, and CodeDeploy
+- Patent work in progress for core architectural concepts

@@ -1,53 +1,17 @@
----
+[Source: Mrbeefy Governance | Section: 2.2 Application Lifecycle Ownership (CI/CD)]
 
-## **5.2 Monitoring**
-Monitoring includes:
+## **2.2 Application Lifecycle Ownership (CI/CD)**
 
-- Lambda error rates
-- CloudFront cache hit/miss ratios
-- KB ingestion job status  
-- Bedrock agent invocation metrics  
+CI/CD owns all dynamic, stateful, or versioned operations:
 
-Alerts may be added as the system scales.
+- Building and deploying Lambda code  
+- Uploading Knowledge Base files  
+- Starting Knowledge Base ingestion jobs  
+- Associating the KB with the agent  
+- Creating the agent alias if missing  
+- Updating Lambda environment variables with alias IDs  
+- Invalidating CloudFront cache  
 
----
-
-## **5.3 Deployment Governance**
-Deployments must:
-
-- Run through CI/CD  
-- Use versioned artifacts  
-- Produce deterministic infrastructure  
-- Avoid manual console changes  
-
-Manual console edits are only allowed for:
-
-- Emergency rollback  
-- Temporary debugging  
-- AWS support troubleshooting  
-
-Any manual change must be documented and reverted into Terraform if permanent.
-
----
-
-# **6. Risk Governance**
-
-## **6.1 Drift Prevention**
-- Terraform manages all static resources  
-- CI/CD manages all dynamic resources  
-- No overlapping ownership  
-- No manual edits to Terraform‑managed resources  
-
-## **6.2 Failure Isolation**
-- Frontend failures do not affect backend  
-- Backend failures do not affect KB ingestion  
-- KB ingestion failures do not affect existing chat functionality  
-- Agent alias ensures stable versioning  
-
-## **6.3 Rollback Strategy**
-- Terraform supports infrastructure rollback  
-- CI/CD supports Lambda rollback  
-- Alias pinning ensures agent rollback  
-- KB ingestion is versioned implicitly  
+CI/CD is the **single source of truth** for runtime configuration and agent lifecycle.
 
 ---

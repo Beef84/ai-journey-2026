@@ -1,49 +1,17 @@
-Only new or updated files are uploaded, preserving the integrity of the vector store.
+[Source: Mrbeefy Design Decisions | Section: 3.3 SSE Over WebSocket for Streaming]
+
+## **3.3 SSE Over WebSocket for Streaming**
+Two real-time delivery options were considered:
+
+| Option | Why rejected |
+|---|---|
+| WebSocket (API Gateway) | Bidirectional connection management, connection state, reconnect logic — all unnecessary overhead for one-way server→client delivery |
+| WebSocket (API Gateway) | API Gateway WebSocket adds cost per connection-minute on top of per-message fees |
+
+SSE (Server-Sent Events) over a regular `POST` request is the right fit here:
+- One-way delivery (server → browser) matches the use case exactly
+- Works with standard `fetch` + `ReadableStream` — no special browser API
+- No persistent connection state to manage
+- CloudFront handles it natively when `compress = false` is set on the behavior
 
 ---
-
-## **11.5 Explicit, Isolated Ingestion Jobs**
-The KB pipeline triggers ingestion directly via the Bedrock API.
-
-This ensures:
-
-- Deterministic ingestion  
-- Clear failure boundaries  
-- No interference with backend deploys  
-- A clean, minimal workflow focused solely on knowledge updates  
-
-The backend still performs ingestion during deploys, but the KB pipeline owns ingestion during day‑to‑day updates.
-
----
-
-# **12. Frontend UI Design Decisions**
-
-## **12.1 Rich Response Rendering**
-Markdown rendering was added to support:
-
-- Bold
-- Lists
-- Headings
-- Multi-paragraph responses
-
-This improves readability and matches modern LLM output patterns.
-
----
-
-## **12.2 Auto-Scrolling**
-The chat scrolls automatically to the latest message, improving conversational flow and eliminating manual scrolling after long responses.
-
----
-
-## **12.3 Improved Input Behavior**
-The input box supports:
-
-- Enter → send
-- Shift+Enter → newline
-- Auto-resizing
-
-These changes align with modern chat UX expectations and make multi-line prompts natural to write.
-
----
-
-## **12.4 Brand Identity: Beef AI Software Logo**

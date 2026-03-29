@@ -1,35 +1,32 @@
-# **2. Frontend Architecture**
+[Source: Mrbeefy Architecture]
 
-## **2.1 Static Hosting**
-- React SPA built and uploaded to an S3 bucket:
-  - Bucket name pattern: `mrbeefy-frontend-<random>`  
-  - Public access fully blocked  
-  - Access controlled exclusively through CloudFront OAC  
+# **1. High‑Level Architecture Overview**
 
-## **2.2 CloudFront Distribution**
-CloudFront serves as the global CDN and routing layer.
+Mr. Beefy is a fully serverless, event‑driven AI agent platform built on AWS.  
+The system consists of four major layers:
 
-### **Origins**
-1. **S3 Frontend Origin**
-   - Uses Origin Access Control (OAC)  
-   - Only CloudFront can read from the bucket  
-   - S3 bucket policy restricts access via `AWS:SourceArn`  
+1. **Frontend Delivery Layer**  
+   - CloudFront distribution  
+   - S3 static hosting with Origin Access Control (OAC)  
+   - Custom domain + ACM certificate + Route53  
 
-2. **Lambda Function URL Origin**
-   - Domain: `<url-id>.lambda-url.us-east-1.on.aws`
-   - No `origin_path` — requests go directly to the function
-   - HTTPS enforced, TLSv1.2
-   - `compress = false` on the `/chat` behavior — required for SSE streaming (compression forces buffering)
+2. **API Layer**
+   - Lambda Function URL with response streaming (`invoke_mode = RESPONSE_STREAM`)
+   - CloudFront → Function URL integration
+   - `/chat` routed directly to Lambda with no intermediate gateway
 
-### **Behaviors**
-- **Default behavior** → S3 frontend  
-- **Ordered behavior**:
-  - `path_pattern = "/chat"`  
-  - Allowed methods:  
-    `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE`  
-  - Cached methods:  
-    `GET, HEAD`  
-  - Cache policy: API no‑cache policy  
-  - Origin request policy: forwards `Content-Type` header + all query strings  
+3. **Compute Layer**
+   - Node.js 20 Lambda function with `awslambda.streamifyResponse`
+   - Bedrock Agent Runtime client streaming SSE chunks as they arrive
+   - Environment variables for Agent ID, Alias ID, and Gateway Secret
 
-### **Security**
+4. **AI Layer**  
+   - Bedrock Agent  
+   - Bedrock Knowledge Base  
+   - Titan V2 embeddings  
+   - S3 Vector Store  
+   - IAM roles for agent execution + KB ingestion  
+
+All infrastructure is deployed via **Terraform**, with dynamic agent lifecycle operations handled by **GitHub Actions CI/CD**.
+
+---

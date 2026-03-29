@@ -1,25 +1,5 @@
-- Architected and built a modern desktop GUI that served as the new entry point for the platform, replacing outdated COBOL screens with a contemporary Windows‑based interface.
-- Developed SQL Server 2008 data structures and supporting logic to integrate modern .NET components with legacy COBOL processes.
-- Redesigned and rebuilt the company’s public website using HTML, CSS, and JavaScript.
-- Provided hands‑on customer support, system troubleshooting, and environment maintenance for small‑business clients.
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > SaaS Platform & Product Context]
 
----
-
-# **Technical Strengths and Focus Areas**
-
-### **Distributed Systems & Backend Platforms**
-- Microservices, event‑driven systems, REST APIs  
-- High‑throughput, low‑latency backend design  
-- SQL/NoSQL data modeling, performance tuning  
-- Messaging patterns and service‑bus architectures  
-
-### **Cloud & Infrastructure**
-- Azure (AKS, App Service, API Management)  
-- Cloud‑agnostic patterns applicable to AWS/GCP  
-- Docker, Kubernetes, OpenShift  
-- Environment provisioning, configuration, governance  
-- IaC with Bicep, ARM, Terraform concepts  
-
-### **DevOps & CI/CD**
-- Azure DevOps Pipelines (YAML, templates, automation modules)  
-- Git, GitHub, SCM workflows  
+### SaaS Platform & Product Context
+- Contributed to the architecture and development of a multi‑tenant SaaS platform used by healthcare providers and patients to share, view, and manage medical information.
+- Ensured backend services, APIs, and integrations met the reliability, scalability, and data‑integrity requirements expected of a healthcare‑grade SaaS offering.

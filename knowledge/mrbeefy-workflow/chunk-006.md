@@ -1,34 +1,9 @@
-These values are consumed by CI/CD for dynamic operations.
+[Source: Mrbeefy Workflow | Section: 2.3 User Access]
+
+### **2.3 User Access**
+1. User navigates to `https://mrbeefy.academy`.  
+2. Route53 resolves the domain to CloudFront.  
+3. CloudFront retrieves static assets from S3 using OAC.  
+4. The browser loads the SPA and initializes the UI.
 
 ---
-
-# **8. Security Workflow**
-
-### **8.1 Access Control**
-- S3 frontend bucket locked behind OAC
-- KB bucket restricted to KB role
-- Lambda role restricted to logging + InvokeAgent
-- Agent execution role restricted to model + KB access
-- CloudFront restricted via `AWS:SourceArn`
-- Lambda Function URL protected by `x-cloudfront-secret` header (both environments)
-- Dev CloudFront protected by signed cookies
-
-### **8.2 TLS**
-- ACM certificate for domain
-- CloudFront enforces HTTPS
-- Lambda Function URL enforces HTTPS
-
-### **8.3 IAM Separation**
-Each component has a dedicated role with least‑privilege permissions.
-
----
-
-# **9. First-Time Manual Setup**
-
-This section is the complete checklist of every manual step required to stand up Mr. Beefy from scratch. These steps are performed once per environment and are **not automated by CI/CD**. Do them in order — each step depends on the one before it.
-
-> **Prod vs Dev:** Steps 9.1–9.5 are required for **both** environments. Steps 9.6–9.9 are **dev only** — the dev CloudFront distribution requires signed cookies; prod does not.
-
----
-
-## **9.1 Generate the Gateway Secret**

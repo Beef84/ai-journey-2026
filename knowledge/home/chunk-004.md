@@ -1,28 +1,16 @@
-A curated list of major systems and long‑term projects, including:
+[Source: Home | Section: 📐 Architecture]
 
-- **Mr. Beefy** — full serverless AI platform  
-- **Oberrath Farms Website** — Azure‑hosted .NET Razor + SQL Server  
-- **Personal Finances App** — ASP.NET Core Razor + API + EF Core (active since 2012)  
-- **Enterprise CI/CD platforms**  
-- **Distributed backend systems**  
-- **Containerized production workloads**  
-- **Feature‑flag platform enablement**  
+## **📐 Architecture**
+A detailed breakdown of the final production architecture, including:
 
-This section demonstrates real production impact and long‑term ownership.
+- Frontend delivery (CloudFront + S3 + OAC)  
+- API routing (CloudFront → Lambda Function URL with SSE streaming)
+- Compute layer (Lambda)  
+- AI layer (Bedrock Agent, Knowledge Base, vector store)  
+- CI/CD lifecycle and responsibilities  
+- IaC boundaries  
+- End‑to‑end request flow  
 
----
-
-# **Purpose of This Wiki**
-
-The documentation is designed to:
-
-- Provide a complete technical reference for the Mr. Beefy platform  
-- Showcase end‑to‑end ownership of a modern AI system  
-- Support future enhancements and architectural evolution  
-- Serve as a professional portfolio artifact  
-- Enable others to understand, evaluate, and learn from the system  
-- Establish a foundation for potential future SaaS development  
-
-The goal is clarity, structure, and technical authority — reflecting the standards expected of senior‑level engineering work.
+This section explains how the system is built and how each component interacts.
 
 ---

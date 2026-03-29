@@ -1,24 +1,24 @@
 output "knowledge_bucket" {
-  value       = aws_s3_bucket.knowledge.bucket
+  value       = module.knowledge_bucket.bucket_name
   description = "S3 bucket name used for knowledge files"
 }
 
 output "knowledge_bucket_arn" {
-  value       = aws_s3_bucket.knowledge.arn
+  value       = module.knowledge_bucket.bucket_arn
   description = "S3 bucket ARN used in IAM policies"
 }
 
 output "kb_role_arn" {
-  value       = aws_iam_role.kb_role.arn
+  value       = module.knowledge_bucket.kb_role_arn
   description = "IAM role ARN used by the knowledge base ingestion service"
 }
 
 output "agent_id" {
-  value       = aws_bedrockagent_agent.mrbeefy.id
-  description = "Bedrock Agent id (DRAFT agent created by Terraform)"
+  value       = module.bedrock_agent.agent_id
+  description = "Bedrock Agent ID (DRAFT agent created by Terraform)"
 }
 
-output "api_id" {
-  value       = aws_apigatewayv2_api.http_api.id
-  description = "API Gateway HTTP API ID for CloudFront origin routing"
+output "function_url_domain" {
+  value       = module.lambda_api.function_url_domain
+  description = "Lambda Function URL domain for CloudFront API origin"
 }

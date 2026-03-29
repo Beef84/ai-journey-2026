@@ -30,17 +30,18 @@ jobs:
         aws-region: us-east-1
 
     # -----------------------------
-    # Read API ID from SSM Parameter Store
+    # Read Function URL Domain from SSM
+    # Written by the backend pipeline after every backend deploy.
     # -----------------------------
-    - name: Read API ID from SSM
+    - name: Read Function URL Domain from SSM
       id: api
       run: |
-        API_ID=$(aws ssm get-parameter \
-          --name "/mrbeefy/api_id" \
+        FUNCTION_URL_DOMAIN=$(aws ssm get-parameter \
+          --name "/mrbeefy/function_url_domain" \
           --query "Parameter.Value" \
           --output text)
-        echo "api_id=$API_ID" >> $GITHUB_OUTPUT
-        echo "Using API ID: $API_ID"
+        echo "function_url_domain=$FUNCTION_URL_DOMAIN" >> $GITHUB_OUTPUT
+        echo "Using Function URL domain: $FUNCTION_URL_DOMAIN"
 
     # -----------------------------
     # Build Frontend (Vite)
@@ -48,7 +49,7 @@ jobs:
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
 
     - name: Install UI Dependencies
       working-directory: frontend/UI
@@ -70,7 +71,10 @@ jobs:
 
     - name: Terraform Apply
       working-directory: frontend/IaC
-      run: terraform apply -auto-approve -var="api_id=${{ steps.api.outputs.api_id }}"
+      run: |
+        terraform apply -auto-approve \
+          -var="function_url_domain=${{ steps.api.outputs.function_url_domain }}" \
+          -var="gateway_secret=${{ secrets.GATEWAY_SECRET }}"
 
     # -----------------------------
     # Capture Terraform Outputs

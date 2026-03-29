@@ -1,3 +1,5 @@
+[Source: Jordan Career Summary]
+
 # **Jordan Oberrath — Expanded Career Summary**
 
 I, Jordan Oberrath currently works at UPMC as a Senior Software Engineer.
@@ -10,3 +12,6 @@ I specialize in **distributed systems**, **backend service design**, and **cloud
 - **Docker, Container Apps, and OpenShift** for containerized production workloads  
 - **Distributed messaging patterns**, including HL7, NServiceBus, and event‑driven architectures  
 - **CI/CD platform engineering** using Azure DevOps, YAML pipelines, reusable templates, and automation modules  
+- **Infrastructure‑as‑Code** using Bicep, ARM, scripting (PowerShell, Bash), and Terraform concepts  
+- **Cloud provisioning, governance, and environment automation** across Azure and cloud‑agnostic patterns applicable to AWS/GCP  
+- **Observability, diagnostics, rollout safety, and incident response** for real‑time, high‑throughput systems  

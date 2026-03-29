@@ -1,17 +1,18 @@
-SSE streaming is fully implemented. The Lambda handler now pipes Bedrock chunks directly to the browser as they arrive, giving the typing effect seen in modern AI chat interfaces. Users see words appear progressively rather than waiting for the full response.
+[Source: Mrbeefy Cost Analysis | Section: 1.3 AWS Lambda]
 
-## **4.2 Architecture Change: API Gateway → Lambda Function URL**
+## **1.3 AWS Lambda**
 
-Streaming required replacing API Gateway with a Lambda Function URL. API Gateway HTTP API buffers the complete Lambda response before forwarding it — true SSE streaming is impossible through it.
+Billed on duration × memory allocation, plus a flat per-invocation fee.
 
-Lambda Function URL with `invoke_mode = RESPONSE_STREAM` enables chunked transfer directly from Lambda to CloudFront to browser with no buffering.
+| Metric | Rate |
+|---|---|
+| Compute | $0.0000166667 / GB-second |
+| Invocations | $0.0000002 / request |
 
-## **4.3 Cost Impact**
+**Per request estimate (256MB, ~10s average duration):**
+- 0.25 GB × 10s = 2.5 GB-seconds × $0.0000166667 = **~$0.00004/request**
+- Plus invocation: $0.0000002
 
-| Component | Before | After | Delta |
-|---|---|---|---|
-| Bedrock tokens | Same | Same | **$0** |
-| Lambda duration | ~10s | ~10s (same wall time) | **~$0** |
-| API Gateway | $1.00/million requests | **Removed** | **-$1.00/M** |
-| Lambda Function URL | n/a | $0 additional | **$0** |
-| CloudFront | Same bytes transferred | Same bytes, incremental delivery | **$0** |
+Lambda is **not** a meaningful cost at personal/demo scale.
+
+---

@@ -1,0 +1,4 @@
+[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Trade-offs considered]
+
+### Trade-offs considered
+Before finalizing the architecture, I evaluated several competing designs: single‑tenant versus multi‑tenant databases, monolithic versus distributed ingestion, single versus dual agent models, and shared versus per‑tenant vector stores. I documented the trade‑offs behind each option, including isolation guarantees, operational complexity, performance characteristics, and cost implications. This documentation sits alongside the infrastructure and DevOps standards I’m writing for the platform, ensuring that my future self and future contributors understand not just what the architecture is, but why it is that way.

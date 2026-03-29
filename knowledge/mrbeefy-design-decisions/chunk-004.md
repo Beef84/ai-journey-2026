@@ -1,41 +1,29 @@
-| WebSocket (API Gateway) | API Gateway WebSocket adds cost per connection-minute on top of per-message fees |
+[Source: Mrbeefy Design Decisions | Section: 2.1 Terraform Owns Static Infrastructure]
 
-SSE (Server-Sent Events) over a regular `POST` request is the right fit here:
-- One-way delivery (server → browser) matches the use case exactly
-- Works with standard `fetch` + `ReadableStream` — no special browser API
-- No persistent connection state to manage
-- CloudFront handles it natively when `compress = false` is set on the behavior
+## **2.1 Terraform Owns Static Infrastructure**
+Terraform manages all resources that are:
 
----
+- Declarative  
+- Long‑lived  
+- Stable  
+- Not subject to frequent versioning  
 
-# **4. CloudFront Design Decisions**
+This includes:
 
-## **4.1 CloudFront as the Routing Layer**
-CloudFront was chosen to:
+- S3 buckets (frontend + knowledge)
+- CloudFront distribution
+- Route53 records
+- ACM certificate
+- Lambda function definition
+- Lambda Function URL
+- IAM roles and policies
+- Bedrock Agent (DRAFT definition only)
 
-- Serve static assets globally
-- Terminate TLS
-- Route `/chat` to the Lambda Function URL origin
-- Apply security headers
-- Enforce caching policies
-- Protect S3 via OAC
+Terraform **does not** manage:
 
-## **4.2 Two-Origin Architecture**
-CloudFront uses:
+- Agent versions  
+- Agent aliases  
+- KB ingestion jobs  
+- Lambda environment variable updates for alias IDs  
 
-1. **S3 Origin**
-   - For static frontend assets
-   - Protected by OAC
-   - No public access
-
-2. **Lambda Function URL Origin**
-   - For dynamic `/chat` requests
-   - HTTPS-only
-   - No `origin_path` — requests go directly to the function
-   - `compress = false` — required to prevent SSE stream buffering
-
-## **4.3 Behavior Design**
-- Default behavior → S3
-- Ordered behavior → `/chat` → Lambda Function URL
-
-This ensures:
+These are dynamic and would cause drift if managed declaratively.

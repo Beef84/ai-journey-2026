@@ -22,9 +22,14 @@ resource "aws_iam_role_policy" "agent_execution_policy" {
     Version = "2012-10-17"
     Statement = [
       {
+        # Cross-region inference profile (required for Claude on-demand throughput).
+        # Inference profile ARNs include the account ID; foundation-model ARNs do not.
         Effect   = "Allow"
         Action   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
-        Resource = "arn:aws:bedrock:${var.region}::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0"
+        Resource = [
+          "arn:aws:bedrock:${var.region}:${var.account_id}:inference-profile/us.anthropic.claude-3-5-haiku-20241022-v1:0",
+          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0"
+        ]
       },
       {
         Effect   = "Allow"
@@ -47,7 +52,7 @@ resource "aws_iam_role_policy" "agent_execution_policy" {
 
 resource "aws_bedrockagent_agent" "mrbeefy" {
   agent_name              = "${var.prefix}-agent"
-  foundation_model        = "anthropic.claude-3-5-haiku-20241022-v1:0"
+  foundation_model        = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
   agent_resource_role_arn = aws_iam_role.agent_execution_role.arn
 
   instruction = <<EOF

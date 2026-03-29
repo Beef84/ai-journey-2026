@@ -1,6 +1,8 @@
-To enforce tenant isolation, I’m using tenant‑scoped S3 prefixes, vector‑database namespaces, and row‑level isolation in relational storage. The ingestion pipeline is also tenant‑scoped, so transcription, chunking, summarization, and embedding workloads remain fully separated even though they run on shared compute. This gives each user a private data boundary without the operational and financial overhead of dedicated per‑tenant infrastructure.
+[Source: Jordan Personal Projects | Section: Oberrath Farms — .NET 6 Razor Pages E‑Commerce Website]
 
-### Scalability and planes
-Scalability is handled by structuring the platform into independently scalable planes. The Control Plane manages identity, tenant metadata, and provisioning. The Tenant Plane handles user‑facing application logic and API surfaces. The AI Plane processes ingestion, summarization, vector search, and AI enabled features like transcription, translation, recognition, and generation capabilities. Each plane scales horizontally based on its own workload characteristics, which prevents bottlenecks and keeps the system efficient as usage grows.
+## Oberrath Farms — .NET 6 Razor Pages E‑Commerce Website
 
-### Cost, tooling, and infrastructure
+- Farm‑to‑consumer e‑commerce site built with .NET 6, Razor Pages, EF Core, SQL Server, and Azure App Service
+- Modular architecture using NuGet packages for DbContext, Models, Business Logic, and an API Client SDK to ensure clean layering and reusability
+- Uses Azure Storage, Azure SQL, and Azure App Service for hosting
+- Repo hosted in Azure DevOps with Azure Pipelines (YAML, PowerShell, Azure CLI) for CI/CD and automated deployments

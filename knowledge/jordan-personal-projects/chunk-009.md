@@ -1,0 +1,4 @@
+[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Scalability and planes]
+
+### Scalability and planes
+Scalability is handled by structuring the platform into independently scalable planes. The Control Plane manages identity, tenant metadata, and provisioning. The Tenant Plane handles user‑facing application logic and API surfaces. The AI Plane processes ingestion, summarization, vector search, and AI enabled features like transcription, translation, recognition, and generation capabilities. Each plane scales horizontally based on its own workload characteristics, which prevents bottlenecks and keeps the system efficient as usage grows.

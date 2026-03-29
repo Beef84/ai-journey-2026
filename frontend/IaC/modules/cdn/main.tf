@@ -145,11 +145,11 @@ resource "aws_cloudfront_distribution" "frontend" {
 # The matching private key is kept locally and never committed.
 resource "aws_cloudfront_public_key" "signed_cookies" {
   count       = var.enable_signed_cookies ? 1 : 0
-  name        = "${var.prefix}-cf-public-key"
+  name_prefix = "${var.prefix}-cf-public-key-"
   encoded_key = var.cloudfront_public_key_pem
 
-  # Must create the new key before destroying the old one so the key group
-  # reference can be updated without a 409 PublicKeyInUse error.
+  # name_prefix ensures each replacement gets a unique name so create_before_destroy
+  # can create the new key before the old one is removed from the key group.
   lifecycle {
     create_before_destroy = true
   }

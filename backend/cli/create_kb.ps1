@@ -51,6 +51,7 @@ if ($BucketExists -and $BucketExists -ne "None") {
 
 # ----------------------------------------------------------------
 # Step 2 — ensure the Knowledge Base exists
+# Passes JSON via temp files to avoid PowerShell quoting issues with the AWS CLI.
 # ----------------------------------------------------------------
 $KB_ID = aws bedrock-agent list-knowledge-bases `
   --query "knowledgeBaseSummaries[?name=='$KbName'] | [0].knowledgeBaseId" `
@@ -61,26 +62,36 @@ if ($KB_ID -and $KB_ID -ne "None") {
 } else {
     Write-Host "Creating Knowledge Base '$KbName'..."
 
-    $KbConfig = @{
-        type = "VECTOR"
-        vectorKnowledgeBaseConfiguration = @{
-            embeddingModelArn = $EmbeddingModelArn
+    $CreateKbInput = @{
+        name    = $KbName
+        roleArn = $KbRoleArn
+        knowledgeBaseConfiguration = @{
+            type = "VECTOR"
+            vectorKnowledgeBaseConfiguration = @{
+                embeddingModelArn = $EmbeddingModelArn
+            }
         }
-    } | ConvertTo-Json -Compress
+        storageConfiguration = @{
+            type = "S3_VECTORS"
+            s3VectorsConfiguration = @{
+                vectorBucketArn = $VectorsBucketArn
+            }
+        }
+    } | ConvertTo-Json -Depth 10 -Compress
 
-    $StorageConfig = @{
-        type = "S3_VECTORS"
-        s3VectorsConfiguration = @{
-            vectorBucketArn = $VectorsBucketArn
-        }
-    } | ConvertTo-Json -Compress
+    $KbInputFile = [System.IO.Path]::Combine($env:TEMP, "create_kb_input.json")
+    [System.IO.File]::WriteAllText($KbInputFile, $CreateKbInput, [System.Text.Encoding]::UTF8)
 
     $KbJson = aws bedrock-agent create-knowledge-base `
-      --name $KbName `
-      --role-arn $KbRoleArn `
-      --knowledge-base-configuration $KbConfig `
-      --storage-configuration $StorageConfig `
+      --cli-input-json "file://$KbInputFile" `
       --output json | ConvertFrom-Json
+
+    Remove-Item $KbInputFile -ErrorAction SilentlyContinue
+
+    if ($LASTEXITCODE -ne 0 -or -not $KbJson.knowledgeBase.knowledgeBaseId) {
+        Write-Error "Failed to create Knowledge Base."
+        exit 1
+    }
 
     $KB_ID = $KbJson.knowledgeBase.knowledgeBaseId
     Write-Host "Knowledge Base created: $KB_ID"
@@ -100,26 +111,32 @@ if ($DS_ID -and $DS_ID -ne "None") {
 } else {
     Write-Host "Creating data source for '$KbName'..."
 
-    $DsConfig = @{
-        type = "S3"
-        s3Configuration = @{
-            bucketArn = $BucketArn
+    $CreateDsInput = @{
+        knowledgeBaseId = $KB_ID
+        name            = "$KbName-source"
+        dataSourceConfiguration = @{
+            type = "S3"
+            s3Configuration = @{
+                bucketArn = $BucketArn
+            }
         }
-    } | ConvertTo-Json -Compress
+        vectorIngestionConfiguration = @{
+            chunkingConfiguration = @{
+                chunkingStrategy = "NONE"
+            }
+        }
+    } | ConvertTo-Json -Depth 10 -Compress
 
-    $VectorIngestionConfig = @{
-        chunkingConfiguration = @{
-            chunkingStrategy = "NONE"
-        }
-    } | ConvertTo-Json -Compress
+    $DsInputFile = [System.IO.Path]::Combine($env:TEMP, "create_ds_input.json")
+    [System.IO.File]::WriteAllText($DsInputFile, $CreateDsInput, [System.Text.Encoding]::UTF8)
 
     aws bedrock-agent create-data-source `
-      --knowledge-base-id $KB_ID `
-      --name "$KbName-source" `
-      --data-source-configuration $DsConfig `
-      --vector-ingestion-configuration $VectorIngestionConfig `
+      --cli-input-json "file://$DsInputFile" `
       --output json | Out-Null
 
+    Remove-Item $DsInputFile -ErrorAction SilentlyContinue
+
+    if ($LASTEXITCODE -ne 0) { Write-Error "Failed to create data source."; exit 1 }
     Write-Host "Data source created."
 }
 

@@ -22,6 +22,11 @@ locals {
   # Any other workspace name (e.g. "dev") gets embedded in every resource name
   # so multiple environments can coexist in the same account.
   prefix = terraform.workspace == "default" ? "mrbeefy" : "mrbeefy-${terraform.workspace}"
+
+  # Foundation model for the Bedrock Agent. The bedrock_agent module derives
+  # the cross-region inference profile ID (us. prefix) from this value.
+  # Update here to switch models — no other file needs to change.
+  foundation_model_id = "anthropic.claude-3-5-haiku-20241022-v1:0"
 }
 
 data "aws_caller_identity" "current" {}
@@ -40,11 +45,12 @@ module "knowledge_bucket" {
 }
 
 module "bedrock_agent" {
-  source     = "./modules/bedrock_agent"
-  prefix     = local.prefix
-  bucket_arn = module.knowledge_bucket.bucket_arn
-  region     = data.aws_region.current.name
-  account_id = data.aws_caller_identity.current.account_id
+  source              = "./modules/bedrock_agent"
+  prefix              = local.prefix
+  bucket_arn          = module.knowledge_bucket.bucket_arn
+  region              = data.aws_region.current.name
+  account_id          = data.aws_caller_identity.current.account_id
+  foundation_model_id = local.foundation_model_id
 }
 
 variable "gateway_secret" {

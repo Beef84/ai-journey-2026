@@ -127,19 +127,68 @@ jobs:
           --query "knowledgeBaseSummaries[?name=='mrbeefy-kb'] | [0].knowledgeBaseId" `
           --output text
 
+        if (-not $KB_ID -or $KB_ID -eq "None") {
+            Write-Error "Knowledge Base 'mrbeefy-kb' not found."
+            exit 1
+        }
+
         ./associate_kb.ps1 `
           -AgentId "${{ steps.tfout.outputs.agent_id }}" `
-          -KbId $KB_ID `
-          -AgentVersion "DRAFT"
+          -KbId $KB_ID
+
+    # -----------------------------
+    # Prepare Agent
+    # Must run after KB association; required before creating a new version.
+    # -----------------------------
+    - name: Prepare Agent
+      shell: bash
+      env:
+        AGENT_ID: ${{ steps.tfout.outputs.agent_id }}
+      run: |
+        set -euo pipefail
+        aws bedrock-agent prepare-agent --agent-id "$AGENT_ID" > /dev/null
+        for i in $(seq 1 24); do
+          STATUS=$(aws bedrock-agent get-agent --agent-id "$AGENT_ID" \
+            --query "agent.agentStatus" --output text)
+          echo "Agent status: $STATUS"
+          if [ "$STATUS" = "PREPARED" ]; then exit 0; fi
+          sleep 5
+        done
+        echo "ERROR: Agent did not reach PREPARED in time" && exit 1
+
+    # -----------------------------
+    # Create New Agent Version from DRAFT
+    # A new version is required on every deploy so the alias always points
+    # to a version that includes the current KB association.
+    # -----------------------------
+    - name: Create Agent Version
+      id: agent_version
+      shell: bash
+      env:
+        AGENT_ID: ${{ steps.tfout.outputs.agent_id }}
+      run: |
+        set -euo pipefail
+        pip install boto3 -q
+        VERSION=$(python3 - <<'PYEOF'
+import boto3, os
+client = boto3.client('bedrock-agent', region_name='us-east-1')
+resp = client.create_agent_version(agentId=os.environ['AGENT_ID'])
+print(resp['agentVersion']['agentVersion'])
+PYEOF
+)
+        echo "agent_version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Created agent version: $VERSION"
 
     # -----------------------------
     # Create or Update Alias
+    # Always update routing to the freshly created version.
     # -----------------------------
-    - name: Create Alias If Missing
+    - name: Create or Update Alias
       id: create_or_update_alias
       shell: bash
       env:
         AGENT_ID: ${{ steps.tfout.outputs.agent_id }}
+        AGENT_VERSION: ${{ steps.agent_version.outputs.agent_version }}
         ALIAS_NAME: prod
         AWS_REGION: us-east-1
       run: |
@@ -151,20 +200,26 @@ jobs:
           --query "agentAliasSummaries[?agentAliasName=='${ALIAS_NAME}'] | [0].agentAliasId" \
           --output text 2>/dev/null || true)
 
-        if [ -n "$EXISTING_ALIAS_ID" ] && [ "$EXISTING_ALIAS_ID" != "None" ]; then
-          echo "alias_id=$EXISTING_ALIAS_ID" >> $GITHUB_OUTPUT
-          exit 0
+        if [ -z "$EXISTING_ALIAS_ID" ] || [ "$EXISTING_ALIAS_ID" = "None" ]; then
+          aws bedrock-agent create-agent-alias \
+            --agent-id "$AGENT_ID" \
+            --agent-alias-name "$ALIAS_NAME" \
+            --routing-configuration "[{\"agentVersion\":\"${AGENT_VERSION}\"}]" \
+            --region "$AWS_REGION" \
+            --output json > alias.json
+          ALIAS_ID=$(jq -r '.agentAlias.agentAliasId' alias.json)
+        else
+          ALIAS_ID="$EXISTING_ALIAS_ID"
+          aws bedrock-agent update-agent-alias \
+            --agent-id "$AGENT_ID" \
+            --agent-alias-id "$ALIAS_ID" \
+            --agent-alias-name "$ALIAS_NAME" \
+            --routing-configuration "[{\"agentVersion\":\"${AGENT_VERSION}\"}]" \
+            --region "$AWS_REGION" > /dev/null
         fi
 
-        aws bedrock-agent create-agent-alias \
-          --agent-id "$AGENT_ID" \
-          --agent-alias-name "$ALIAS_NAME" \
-          --region "$AWS_REGION" \
-          --output json > alias.json
-
-        NEW_ALIAS_ID=$(jq -r '.agentAlias.agentAliasId' alias.json)
-
-        echo "alias_id=$NEW_ALIAS_ID" >> $GITHUB_OUTPUT
+        echo "alias_id=$ALIAS_ID" >> $GITHUB_OUTPUT
+        echo "Alias $ALIAS_NAME ($ALIAS_ID) now routes to version $AGENT_VERSION"
 
     # -----------------------------
     # Update Lambda Environment

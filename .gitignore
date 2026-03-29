@@ -7,3 +7,7 @@
 terraform.tfvars
 *.tfstate
 *.tfstate.backup
+
+# Lambda build artifacts
+backend/lambda/dist/
+backend/lambda/dist.zip

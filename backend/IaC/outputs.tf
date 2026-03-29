@@ -25,5 +25,5 @@ output "function_url_domain" {
 
 output "function_name" {
   value       = module.lambda_api.function_name
-  description = "Lambda function name"
+  description = "Lambda function name for CLI and CI/CD env var updates"
 }

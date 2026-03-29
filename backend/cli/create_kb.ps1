@@ -44,7 +44,8 @@ if ($BucketExists -and $BucketExists -ne "None") {
     Write-Host "Creating S3 Vectors bucket '$VectorsBucketName'..."
     aws s3vectors create-vector-bucket `
       --vector-bucket-name $VectorsBucketName `
-      --region $Region | Out-Null
+      --region $Region
+    if ($LASTEXITCODE -ne 0) { Write-Error "Failed to create S3 Vectors bucket."; exit 1 }
     Write-Host "S3 Vectors bucket created."
 }
 
@@ -70,7 +71,7 @@ if ($KB_ID -and $KB_ID -ne "None") {
     $StorageConfig = @{
         type = "S3_VECTORS"
         s3VectorsConfiguration = @{
-            bucketArn = $VectorsBucketArn
+            vectorBucketArn = $VectorsBucketArn
         }
     } | ConvertTo-Json -Compress
 

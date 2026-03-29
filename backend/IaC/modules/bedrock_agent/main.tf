@@ -1,5 +1,14 @@
 # Bedrock Agent IAM execution role and the agent resource itself.
-# The agent uses Claude Haiku 3.5 and retrieves context from the knowledge base.
+# The agent uses Claude 3.5 Haiku and retrieves context from the knowledge base.
+
+locals {
+  # Claude on-demand throughput requires a US cross-region inference profile.
+  # The profile ID is derived from the foundation model ID passed in from the root module.
+  # Inference profile ARNs include the account ID; foundation-model ARNs do not.
+  inference_profile_id  = "us.${var.foundation_model_id}"
+  inference_profile_arn = "arn:aws:bedrock:${var.region}:${var.account_id}:inference-profile/${local.inference_profile_id}"
+  foundation_model_arn  = "arn:aws:bedrock:*::foundation-model/${var.foundation_model_id}"
+}
 
 resource "aws_iam_role" "agent_execution_role" {
   name = "${var.prefix}-agent-role"
@@ -10,6 +19,9 @@ resource "aws_iam_role" "agent_execution_role" {
       Effect    = "Allow"
       Principal = { Service = "bedrock.amazonaws.com" }
       Action    = "sts:AssumeRole"
+      Condition = {
+        StringEquals = { "aws:SourceAccount" = var.account_id }
+      }
     }]
   })
 }
@@ -22,14 +34,17 @@ resource "aws_iam_role_policy" "agent_execution_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        # Cross-region inference profile (required for Claude on-demand throughput).
-        # Inference profile ARNs include the account ID; foundation-model ARNs do not.
+        # Cross-region inference profile routes Claude requests across us-east-1/2 and us-west-2.
+        # Both the profile ARN (with account ID) and the foundation-model ARN (without) are required.
         Effect   = "Allow"
         Action   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
-        Resource = [
-          "arn:aws:bedrock:${var.region}:${var.account_id}:inference-profile/us.anthropic.claude-3-5-haiku-20241022-v1:0",
-          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0"
-        ]
+        Resource = [local.inference_profile_arn, local.foundation_model_arn]
+      },
+      {
+        # Required by Bedrock to verify the Marketplace subscription for Anthropic models.
+        Effect   = "Allow"
+        Action   = ["aws-marketplace:ViewSubscriptions"]
+        Resource = "*"
       },
       {
         Effect   = "Allow"
@@ -52,7 +67,7 @@ resource "aws_iam_role_policy" "agent_execution_policy" {
 
 resource "aws_bedrockagent_agent" "mrbeefy" {
   agent_name              = "${var.prefix}-agent"
-  foundation_model        = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
+  foundation_model        = local.inference_profile_id
   agent_resource_role_arn = aws_iam_role.agent_execution_role.arn
 
   instruction = <<EOF

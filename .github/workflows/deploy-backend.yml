@@ -49,8 +49,8 @@ jobs:
       run: npm run build
 
     - name: Zip Lambda Bundle
-      working-directory: backend/lambda
-      run: zip -r dist.zip dist
+      working-directory: backend/lambda/dist
+      run: zip -r ../dist.zip .
 
     # -----------------------------
     # Terraform Deploy

@@ -147,6 +147,12 @@ resource "aws_cloudfront_public_key" "signed_cookies" {
   count       = var.enable_signed_cookies ? 1 : 0
   name        = "${var.prefix}-cf-public-key"
   encoded_key = var.cloudfront_public_key_pem
+
+  # Must create the new key before destroying the old one so the key group
+  # reference can be updated without a 409 PublicKeyInUse error.
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_cloudfront_key_group" "signed_cookies" {

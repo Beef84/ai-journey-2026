@@ -22,8 +22,3 @@ output "function_url_domain" {
   value       = module.lambda_api.function_url_domain
   description = "Lambda Function URL domain for CloudFront API origin"
 }
-
-output "function_name" {
-  value       = module.lambda_api.function_name
-  description = "Lambda function name"
-}

@@ -169,13 +169,7 @@ jobs:
       run: |
         set -euo pipefail
         pip install boto3 -q
-        VERSION=$(python3 - <<'PYEOF'
-import boto3, os
-client = boto3.client('bedrock-agent', region_name='us-east-1')
-resp = client.create_agent_version(agentId=os.environ['AGENT_ID'])
-print(resp['agentVersion']['agentVersion'])
-PYEOF
-)
+        VERSION=$(python3 backend/cli/create_agent_version.py)
         echo "agent_version=$VERSION" >> $GITHUB_OUTPUT
         echo "Created agent version: $VERSION"
 

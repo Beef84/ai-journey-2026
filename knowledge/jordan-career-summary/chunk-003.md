@@ -1,0 +1,5 @@
+Because our existing DevOps template repositories had no Infrastructure‑as‑Code patterns for Azure Container App Managed Environments or Azure Container Apps themselves, my first task was to design and implement these templates from scratch. This required aligning with company policies, architectural standards, and established conventions within our template repos, including naming rules, structural layout, and coding practices such as using typed parameter objects in Bicep for complex configurations.
+
+Once the IaC patterns were in place, I built the CI/CD pipeline that provisions the application’s managed environment and deploys its first two container apps. This work not only enabled the new application to move forward but also established reusable patterns that the broader organization can now adopt for future Azure Container Apps workloads; representing a significant step in unifying the on‑premises and cloud engineering practices, and providing a modern, scalable deployment model that didn’t exist before.
+
+### RFID-based firearms & footwear systems (previous employer)

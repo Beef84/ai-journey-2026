@@ -1,0 +1,6 @@
+To enforce tenant isolation, I’m using tenant‑scoped S3 prefixes, vector‑database namespaces, and row‑level isolation in relational storage. The ingestion pipeline is also tenant‑scoped, so transcription, chunking, summarization, and embedding workloads remain fully separated even though they run on shared compute. This gives each user a private data boundary without the operational and financial overhead of dedicated per‑tenant infrastructure.
+
+### Scalability and planes
+Scalability is handled by structuring the platform into independently scalable planes. The Control Plane manages identity, tenant metadata, and provisioning. The Tenant Plane handles user‑facing application logic and API surfaces. The AI Plane processes ingestion, summarization, vector search, and AI enabled features like transcription, translation, recognition, and generation capabilities. Each plane scales horizontally based on its own workload characteristics, which prevents bottlenecks and keeps the system efficient as usage grows.
+
+### Cost, tooling, and infrastructure

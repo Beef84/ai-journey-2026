@@ -7,7 +7,7 @@ function App() {
     const [input, setInput] = useState("");
     const [isStreaming, setIsStreaming] = useState(false);
     const inputRef = useRef(null);
-    const messagesEndRef = useRef(null);
+    const messagesEndRef = useRef(null);   // <-- NEW
     const API_URL = "/chat";
 
     async function sendMessage() {
@@ -86,7 +86,7 @@ function App() {
         }
     }, [input]);
 
-    // Auto-scroll to bottom on new messages / streaming chunks
+    // Auto-scroll to bottom on new messages
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -127,7 +127,7 @@ function App() {
                                         isStreaming && i === messages.length - 1 ? " streaming" : ""
                                     }`}
                                 >
-                                    <ReactMarkdown>{m.text || "\u00A0"}</ReactMarkdown>
+                                    <ReactMarkdown>{m.text}</ReactMarkdown>
                                 </div>
                             ))}
 
@@ -147,6 +147,8 @@ function App() {
                                         e.preventDefault();
                                         sendMessage();
                                     }
+
+                                    // Shift+Enter → newline (your original behavior)
                                     if (e.key === "Enter" && e.shiftKey) {
                                         e.preventDefault();
                                         setInput((prev) => prev + "\n");

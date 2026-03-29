@@ -123,10 +123,12 @@ jobs:
       id: tfout
       working-directory: backend/IaC
       run: |
-        echo "bucket=$(terraform output -raw knowledge_bucket)"           >> $GITHUB_OUTPUT
-        echo "agent_id=$(terraform output -raw agent_id)"                 >> $GITHUB_OUTPUT
+        echo "bucket=$(terraform output -raw knowledge_bucket)"                 >> $GITHUB_OUTPUT
+        echo "bucket_arn=$(terraform output -raw knowledge_bucket_arn)"         >> $GITHUB_OUTPUT
+        echo "kb_role_arn=$(terraform output -raw kb_role_arn)"                 >> $GITHUB_OUTPUT
+        echo "agent_id=$(terraform output -raw agent_id)"                       >> $GITHUB_OUTPUT
         echo "function_url_domain=$(terraform output -raw function_url_domain)" >> $GITHUB_OUTPUT
-        echo "function_name=$(terraform output -raw function_name)"       >> $GITHUB_OUTPUT
+        echo "function_name=$(terraform output -raw function_name)"             >> $GITHUB_OUTPUT
 
     # -----------------------------
     # Ensure AWS CLI v2
@@ -149,22 +151,32 @@ jobs:
         aws s3 sync knowledge/ s3://${{ steps.tfout.outputs.bucket }}/ --delete
 
     # -----------------------------
+    # Create KB if not exists
+    # Creates the S3 Vectors bucket, Knowledge Base, and data source on first deploy.
+    # Idempotent — safe to run on every deploy.
+    # -----------------------------
+    - name: Create KB if not exists
+      id: kb
+      working-directory: backend/cli
+      shell: pwsh
+      run: |
+        $KB_ID = ./create_kb.ps1 `
+          -KbName    "${{ steps.env.outputs.kb_name }}" `
+          -KbRoleArn "${{ steps.tfout.outputs.kb_role_arn }}" `
+          -BucketArn "${{ steps.tfout.outputs.bucket_arn }}"
+
+        # create_kb.ps1 outputs the KB ID as the last line
+        $KB_ID = $KB_ID | Select-Object -Last 1
+        echo "kb_id=$KB_ID" >> $env:GITHUB_OUTPUT
+
+    # -----------------------------
     # Trigger KB Ingestion
     # -----------------------------
     - name: Trigger KB Ingestion
       working-directory: backend/cli
       shell: pwsh
       run: |
-        $KB_ID = aws bedrock-agent list-knowledge-bases `
-          --query "knowledgeBaseSummaries[?name=='${{ steps.env.outputs.kb_name }}'] | [0].knowledgeBaseId" `
-          --output text
-
-        if (-not $KB_ID -or $KB_ID -eq "None") {
-            Write-Error "Knowledge Base '${{ steps.env.outputs.kb_name }}' not found."
-            exit 1
-        }
-
-        ./ingest.ps1 -KbId $KB_ID
+        ./ingest.ps1 -KbId "${{ steps.kb.outputs.kb_id }}"
 
     # -----------------------------
     # Associate KB with Agent (DRAFT)
@@ -173,18 +185,9 @@ jobs:
       working-directory: backend/cli
       shell: pwsh
       run: |
-        $KB_ID = aws bedrock-agent list-knowledge-bases `
-          --query "knowledgeBaseSummaries[?name=='${{ steps.env.outputs.kb_name }}'] | [0].knowledgeBaseId" `
-          --output text
-
-        if (-not $KB_ID -or $KB_ID -eq "None") {
-            Write-Error "Knowledge Base '${{ steps.env.outputs.kb_name }}' not found."
-            exit 1
-        }
-
         ./associate_kb.ps1 `
           -AgentId "${{ steps.tfout.outputs.agent_id }}" `
-          -KbId $KB_ID
+          -KbId    "${{ steps.kb.outputs.kb_id }}"
 
     # -----------------------------
     # Prepare Agent

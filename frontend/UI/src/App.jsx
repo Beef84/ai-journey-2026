@@ -161,6 +161,7 @@ function App() {
                                 {isStreaming ? "..." : "Send"}
                             </button>
                         </div>
+                        <p className="copyright">© {new Date().getFullYear()} Beef AI Software</p>
                     </div>
                 </div>
             </div>

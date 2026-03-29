@@ -1,1 +1,3 @@
-I can offer my next employer a blend of architectural clarity, hands‑on engineering depth, and a track record of building real systems that solve real problems. I’m not someone who just maintains what already exists — I create things. I’ve consistently taken ideas from nothing more than a concept and turned them into working, production‑grade systems. That pattern shows up everywhere in my career, whether it’s internal enterprise platforms, consumer‑facing tools, or personal projects that push my skills forward.
+[Source: Jordan The Employee | Section: Where I fit in a group]
+
+So in a group, I’m the architect‑builder hybrid — the one who sets the direction, clarifies the patterns, and ensures the system is something the whole team can build on confidently.

@@ -1,22 +1,47 @@
-The platform now supports two fully isolated environments within the same AWS account using Terraform workspaces: `default` (prod) and `dev`. Alongside this, the API backend — previously reachable by anyone who discovered the URL — is protected in both environments.
+[Source: Mrbeefy Status]
+
+# **🌐 Day 5: The Frontend Gauntlet**
+
+This was the final boss fight.
+
+CloudFront.  
+API Gateway.  
+HTTP API stages.  
+Origin paths.  
+Behaviors.  
+Allowed methods.  
+OAC.  
+S3.  
+CORS.  
+React.  
+Routing.  
+404s.  
+403s.  
+Terraform state.  
+Cache invalidation.  
+Path patterns.  
+
+It was like AWS threw the entire alphabet soup at me.
+
+But I kept peeling back layers until the truth finally revealed itself:
+
+- HTTP APIs don’t use stage names in the URL  
+- CloudFront was forwarding `/chat` to `/chat`  
+- API Gateway expected `/prod/chat`  
+- CloudFront needed `origin_path = "/prod"`  
+- `/prod/chat` was falling back to S3 and 403ing  
+- `/chat` was hitting API Gateway and 404ing  
+- The fix was a single line that required **deep** understanding to even see  
+
+And when it clicked, the whole system snapped into place.
+
+The UI worked.  
+The backend worked.  
+The agent worked.  
+The domain worked.  
+The architecture worked.  
+
+That was the moment I knew:  
+**I had actually done it.**
 
 ---
-
-## **What Changed**
-
-### **Lambda Function URL Protected by Secret Header**
-API Gateway was replaced by a Lambda Function URL (required for SSE streaming). The raw Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is publicly reachable by default. It is now protected by a shared secret:
-
-- CloudFront injects an `x-cloudfront-secret` header on every request it forwards to the Function URL origin
-- Lambda validates this header and returns 403 for any request missing it
-- Direct Function URL access without the secret is rejected immediately — no Bedrock call is made
-- The secret lives in Terraform state and GitHub secrets — it is never committed to the repository
-
-This applies to both prod and dev.
-
-### **Dev Environment**
-A `dev` Terraform workspace creates a fully isolated parallel stack:
-
-- All AWS resources prefixed `mrbeefy-dev-*`
-- Hosted at `dev.mrbeefy.academy`
-- Own Terraform state (`env:/dev/...` in the same S3 bucket)

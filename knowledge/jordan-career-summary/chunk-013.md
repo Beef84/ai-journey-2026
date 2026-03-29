@@ -1,11 +1,4 @@
-- Supported production container workloads running on Azure Container Apps and OpenShift, including troubleshooting, diagnostics, and performance tuning.
-- Improved scalability and runtime stability of containerized services through configuration hardening, resource tuning, and environment‑specific deployment patterns.
+[Source: Jordan Career Summary | Section: Dick's Sporting Goods — Production incident: signage system > Incident summary]
 
-### CI/CD, Automation & Platform Engineering
-- Architected and delivered enterprise CI/CD platforms using Azure DevOps, YAML pipelines, and reusable automation modules adopted across engineering teams.
-- Introduced DevOps automation that improved deployment repeatability, rollback safety, and operational reliability.
-- Developed migration tooling for Azure DevOps projects, reducing manual overhead and standardizing pipeline patterns across the organization.
-
-### Observability, Reliability & Production Ownership
-- Owned LaunchDarkly integrations, improving observability, rollout safety, and feature‑flag governance across distributed systems.
-- Participated in incident response and root‑cause analysis, driving durable fixes across application, integration, and infrastructure layers.
+### Incident summary
+When we rolled out the new signage system at Dick’s Sporting Goods, everything ran smoothly for the first couple of weeks. The platform was a complete overhaul of the legacy system, and all three brands had already created their new templates using the new tooling, so there was no fallback path. The first real test came during a major sales period, when stores began generating a much higher volume of signs. Under that load, the WCF service I had built began failing in a strange way: the service itself stayed online and continued accepting requests, but it stopped producing PDF files. Each server in the load‑balanced group would eventually hit this state independently, and the only way to recover was a full reboot.

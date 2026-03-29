@@ -1,55 +1,22 @@
-If I can’t destroy the entire system and rebuild it cleanly, then the architecture isn’t good enough.
+[Source: Jordan Engineering Philosophy]
 
-Reproducibility means:
+# **2. Separate Declarative and Dynamic Concerns**
 
-- No manual console changes  
-- No hidden configuration  
-- No untracked state  
-- No one‑off fixes  
+This is one of my core engineering beliefs.
 
-Everything must be:
+- **Infrastructure‑as‑Code (IaC)** owns static, long‑lived infrastructure  
+- **CI/CD** owns dynamic, versioned, stateful operations  
+- **Runtime** owns execution, not configuration  
 
-- Declarative  
-- Versioned  
-- Documented  
-- Automated  
+Mixing these responsibilities creates drift, brittleness, and unpredictable deployments.
 
-This ensures the system can survive time, growth, and future engineers.
+By separating them:
 
----
+- Infrastructure stays reproducible  
+- Agent lifecycle stays flexible  
+- Deployments stay clean  
+- Debugging stays sane  
 
-# **7. Embrace Iteration and Continuous Learning**
-
-I don’t cling to initial assumptions.  
-If I discover a better way, I pivot.
-
-This project evolved because I allowed it to:
-
-- Restructure the architecture  
-- Rewrite IaC  
-- Redesign IAM roles  
-- Rebuild the frontend routing  
-- Rework the agent lifecycle  
-- Refine the KB ingestion flow  
-
-Every iteration made the system stronger.
-
-Continuous learning isn’t a slogan — it’s the engine behind every improvement.
-
----
-
-# **8. Build for the Future, Not the Moment**
-
-I design systems with tomorrow in mind:
-
-- Modular repo structure  
-- Clear separation of concerns  
-- Extensible architecture  
-- Clean documentation  
-- Predictable workflows  
-- Scalable patterns  
-
-Mr. Beefy isn’t a one‑off project.  
-It’s a foundation for future agents, future tools, and future automation.
+This principle shaped the entire Mr. Beefy architecture.
 
 ---

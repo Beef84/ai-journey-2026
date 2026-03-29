@@ -1,14 +1,8 @@
-### Mobile, Device & Edge Integrations
-- Built Windows and Android mobile applications enabling store associates to generate and print signs directly from handheld devices, integrating with mobile printers for real‑time, in‑aisle signage updates.
-- Leveraged mobile‑device experience to contribute to an RFID‑based firearm inventory solution, designing scanning workflows and integrating mobile data capture with backend systems.
+[Source: Jordan Career Summary | Section: Dick's Sporting Goods — Production incident: signage system > Fix and follow-up]
 
-### DevOps, Deployment & Operational Support
-- Automated provisioning and deployment processes for large‑scale store rollouts, improving reliability and reducing manual operational overhead.
-- Trained corporate users, onboarded store teams, and provided ongoing support for the signage platform, ensuring smooth adoption and long‑term stability.
+### Fix and follow-up
+Once the vendor provided a patched version of the library, we ran our penetration tests again in lower environments to validate the fix under load. After confirming the issue was resolved, we deployed the update to production and monitored the servers closely. The failures stopped, and we were able to remove the extra servers we had added. We kept the automated reboots in place as a precaution, but the system remained stable going forward.
+
+The permanent fix was ultimately a combination of updating the third‑party library, improving our load‑testing practices, and tightening our monitoring around temp‑file usage and resource exhaustion. It was a classic example of a distributed system failure where the symptoms pointed everywhere except the true root cause.
 
 ---
-
-## United States Investigative Services — Application Developer
-**Apr 2012 – Oct 2012**
-
-- Maintained and enhanced ASP.NET and C# intranet and extranet applications used by private investigators performing government‑contracted background checks for federal clearance levels.

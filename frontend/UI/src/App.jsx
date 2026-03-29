@@ -5,17 +5,18 @@ import "./App.css";
 function App() {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+    const [isStreaming, setIsStreaming] = useState(false);
     const inputRef = useRef(null);
     const messagesEndRef = useRef(null);   // <-- NEW
     const API_URL = "/chat";
 
     async function sendMessage() {
-        if (!input.trim()) return;
+        if (!input.trim() || isStreaming) return;
 
         const userMessage = { role: "user", text: input };
-        setMessages((prev) => [...prev, userMessage]);
-
+        setMessages((prev) => [...prev, userMessage, { role: "assistant", text: "" }]);
         setInput("");
+        setIsStreaming(true);
 
         try {
             const res = await fetch(API_URL, {
@@ -24,19 +25,56 @@ function App() {
                 body: JSON.stringify({ input: userMessage.text })
             });
 
-            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
+            }
 
-            const agentMessage = {
-                role: "assistant",
-                text: data.reply || "(No response)"
-            };
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let buffer = "";
 
-            setMessages((prev) => [...prev, agentMessage]);
-        } catch (err) {
-            setMessages((prev) => [
-                ...prev,
-                { role: "assistant", text: "Error contacting Mr. Beefy backend." }
-            ]);
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n");
+                buffer = lines.pop(); // hold the last incomplete line
+
+                for (const line of lines) {
+                    if (!line.startsWith("data: ")) continue;
+                    const payload = line.slice(6).trim();
+                    if (payload === "[DONE]") break;
+
+                    try {
+                        const { token, error } = JSON.parse(payload);
+                        if (error) throw new Error(error);
+                        if (token) {
+                            setMessages((prev) => {
+                                const updated = [...prev];
+                                updated[updated.length - 1] = {
+                                    role: "assistant",
+                                    text: updated[updated.length - 1].text + token
+                                };
+                                return updated;
+                            });
+                        }
+                    } catch {
+                        // malformed chunk — skip
+                    }
+                }
+            }
+        } catch {
+            setMessages((prev) => {
+                const updated = [...prev];
+                updated[updated.length - 1] = {
+                    role: "assistant",
+                    text: "Error contacting Mr. Beefy backend."
+                };
+                return updated;
+            });
+        } finally {
+            setIsStreaming(false);
         }
     }
 
@@ -59,6 +97,9 @@ function App() {
         <div className="page">
             <div className="shell">
                 <header className="hero">
+                    <div className="logo-box">
+                        <img src="/favicon.png" alt="Beef AI Software" className="logo-img" />
+                    </div>
                     <h1 className="hero-title">Mr. Beefy</h1>
                 </header>
 
@@ -82,7 +123,9 @@ function App() {
                             {messages.map((m, i) => (
                                 <div
                                     key={i}
-                                    className={`message ${m.role === "user" ? "user" : "assistant"}`}
+                                    className={`message ${m.role === "user" ? "user" : "assistant"}${
+                                        isStreaming && i === messages.length - 1 ? " streaming" : ""
+                                    }`}
                                 >
                                     <ReactMarkdown>{m.text}</ReactMarkdown>
                                 </div>
@@ -100,7 +143,6 @@ function App() {
                                 placeholder="Ask Mr. Beefy something..."
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={(e) => {
-                                    // Enter without Shift → send
                                     if (e.key === "Enter" && !e.shiftKey) {
                                         e.preventDefault();
                                         sendMessage();
@@ -113,8 +155,11 @@ function App() {
                                     }
                                 }}
                                 rows={1}
+                                disabled={isStreaming}
                             />
-                            <button onClick={sendMessage}>Send</button>
+                            <button onClick={sendMessage} disabled={isStreaming}>
+                                {isStreaming ? "..." : "Send"}
+                            </button>
                         </div>
                     </div>
                 </div>

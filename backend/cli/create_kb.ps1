@@ -7,6 +7,10 @@
 #   -KbRoleArn    IAM role ARN for the KB (from Terraform output kb_role_arn)
 #   -BucketArn    S3 bucket ARN for the data source (from Terraform output knowledge_bucket_arn)
 #   -Region       AWS region (default: us-east-1)
+#
+# S3 Vectors setup mirrors the prod index config:
+#   dimension=1024, distanceMetric=euclidean, dataType=float32
+#   nonFilterableMetadataKeys: AMAZON_BEDROCK_TEXT, AMAZON_BEDROCK_METADATA
 
 param(
   [string]$KbName,
@@ -19,15 +23,19 @@ $ErrorActionPreference = "Stop"
 $env:AWS_REGION         = $Region
 $env:AWS_DEFAULT_REGION = $Region
 
-# Derive S3 Vectors bucket name from KB name: mrbeefy-kb -> mrbeefy-vectors
+# Naming: mrbeefy-dev-kb -> bucket: mrbeefy-dev-vectors, index: bedrock-knowledge-base-default-index
 $VectorsBucketName = $KbName -replace '-kb$', '-vectors'
+$VectorsIndexName  = "bedrock-knowledge-base-default-index"
 
 # Get account ID
 $AccountId = aws sts get-caller-identity --query "Account" --output text
 if (-not $AccountId) { Write-Error "Could not determine AWS account ID."; exit 1 }
 
-$VectorsBucketArn  = "arn:aws:s3vectors:${Region}:${AccountId}:bucket/${VectorsBucketName}"
+$VectorsBucketArn = "arn:aws:s3vectors:${Region}:${AccountId}:bucket/${VectorsBucketName}"
+$VectorsIndexArn  = "arn:aws:s3vectors:${Region}:${AccountId}:bucket/${VectorsBucketName}/index/${VectorsIndexName}"
 $EmbeddingModelArn = "arn:aws:bedrock:${Region}::foundation-model/amazon.titan-embed-text-v2:0"
+
+$TempDir = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } elseif ($env:TEMP) { $env:TEMP } else { "/tmp" }
 
 # ----------------------------------------------------------------
 # Step 1 — ensure the S3 Vectors bucket exists
@@ -50,8 +58,47 @@ if ($BucketExists -and $BucketExists -ne "None") {
 }
 
 # ----------------------------------------------------------------
-# Step 2 — ensure the Knowledge Base exists
-# Passes JSON via temp files to avoid PowerShell quoting issues with the AWS CLI.
+# Step 2 — ensure the S3 Vectors index exists
+# Mirrors the prod index: euclidean distance, float32, 1024 dimensions.
+# Bedrock requires an indexArn when creating the KB via API.
+# ----------------------------------------------------------------
+$IndexExists = aws s3vectors get-index `
+  --vector-bucket-name $VectorsBucketName `
+  --index-name $VectorsIndexName `
+  --query "index.indexName" `
+  --output text 2>$null
+
+if ($IndexExists -and $IndexExists -ne "None") {
+    Write-Host "S3 Vectors index '$VectorsIndexName' already exists."
+} else {
+    Write-Host "Creating S3 Vectors index '$VectorsIndexName'..."
+
+    $CreateIndexInput = @{
+        vectorBucketName = $VectorsBucketName
+        indexName        = $VectorsIndexName
+        dataType         = "float32"
+        dimension        = 1024
+        distanceMetric   = "euclidean"
+        metadataConfiguration = @{
+            nonFilterableMetadataKeys = @("AMAZON_BEDROCK_TEXT", "AMAZON_BEDROCK_METADATA")
+        }
+    } | ConvertTo-Json -Depth 10 -Compress
+
+    $IndexInputFile = "$TempDir/create_index_input.json"
+    [System.IO.File]::WriteAllText($IndexInputFile, $CreateIndexInput, (New-Object System.Text.UTF8Encoding $false))
+
+    aws s3vectors create-index `
+      --cli-input-json "file://$IndexInputFile" `
+      --region $Region | Out-Null
+
+    Remove-Item $IndexInputFile -ErrorAction SilentlyContinue
+    if ($LASTEXITCODE -ne 0) { Write-Error "Failed to create S3 Vectors index."; exit 1 }
+    Write-Host "S3 Vectors index created: $VectorsIndexArn"
+}
+
+# ----------------------------------------------------------------
+# Step 3 — ensure the Knowledge Base exists
+# Uses indexArn (bucket/index) which is what the Bedrock API requires.
 # ----------------------------------------------------------------
 $KB_ID = aws bedrock-agent list-knowledge-bases `
   --query "knowledgeBaseSummaries[?name=='$KbName'] | [0].knowledgeBaseId" `
@@ -74,17 +121,13 @@ if ($KB_ID -and $KB_ID -ne "None") {
         storageConfiguration = @{
             type = "S3_VECTORS"
             s3VectorsConfiguration = @{
-                vectorBucketArn = $VectorsBucketArn
+                indexArn = $VectorsIndexArn
             }
         }
     } | ConvertTo-Json -Depth 10 -Compress
 
-    $TempDir     = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } elseif ($env:TEMP) { $env:TEMP } else { "/tmp" }
     $KbInputFile = "$TempDir/create_kb_input.json"
     [System.IO.File]::WriteAllText($KbInputFile, $CreateKbInput, (New-Object System.Text.UTF8Encoding $false))
-
-    Write-Host "KB input file: $KbInputFile"
-    Write-Host "KB input JSON: $CreateKbInput"
 
     $KbJson = aws bedrock-agent create-knowledge-base `
       --cli-input-json "file://$KbInputFile" `
@@ -102,7 +145,7 @@ if ($KB_ID -and $KB_ID -ne "None") {
 }
 
 # ----------------------------------------------------------------
-# Step 3 — ensure a data source exists
+# Step 4 — ensure a data source exists
 # Chunking strategy is NONE because we manage chunk boundaries ourselves.
 # ----------------------------------------------------------------
 $DS_ID = aws bedrock-agent list-data-sources `
@@ -131,9 +174,8 @@ if ($DS_ID -and $DS_ID -ne "None") {
         }
     } | ConvertTo-Json -Depth 10 -Compress
 
-    $TempDir    = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } elseif ($env:TEMP) { $env:TEMP } else { "/tmp" }
     $DsInputFile = "$TempDir/create_ds_input.json"
-    [System.IO.File]::WriteAllText($DsInputFile, $CreateDsInput, [System.Text.Encoding]::UTF8)
+    [System.IO.File]::WriteAllText($DsInputFile, $CreateDsInput, (New-Object System.Text.UTF8Encoding $false))
 
     aws bedrock-agent create-data-source `
       --cli-input-json "file://$DsInputFile" `

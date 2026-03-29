@@ -14,11 +14,15 @@ resource "aws_iam_role" "kb_role" {
       Effect    = "Allow"
       Principal = { Service = "bedrock.amazonaws.com" }
       Action    = "sts:AssumeRole"
+      Condition = {
+        StringEquals = { "aws:SourceAccount" = var.account_id }
+      }
     }]
   })
 }
 
 resource "aws_iam_role_policy" "kb_policy" {
+  name = "${var.prefix}-kb-policy"
   role = aws_iam_role.kb_role.id
 
   policy = jsonencode({

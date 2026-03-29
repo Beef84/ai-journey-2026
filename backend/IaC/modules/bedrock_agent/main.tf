@@ -1,5 +1,5 @@
 # Bedrock Agent IAM execution role and the agent resource itself.
-# The agent uses Amazon Nova Pro and retrieves context from the knowledge base.
+# The agent uses Claude Haiku 3.5 and retrieves context from the knowledge base.
 
 resource "aws_iam_role" "agent_execution_role" {
   name = "${var.prefix}-agent-role"
@@ -24,7 +24,7 @@ resource "aws_iam_role_policy" "agent_execution_policy" {
       {
         Effect   = "Allow"
         Action   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
-        Resource = "arn:aws:bedrock:${var.region}::foundation-model/amazon.nova-pro-v1:0"
+        Resource = "arn:aws:bedrock:${var.region}::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0"
       },
       {
         Effect   = "Allow"
@@ -47,7 +47,7 @@ resource "aws_iam_role_policy" "agent_execution_policy" {
 
 resource "aws_bedrockagent_agent" "mrbeefy" {
   agent_name              = "${var.prefix}-agent"
-  foundation_model        = "amazon.nova-pro-v1:0"
+  foundation_model        = "anthropic.claude-3-5-haiku-20241022-v1:0"
   agent_resource_role_arn = aws_iam_role.agent_execution_role.arn
 
   instruction = <<EOF

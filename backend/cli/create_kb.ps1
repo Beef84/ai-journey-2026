@@ -79,7 +79,8 @@ if ($KB_ID -and $KB_ID -ne "None") {
         }
     } | ConvertTo-Json -Depth 10 -Compress
 
-    $KbInputFile = [System.IO.Path]::Combine($env:TEMP, "create_kb_input.json")
+    $TempDir     = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } elseif ($env:TEMP) { $env:TEMP } else { "/tmp" }
+    $KbInputFile = "$TempDir/create_kb_input.json"
     [System.IO.File]::WriteAllText($KbInputFile, $CreateKbInput, [System.Text.Encoding]::UTF8)
 
     $KbJson = aws bedrock-agent create-knowledge-base `
@@ -127,7 +128,8 @@ if ($DS_ID -and $DS_ID -ne "None") {
         }
     } | ConvertTo-Json -Depth 10 -Compress
 
-    $DsInputFile = [System.IO.Path]::Combine($env:TEMP, "create_ds_input.json")
+    $TempDir    = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } elseif ($env:TEMP) { $env:TEMP } else { "/tmp" }
+    $DsInputFile = "$TempDir/create_ds_input.json"
     [System.IO.File]::WriteAllText($DsInputFile, $CreateDsInput, [System.Text.Encoding]::UTF8)
 
     aws bedrock-agent create-data-source `

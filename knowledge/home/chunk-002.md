@@ -1,5 +1,5 @@
 - Frontend delivery (CloudFront + S3 + OAC)  
-- API routing (CloudFront → API Gateway)  
+- API routing (CloudFront → Lambda Function URL with SSE streaming)
 - Compute layer (Lambda)  
 - AI layer (Bedrock Agent, Knowledge Base, vector store)  
 - CI/CD lifecycle and responsibilities  
@@ -45,4 +45,3 @@ The rules and boundaries that ensure system stability:
 
 - Ownership model (IaC, CI/CD, runtime)  
 - Change management processes  
-- Security governance  

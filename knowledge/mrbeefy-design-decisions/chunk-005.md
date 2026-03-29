@@ -1,71 +1,62 @@
-## **7.2 Explicit Ingestion**
-KB ingestion is triggered manually via CI/CD because:
-
-- AWS does not auto-ingest  
-- Ingestion should be deterministic  
-- KB updates should be intentional  
+- The SPA loads instantly  
+- API calls bypass caching  
+- Only the intended path hits the backend  
 
 ---
 
-# **8. IAM Design Decisions**
+# **5. Lambda Design Decisions**
 
-## **8.1 Least Privilege**
-Each role has only the permissions required for its function.
-
-### **Lambda Role**
-- Logging  
-- `bedrock:InvokeAgent`  
-
-### **Agent Execution Role**
-- Model invocation  
-- KB retrieval  
-- S3 read access  
-- Vector store operations  
-
-### **KB Role**
-- S3 read  
-- s3vectors operations  
-- Titan embedding model invocation  
-
-### **CloudFront OAC**
-- `s3:GetObject` with `AWS:SourceArn` condition  
-
-This structure isolates responsibilities and minimizes blast radius.
-
----
-
-# **9. Frontend Design Decisions**
-
-## **9.1 React SPA**
+## **5.1 Node.js 20 Runtime**
 Chosen for:
 
-- Fast development  
-- Simple deployment  
-- Easy integration with API Gateway  
+- Fast cold starts  
+- Native AWS SDK v3 support  
+- Simple JSON handling  
+- Lightweight deployment package  
 
-## **9.2 Clean API Contract**
-Frontend only calls:
+## **5.2 Minimal Responsibility**
+Lambda does not:
 
-```
-POST /chat
-```
+- Perform retrieval  
+- Perform embeddings  
+- Manage KB ingestion  
+- Manage agent versions  
 
-No other endpoints are exposed.
+Lambda only:
 
-## **9.3 CloudFront + S3 Hosting**
-Provides:
+- Accepts user input  
+- Calls Bedrock Agent Runtime  
+- Returns the response  
 
-- Global caching  
-- Instant invalidation  
-- Zero server maintenance  
-- Strong security posture  
+This keeps the function small, predictable, and low-maintenance.
+
+## **5.3 Environment Variables**
+Lambda receives:
+
+- `AGENT_ID`  
+- `AGENT_ALIAS_ID`  
+
+These are updated by CI/CD to avoid Terraform drift.
 
 ---
 
-# **10. Deployment Design Decisions**
+# **6. Bedrock Agent Design Decisions**
 
-## **10.1 Terraform for Infrastructure**
-Ensures:
+## **6.1 Nova Pro for Reasoning**
+Nova Pro was selected because:
 
-- Reproducibility  
-- Version control  
+- Strong reasoning capabilities  
+- Fast response times  
+- High-quality output for agent workflows  
+
+## **6.2 Titan V2 for Embeddings**
+Titan V2 was chosen because:
+
+- High-quality text embeddings  
+- Native integration with S3 Vector Store  
+- Optimized for retrieval tasks  
+
+## **6.3 Knowledge Base as the First Source of Truth**
+The agent is instructed to:
+
+- Always search the KB first  

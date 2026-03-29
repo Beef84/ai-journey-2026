@@ -1,3 +1,21 @@
+   - Reads documents from the KB S3 bucket  
+   - Generates embeddings using Titan V2  
+   - Writes vectors to the S3 Vector Store  
+   - Updates the vector index  
+
+### **4.3 Retrieval Workflow**
+During a chat request:
+
+1. The agent embeds the user query.  
+2. The agent queries the vector index.  
+3. Relevant documents are returned.  
+4. The agent uses retrieved content to generate the final answer.
+
+---
+
+# **5. Agent Lifecycle Workflow**
+
+### **5.1 Agent Definition**
 Terraform defines the agent in DRAFT state, including:
 
 - Instruction block  
@@ -31,18 +49,3 @@ Pipeline runs on:
 ### **6.2 Pipeline Steps**
 1. Build Lambda bundle.  
 2. Deploy Terraform.  
-3. Upload KB files to the KB S3 bucket.  
-4. **Start a Knowledge Base ingestion job using the Bedrock ingestion API.**  
-5. Associate the KB with the agent if needed.  
-6. Create the agent alias if missing.  
-7. Update Lambda environment variables with the alias ID.  
-8. Invalidate CloudFront cache.
-
-### **6.3 Outputs**
-- Updated infrastructure  
-- Updated KB index  
-- Updated agent alias  
-- Updated Lambda runtime  
-- Updated frontend  
-
----

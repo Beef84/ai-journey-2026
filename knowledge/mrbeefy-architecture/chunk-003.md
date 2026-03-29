@@ -1,52 +1,24 @@
-- Protocol: **HTTP API** (not REST API)  
-- Stage: **prod**  
-- Stage does **not** appear in CloudFront URL due to origin_path mapping  
-- CORS enabled:
-  - Allowed origins: `https://mrbeefy.academy`  
-  - Allowed methods: `OPTIONS, POST`  
-  - Allowed headers: `content-type`  
+- ACM certificate for `mrbeefy.academy` (prod) / `dev.mrbeefy.academy` (dev)
+- SNI‑only
+- Security headers policy applied to frontend
+- **Dev only:** Signed cookies required — CloudFront returns 403 to any request without a valid signed cookie  
 
-## **3.2 Routes**
-- **POST /chat**  
-  - Integrated with Lambda via AWS_PROXY  
-  - Payload format version: 2.0  
-
-## **3.3 Lambda Invocation Permissions**
-Lambda permission allows API Gateway to invoke the function:
-
-```
-lambda:InvokeFunction
-source_arn = <api-gateway-execution-arn>/*/*
-```
+## **2.3 DNS**
+- Route53 A‑record alias → CloudFront distribution  
+- Certificate validated via DNS  
 
 ---
 
-# **4. Compute Architecture (Lambda)**
+# **3. API Architecture**
 
-## **4.1 Lambda Function**
-- Runtime: **Node.js 20.x**  
-- Handler: `index.handler`  
-- Timeout: 30 seconds  
-- Deployed via CI/CD (zip artifact)  
-- Environment variables:
-  - `AGENT_ID`
-  - `AGENT_ALIAS_ID` (updated by CI/CD after alias creation)  
+## **3.1 Lambda Function URL**
+- `authorization_type = "NONE"` — Lambda validates all access itself via the gateway secret header
+- `invoke_mode = "RESPONSE_STREAM"` — enables true SSE streaming; Lambda writes chunks to the response as Bedrock produces them
+- No API Gateway, no stages, no managed CORS — the Function URL is a direct HTTPS endpoint consumed only by CloudFront
 
-## **4.2 Lambda IAM Role**
-Permissions include:
+## **3.2 Gateway Secret**
+CloudFront injects `x-cloudfront-secret` as a custom header on every request forwarded to the Function URL origin. Lambda checks this header before doing anything else and returns 403 if it is absent or wrong.
 
-### **Logging**
-- `logs:CreateLogGroup`  
-- `logs:CreateLogStream`  
-- `logs:PutLogEvents`  
+The raw Function URL (`https://<id>.lambda-url.us-east-1.on.aws`) is publicly reachable by anyone who discovers it, but without the secret header every request is rejected immediately.
 
-### **Bedrock Agent Runtime**
-- `bedrock:InvokeAgent`  
-
-Lambda does **not** need direct access to S3 or vector store — the agent handles retrieval.
-
----
-
-# **5. AI Architecture (Bedrock)**
-
-## **5.1 Bedrock Agent**
+## **3.3 Streaming Response Format**

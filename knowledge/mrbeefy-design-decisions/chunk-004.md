@@ -1,59 +1,41 @@
-- Perform embeddings  
-- Manage KB ingestion  
-- Manage agent versions  
+| WebSocket (API Gateway) | API Gateway WebSocket adds cost per connection-minute on top of per-message fees |
 
-Lambda only:
-
-- Accepts user input  
-- Calls Bedrock Agent Runtime  
-- Returns the response  
-
-This keeps the function small, predictable, and low-maintenance.
-
-## **5.3 Environment Variables**
-Lambda receives:
-
-- `AGENT_ID`  
-- `AGENT_ALIAS_ID`  
-
-These are updated by CI/CD to avoid Terraform drift.
+SSE (Server-Sent Events) over a regular `POST` request is the right fit here:
+- One-way delivery (server → browser) matches the use case exactly
+- Works with standard `fetch` + `ReadableStream` — no special browser API
+- No persistent connection state to manage
+- CloudFront handles it natively when `compress = false` is set on the behavior
 
 ---
 
-# **6. Bedrock Agent Design Decisions**
+# **4. CloudFront Design Decisions**
 
-## **6.1 Nova Pro for Reasoning**
-Nova Pro was selected because:
+## **4.1 CloudFront as the Routing Layer**
+CloudFront was chosen to:
 
-- Strong reasoning capabilities  
-- Fast response times  
-- High-quality output for agent workflows  
+- Serve static assets globally
+- Terminate TLS
+- Route `/chat` to the Lambda Function URL origin
+- Apply security headers
+- Enforce caching policies
+- Protect S3 via OAC
 
-## **6.2 Titan V2 for Embeddings**
-Titan V2 was chosen because:
+## **4.2 Two-Origin Architecture**
+CloudFront uses:
 
-- High-quality text embeddings  
-- Native integration with S3 Vector Store  
-- Optimized for retrieval tasks  
+1. **S3 Origin**
+   - For static frontend assets
+   - Protected by OAC
+   - No public access
 
-## **6.3 Knowledge Base as the First Source of Truth**
-The agent is instructed to:
+2. **Lambda Function URL Origin**
+   - For dynamic `/chat` requests
+   - HTTPS-only
+   - No `origin_path` — requests go directly to the function
+   - `compress = false` — required to prevent SSE stream buffering
 
-- Always search the KB first  
-- Only answer from KB when relevant  
-- Avoid hallucination  
-- Fall back to out-of-domain only when KB is empty  
+## **4.3 Behavior Design**
+- Default behavior → S3
+- Ordered behavior → `/chat` → Lambda Function URL
 
-This ensures accuracy and consistency.
-
----
-
-# **7. Knowledge Base Design Decisions**
-
-## **7.1 S3 Vector Store**
-Chosen because:
-
-- Fully managed  
-- Scales automatically  
-- Integrates with Titan embeddings  
-- No infrastructure to maintain  
+This ensures:

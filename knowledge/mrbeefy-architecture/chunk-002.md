@@ -1,3 +1,8 @@
+# **2. Frontend Architecture**
+
+## **2.1 Static Hosting**
+- React SPA built and uploaded to an S3 bucket:
+  - Bucket name pattern: `mrbeefy-frontend-<random>`  
   - Public access fully blocked  
   - Access controlled exclusively through CloudFront OAC  
 
@@ -10,11 +15,11 @@ CloudFront serves as the global CDN and routing layer.
    - Only CloudFront can read from the bucket  
    - S3 bucket policy restricts access via `AWS:SourceArn`  
 
-2. **API Gateway Origin**
-   - Domain: `<api-id>.execute-api.<region>.amazonaws.com`  
-   - **origin_path = "/prod"** to map CloudFront `/chat` → API Gateway `/prod/chat`  
-   - HTTPS enforced  
-   - TLSv1.2  
+2. **Lambda Function URL Origin**
+   - Domain: `<url-id>.lambda-url.us-east-1.on.aws`
+   - No `origin_path` — requests go directly to the function
+   - HTTPS enforced, TLSv1.2
+   - `compress = false` on the `/chat` behavior — required for SSE streaming (compression forces buffering)
 
 ### **Behaviors**
 - **Default behavior** → S3 frontend  
@@ -28,16 +33,3 @@ CloudFront serves as the global CDN and routing layer.
   - Origin request policy: forwards `Content-Type` header + all query strings  
 
 ### **Security**
-- ACM certificate for `mrbeefy.academy`  
-- SNI‑only  
-- Security headers policy applied to frontend  
-
-## **2.3 DNS**
-- Route53 A‑record alias → CloudFront distribution  
-- Certificate validated via DNS  
-
----
-
-# **3. API Architecture**
-
-## **3.1 API Gateway (HTTP API)**

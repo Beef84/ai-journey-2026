@@ -5,7 +5,7 @@ This document showcases Jordan's personal projects.
 ## Mr. Beefy — AI Infrastructure & Interactive Resume Platform
 
 - Fully serverless AI agent hosted at https://mrbeefy.academy
-- Built on AWS using Bedrock Agents, Lambda, API Gateway (HTTP), S3 with CloudFront (OAC), SNS for event notifications, and Terraform for all infrastructure
+- Built on AWS using Bedrock Agents, Lambda Function URL (SSE streaming), S3 with CloudFront (OAC), and Terraform for all infrastructure
 - React frontend with dynamic agent interaction and knowledge‑driven routing
 - Custom ingestion pipeline using S3 events, vector embeddings, and retrieval‑augmented generation
 - Codebase hosted in GitHub with GitHub Actions for CI/CD, automated deployments, and environment promotion
@@ -16,3 +16,4 @@ This document showcases Jordan's personal projects.
   - Control Plane: identity, tenant provisioning, metadata, configuration, and global orchestration
   - Tenant Plane: user‑facing APIs, private agents, ingestion endpoints, and tenant‑isolated data stores
   - AI Plane: ingestion, embeddings, analytics, and generative AI workflows
+- AI Plane integrates AWS Rekognition, Translate, Transcribe, and SageMaker foundational models, exposed through TypeScript services and both TypeScript and Python SDKs

@@ -1,43 +1,24 @@
-This ensures that every backend deploy results in a fully refreshed KB.
+- Requires the developer to set up signed cookies to access it
 
-**But this is no longer the only ingestion path.**
+### **Dev Access via Signed Cookies**
+The dev CloudFront distribution requires a valid CloudFront signed cookie for every request. This means:
 
----
+- Only the developer (who holds the RSA private key) can generate valid cookies
+- The public key is uploaded to CloudFront via Terraform — not a secret
+- The private key lives locally and is never committed
+- Unauthenticated requests receive a 403
 
-## **2. The dedicated KB pipeline handles ingestion between deploys**
-This new pipeline is intentionally minimal and focused:
-
-### **Inputs**
-- `/knowledge` directory  
-- SSM parameter: `mrbeefy.kb.bucket_name`  
-- SSM parameter: KB ID  
-
-### **Actions**
-- Syncs knowledge files → S3 (non‑destructive)  
-- Triggers a Bedrock KB ingestion job  
-- Waits for ingestion to complete  
-- Reports success/failure  
-
-### **Outputs**
-- Updated embeddings  
-- Updated vector index  
-- A refreshed KB without touching backend infrastructure  
+See the Workflow wiki for the full setup guide.
 
 ---
 
-# **🔄 Why Both Pipelines Trigger Ingestion**
+## **What Was Not Changed**
+- Prod (`mrbeefy.academy`) remains publicly accessible — unchanged behavior for end users
+- No existing resource names, state, or configurations were modified for the `default` workspace
+- The `gateway_secret` variable is the only new input required for a prod re-apply
 
-### **Backend ingestion**
-- Ensures the KB is always correct after infra changes  
-- Guarantees the KB is aligned with the deployed agent  
-- Acts as a safety net during releases  
+---
 
-### **Dedicated KB ingestion**
-- Allows rapid iteration on documentation  
-- Avoids unnecessary backend deploys  
-- Keeps the KB fresh even when the backend is stable  
-- Reduces risk by isolating ingestion failures from backend releases  
+# **📚 Knowledge Base Ingestion Pipeline (Dedicated Workflow)**
 
-Together, they create a **dual‑path ingestion model**:
-
-- **Backend deploy → full system refresh**  
+## **Overview**

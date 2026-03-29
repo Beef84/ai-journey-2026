@@ -1,68 +1,16 @@
-HTTP APIs do not expose stages in the URL by default.  
-To maintain clean frontend URLs, CloudFront uses:
+- `invoke_mode = RESPONSE_STREAM` enables chunked transfer directly from Lambda to CloudFront to browser
+- No stages, no routing rules, no CORS configuration needed — the Function URL is a direct HTTPS endpoint consumed only by CloudFront
+- Simpler: one fewer AWS service, one fewer IaC module to manage
+- Same security posture: the gateway secret header check in Lambda replaces API Gateway auth
 
-```
-origin_path = "/prod"
-```
+**Cost:** Lambda Function URLs have no per-request charge beyond the Lambda invocation itself. Removing API Gateway saves $1.00/million requests — negligible at this scale but a simplification win.
 
-This maps:
+## **3.2 Single Endpoint: `POST /chat`**
+The system exposes only one route. This keeps the attack surface minimal, the contract simple, and the frontend integration straightforward. The Function URL receives all requests; Lambda routes internally by HTTP method if needed.
 
-```
-/chat → /prod/chat
-```
+## **3.3 SSE Over WebSocket for Streaming**
+Two real-time delivery options were considered:
 
-without exposing stage names to the user.
-
----
-
-# **4. CloudFront Design Decisions**
-
-## **4.1 CloudFront as the Routing Layer**
-CloudFront was chosen to:
-
-- Serve static assets globally  
-- Terminate TLS  
-- Route `/chat` to API Gateway  
-- Apply security headers  
-- Enforce caching policies  
-- Protect S3 via OAC  
-
-## **4.2 Two-Origin Architecture**
-CloudFront uses:
-
-1. **S3 Origin**  
-   - For static frontend assets  
-   - Protected by OAC  
-   - No public access  
-
-2. **API Gateway Origin**  
-   - For dynamic `/chat` requests  
-   - Uses HTTPS-only  
-   - Uses origin_path to map to stage  
-
-## **4.3 Behavior Design**
-- Default behavior → S3  
-- Ordered behavior → `/chat` → API Gateway  
-
-This ensures:
-
-- The SPA loads instantly  
-- API calls bypass caching  
-- Only the intended path hits the backend  
-
----
-
-# **5. Lambda Design Decisions**
-
-## **5.1 Node.js 20 Runtime**
-Chosen for:
-
-- Fast cold starts  
-- Native AWS SDK v3 support  
-- Simple JSON handling  
-- Lightweight deployment package  
-
-## **5.2 Minimal Responsibility**
-Lambda does not:
-
-- Perform retrieval  
+| Option | Why rejected |
+|---|---|
+| WebSocket (API Gateway) | Bidirectional connection management, connection state, reconnect logic — all unnecessary overhead for one-way server→client delivery |

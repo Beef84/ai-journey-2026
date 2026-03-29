@@ -29,8 +29,8 @@ Terraform owns:
 - CloudFront distribution  
 - Route53 DNS records  
 - ACM certificates  
-- API Gateway HTTP API  
-- Lambda function definition  
+- Lambda Function URL
+- Lambda function definition
 - IAM roles and policies  
 - Bedrock Agent (DRAFT definition only)  
 

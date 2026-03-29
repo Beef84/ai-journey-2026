@@ -8,9 +8,7 @@
 
 ---
 
-## **AWS Certifications & Cloud Learning Path**
-
-### **AWS Certifications**
+## **AWS Certifications**
 - **AWS Certified AI Practitioner (2026)**  
   Demonstrates foundational knowledge of artificial intelligence, machine learning, and generative AI concepts, along with practical understanding of how these capabilities are implemented using AWS services such as Bedrock, Lambda, API Gateway, and S3. Validates the ability to reason about AI workloads, model selection, data preparation, and responsible AI principles.
 

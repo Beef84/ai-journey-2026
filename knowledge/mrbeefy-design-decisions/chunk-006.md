@@ -1,38 +1,62 @@
-- Clear diffs  
-- Safe rollbacks  
+- Only answer from KB when relevant  
+- Avoid hallucination  
+- Fall back to out-of-domain only when KB is empty  
 
-## **10.2 CI/CD for Dynamic Operations**
-Ensures:
-
-- No stale alias IDs  
-- No Terraform drift  
-- Clean agent lifecycle  
-- Automated KB ingestion  
+This ensures accuracy and consistency.
 
 ---
 
-# **11. Knowledge Base Lifecycle Design Decisions**
+# **7. Knowledge Base Design Decisions**
 
-## **11.1 Dual‑Path Ingestion Model**
-The system now supports two ingestion paths:
+## **7.1 S3 Vector Store**
+Chosen because:
 
-1. **Backend Deployment Ingestion**  
-   - Runs automatically during backend deploys  
-   - Ensures the KB is refreshed whenever infrastructure or agent configuration changes  
-   - Acts as a safety net to guarantee consistency after releases  
+- Fully managed  
+- Scales automatically  
+- Integrates with Titan embeddings  
+- No infrastructure to maintain  
 
-2. **Dedicated KB Ingestion Pipeline**  
-   - Runs independently of backend deploys  
-   - Allows documentation updates to be ingested without requiring a backend rollout  
-   - Provides a safe, isolated ingestion workflow  
+## **7.2 Explicit Ingestion**
+KB ingestion is triggered manually via CI/CD because:
 
-This separation reflects the reality that **knowledge evolves faster than infrastructure**.
+- AWS does not auto-ingest  
+- Ingestion should be deterministic  
+- KB updates should be intentional  
 
 ---
 
-## **11.2 Why a Separate KB Pipeline Was Introduced**
-Originally, KB ingestion was tied to backend deployments. This created friction:
+# **8. IAM Design Decisions**
 
-- Documentation updates required a full backend deploy  
-- KB ingestion failures could block infrastructure releases  
-- Terraform outputs were tightly coupled to ingestion  
+## **8.1 Least Privilege**
+Each role has only the permissions required for its function.
+
+### **Lambda Role**
+- Logging  
+- `bedrock:InvokeAgent`  
+
+### **Agent Execution Role**
+- Model invocation  
+- KB retrieval  
+- S3 read access  
+- Vector store operations  
+
+### **KB Role**
+- S3 read  
+- s3vectors operations  
+- Titan embedding model invocation  
+
+### **CloudFront OAC**
+- `s3:GetObject` with `AWS:SourceArn` condition  
+
+This structure isolates responsibilities and minimizes blast radius.
+
+---
+
+# **9. Frontend Design Decisions**
+
+## **9.1 React SPA**
+Chosen for:
+
+- Fast development  
+- Simple deployment  
+- Easy integration with CloudFront + Lambda Function URL

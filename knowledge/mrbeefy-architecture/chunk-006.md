@@ -1,33 +1,48 @@
-- Payload format v2.0  
-- Lambda receives user message  
+- Associate KB with agent  
+- Create alias if missing  
+- Update Lambda environment variables (AGENT_ID, AGENT_ALIAS_ID, GATEWAY_SECRET)
+- Store `function_url_domain` in SSM for frontend pipeline consumption
 
-### **5. Lambda calls Bedrock Agent Runtime**
-- Using Agent ID + Alias ID  
-
-### **6. Bedrock Agent**
-- Searches Knowledge Base  
-- Retrieves relevant documents  
-- Generates response via Nova Pro  
-
-### **7. Response flows back**
-Agent → Lambda → API Gateway → CloudFront → Browser
+## **7.2 Why CI/CD Owns This**
+- Bedrock agent versions and aliases are dynamic  
+- Terraform cannot safely manage them without drift  
+- CI/CD ensures clean, deterministic updates  
 
 ---
 
-# **10. Final Architecture Summary**
+# **8. Terraform Architecture**
 
-Mr. Beefy is a fully serverless, production‑grade AI platform with:
+## **8.1 Terraform Owns**
+- S3 buckets
+- IAM roles and policies
+- Lambda function (static definition)
+- Lambda Function URL
+- CloudFront
+- Route53
+- ACM certificate
+- Bedrock Agent (DRAFT definition only)
 
-- Global CDN delivery  
-- Secure static hosting  
-- API routing via CloudFront  
-- HTTP API with clean routing  
-- Lambda compute with Bedrock integration  
-- Knowledge Base retrieval + embeddings  
-- Vector store indexing  
-- Automated CI/CD lifecycle  
-- Fully IaC‑managed infrastructure  
+## **8.2 Terraform Does NOT Own**
+- Agent versions  
+- Agent aliases  
+- KB ingestion jobs  
+- Lambda environment variable updates for alias IDs  
 
-This architecture is scalable, reproducible, cost‑efficient, and designed for long‑term maintainability.
+These are handled by CI/CD to avoid drift and stale state.
 
 ---
+
+# **9. End‑to‑End Request Flow**
+
+### **1. User sends message from UI**
+```
+POST https://mrbeefy.academy/chat
+```
+
+### **2. CloudFront behavior matches `/chat`**
+- Forwards request to the Lambda Function URL origin
+- Injects `x-cloudfront-secret` custom header
+- `compress = false` — ensures CloudFront does not buffer the streaming response
+
+### **3. Lambda Function URL receives**
+```

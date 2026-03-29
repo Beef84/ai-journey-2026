@@ -1,28 +1,34 @@
-- API Gateway access logs  
-- API Gateway execution logs  
-
-### **9.2 CloudFront**
-- Cache hit/miss metrics  
-- Optional standard logs  
-
-### **9.3 Bedrock**
-- KB ingestion job status  
-- Agent invocation metrics  
+These values are consumed by CI/CD for dynamic operations.
 
 ---
 
-# **10. Summary**
+# **8. Security Workflow**
 
-The Mr. Beefy workflow is a fully serverless, tightly integrated system that:
+### **8.1 Access Control**
+- S3 frontend bucket locked behind OAC
+- KB bucket restricted to KB role
+- Lambda role restricted to logging + InvokeAgent
+- Agent execution role restricted to model + KB access
+- CloudFront restricted via `AWS:SourceArn`
+- Lambda Function URL protected by `x-cloudfront-secret` header (both environments)
+- Dev CloudFront protected by signed cookies
 
-- Delivers a global frontend  
-- Routes chat requests through CloudFront  
-- Executes logic in Lambda  
-- Delegates reasoning to Bedrock  
-- Retrieves context from a vectorized Knowledge Base  
-- Automates lifecycle operations via CI/CD  
-- Maintains infrastructure via Terraform  
+### **8.2 TLS**
+- ACM certificate for domain
+- CloudFront enforces HTTPS
+- Lambda Function URL enforces HTTPS
 
-This workflow ensures the system is scalable, maintainable, secure, and production‑ready.
+### **8.3 IAM Separation**
+Each component has a dedicated role with least‑privilege permissions.
 
 ---
+
+# **9. First-Time Manual Setup**
+
+This section is the complete checklist of every manual step required to stand up Mr. Beefy from scratch. These steps are performed once per environment and are **not automated by CI/CD**. Do them in order — each step depends on the one before it.
+
+> **Prod vs Dev:** Steps 9.1–9.5 are required for **both** environments. Steps 9.6–9.9 are **dev only** — the dev CloudFront distribution requires signed cookies; prod does not.
+
+---
+
+## **9.1 Generate the Gateway Secret**

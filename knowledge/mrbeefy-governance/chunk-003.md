@@ -1,5 +1,3 @@
-- S3 bucket configuration  
-- Route53  
 - Lambda configuration (except environment variables updated by CI/CD)
 
 This prevents drift and ensures reproducibility.
@@ -46,4 +44,5 @@ No role may be expanded without explicit justification.
 ---
 
 ## **4.2 Network Governance**
-- All traffic is HTTPS‑only  
+- All traffic is HTTPS-only
+- CloudFront terminates TLS

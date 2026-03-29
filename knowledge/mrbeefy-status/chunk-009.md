@@ -1,44 +1,34 @@
-## **5. Glassy, Modern Chat Container**
-The chat box now matches the aesthetic of the rest of the site:
+- **KB pipeline → documentation‑only refresh**  
 
-- Semi‑transparent background  
-- Subtle blur effect  
-- Rounded corners  
-- Soft shadows  
-- Harmonized with the dark content card  
-
-This creates a cohesive visual identity across the entire page.
-
----
-
-## **6. Updated Scrollbar Styling**
-The message container now uses a minimal, modern scrollbar:
-
-- Narrow width  
-- Soft white thumb  
-- Rounded edges  
-- Non‑intrusive appearance  
-
-This keeps the UI clean while still providing usability.
-
----
-
-## **7. Unified Color and Typography System**
-The chat UI now inherits the same design language as the rest of the platform:
-
-- Consistent font stack  
-- Harmonized color palette  
-- Balanced spacing and margins  
-- Improved readability on dark backgrounds  
-
-This makes the UI feel like a first‑class part of the Mr. Beefy experience.
+This mirrors real‑world AI infra patterns where knowledge updates and infrastructure updates move at different speeds.
 
 ---
 
 # **🚀 Impact**
-These updates transform the frontend from a functional prototype into a polished, user‑friendly interface:
+The addition of the dedicated KB ingestion pipeline provides:
 
-- Better readability for complex agent responses  
-- More natural input behavior  
-- Aesthetic consistency across the entire site  
-- A chat experience that feels intentional and product‑ready  
+- Faster documentation iteration  
+- Safer ingestion cycles  
+- Clear separation of concerns  
+- Reduced coupling between infra and knowledge  
+- A more resilient and maintainable architecture  
+
+The backend still owns ingestion during deploys, but the KB pipeline now owns ingestion during day‑to‑day updates — exactly the right division of responsibilities.
+
+---
+
+# **⚡ SSE Streaming Responses**
+
+## **Overview**
+Chat responses now stream token-by-token from Bedrock to the browser. Instead of waiting for the full response to generate, users see words appear progressively — the same typing effect used by modern AI chat interfaces.
+
+---
+
+## **What Changed**
+
+### **Lambda Handler**
+- Replaced the standard handler with `awslambda.streamifyResponse`
+- Bedrock chunks are piped directly to the response stream as they arrive
+- Output formatted as Server-Sent Events: `data: {"token": "..."}\n\n`
+- Final sentinel: `data: [DONE]\n\n`
+- Content-Type set to `text/event-stream`

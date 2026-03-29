@@ -1,3 +1,31 @@
+---
+
+## **5.2 Monitoring**
+Monitoring includes:
+
+- Lambda error rates
+- CloudFront cache hit/miss ratios
+- KB ingestion job status  
+- Bedrock agent invocation metrics  
+
+Alerts may be added as the system scales.
+
+---
+
+## **5.3 Deployment Governance**
+Deployments must:
+
+- Run through CI/CD  
+- Use versioned artifacts  
+- Produce deterministic infrastructure  
+- Avoid manual console changes  
+
+Manual console edits are only allowed for:
+
+- Emergency rollback  
+- Temporary debugging  
+- AWS support troubleshooting  
+
 Any manual change must be documented and reverted into Terraform if permanent.
 
 ---
@@ -23,34 +51,3 @@ Any manual change must be documented and reverted into Terraform if permanent.
 - KB ingestion is versioned implicitly  
 
 ---
-
-# **7. Compliance Governance**
-
-## **7.1 Documentation Requirements**
-All architectural changes must be documented in:
-
-- Architecture wiki  
-- Design decisions wiki  
-- Workflow wiki  
-- Governance wiki  
-
-## **7.2 Code Review Requirements**
-All changes must undergo:
-
-- Jordan's review 
-- CI validation  
-- Terraform plan review  
-
-## **7.3 Security Review Requirements**
-Any change affecting:
-
-- IAM  
-- Network access  
-- KB content  
-- Agent instructions  
-
-must undergo a security review.
-
----
-
-# **8. Summary**

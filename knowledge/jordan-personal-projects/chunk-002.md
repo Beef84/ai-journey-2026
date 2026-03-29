@@ -1,4 +1,3 @@
-- AI Plane integrates AWS Rekognition, Translate, Transcribe, and SageMaker foundational models, exposed through TypeScript services and both TypeScript and Python SDKs
 - Uses Lambda, API Gateway, S3, SNS/SQS, DynamoDB, OpenSearch/Vector DB, and Step Functions for orchestration
 - React frontend for user interaction and agent experiences
 - Infrastructure managed through AWS CodeCommit, CloudFormation, CodePipeline, and CodeDeploy
@@ -14,3 +13,4 @@
 ## Personal Finance & Budgeting Web App — .NET 8
 
 - Long‑running financial management application originally built in .NET Framework (2012) and modernized to .NET 8
+- Modular NuGet‑based architecture (DbContext, Models, Business Logic, API Client SDK) enabling clean separation of concerns and long‑term maintainability

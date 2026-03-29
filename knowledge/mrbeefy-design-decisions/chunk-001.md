@@ -30,6 +30,6 @@ Terraform manages all resources that are:
 
 This includes:
 
-- S3 buckets (frontend + knowledge)  
-- CloudFront distribution  
-- Route53 records  
+- S3 buckets (frontend + knowledge)
+- CloudFront distribution
+- Route53 records

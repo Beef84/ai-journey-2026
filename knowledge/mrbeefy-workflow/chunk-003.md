@@ -1,11 +1,24 @@
-1. Lambda receives the agent output.  
-2. Lambda formats the response for the UI.  
-3. Lambda returns the response to API Gateway.
+   - Queries the S3 Vector Store
+   - Retrieves relevant documents
+3. The agent generates a response using Nova Pro, streamed back in chunks.
 
-### **3.7 CloudFront Return Path**
-1. API Gateway returns the response to CloudFront.  
-2. CloudFront forwards the response to the browser.  
-3. UI renders the assistant message.
+### **3.6 Lambda Streams SSE Chunks**
+1. Each Bedrock chunk is written to the response stream immediately:
+
+```
+data: {"token": "Hello"}\n\n
+data: {"token": ", world"}\n\n
+data: [DONE]\n\n
+```
+
+2. The stream stays open until Bedrock signals completion.
+3. Lambda sends `data: [DONE]\n\n` as the terminal sentinel.
+
+### **3.7 Browser Receives Tokens in Real Time**
+1. The browser reads the response via `fetch` + `ReadableStream`.
+2. Each SSE line is parsed and the token appended to the assistant message bubble immediately.
+3. A blinking cursor is shown while streaming is in progress.
+4. When `[DONE]` arrives, the cursor is removed and the send button is re-enabled.
 
 ---
 
@@ -20,21 +33,3 @@
 
 1. CI/CD calls the Bedrock Knowledge Base ingestion API to start a new ingestion job.  
 2. Bedrock performs the ingestion process:
-   - Reads documents from the KB S3 bucket  
-   - Generates embeddings using Titan V2  
-   - Writes vectors to the S3 Vector Store  
-   - Updates the vector index  
-
-### **4.3 Retrieval Workflow**
-During a chat request:
-
-1. The agent embeds the user query.  
-2. The agent queries the vector index.  
-3. Relevant documents are returned.  
-4. The agent uses retrieved content to generate the final answer.
-
----
-
-# **5. Agent Lifecycle Workflow**
-
-### **5.1 Agent Definition**

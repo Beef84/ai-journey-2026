@@ -1,47 +1,53 @@
-- No safe way to update the KB independently  
+## **9.2 Clean API Contract**
+Frontend only calls:
 
-The dedicated pipeline resolves these issues by giving the KB its own lifecycle.
+```
+POST /chat
+```
 
----
+No other endpoints are exposed.
 
-## **11.3 SSM as the Source of Truth**
-The backend pipeline now publishes:
+## **9.3 CloudFront + S3 Hosting**
+Provides:
 
-- KB bucket name  
-- KB ID  
-
-…into SSM parameters.
-
-The KB pipeline reads these values at runtime, ensuring:
-
-- No Terraform coupling  
-- No querying the KB for data source ARNs  
-- No brittle assumptions about resource recreation  
-- A stable, explicit contract between pipelines  
-
-SSM becomes the **canonical interface** between backend deploys and KB ingestion.
+- Global caching  
+- Instant invalidation  
+- Zero server maintenance  
+- Strong security posture  
 
 ---
 
-## **11.4 Non‑Destructive S3 Sync**
-The KB pipeline intentionally avoids destructive sync flags.
+# **10. Deployment Design Decisions**
 
-This prevents:
+## **10.1 Terraform for Infrastructure**
+Ensures:
 
-- Metadata loss  
-- Embedding corruption  
-- Ingestion failures caused by missing files  
+- Reproducibility  
+- Version control  
+- Clear diffs  
+- Safe rollbacks  
 
-Only new or updated files are uploaded, preserving the integrity of the vector store.
+## **10.2 CI/CD for Dynamic Operations**
+Ensures:
+
+- No stale alias IDs  
+- No Terraform drift  
+- Clean agent lifecycle  
+- Automated KB ingestion  
 
 ---
 
-## **11.5 Explicit, Isolated Ingestion Jobs**
-The KB pipeline triggers ingestion directly via the Bedrock API.
+# **11. Knowledge Base Lifecycle Design Decisions**
 
-This ensures:
+## **11.1 Dual‑Path Ingestion Model**
+The system now supports two ingestion paths:
 
-- Deterministic ingestion  
-- Clear failure boundaries  
-- No interference with backend deploys  
-- A clean, minimal workflow focused solely on knowledge updates  
+1. **Backend Deployment Ingestion**  
+   - Runs automatically during backend deploys  
+   - Ensures the KB is refreshed whenever infrastructure or agent configuration changes  
+   - Acts as a safety net to guarantee consistency after releases  
+
+2. **Dedicated KB Ingestion Pipeline**  
+   - Runs independently of backend deploys  
+   - Allows documentation updates to be ingested without requiring a backend rollout  
+   - Provides a safe, isolated ingestion workflow  

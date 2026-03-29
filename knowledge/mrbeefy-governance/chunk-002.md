@@ -16,9 +16,9 @@ CI/CD is the **single source of truth** for runtime configuration and agent life
 
 At runtime:
 
-- **CloudFront** owns request routing and caching  
-- **API Gateway** owns request validation and Lambda invocation  
-- **Lambda** owns request processing and Bedrock invocation  
+- **CloudFront** owns request routing and caching
+- **Lambda Function URL** owns request receipt and secret validation
+- **Lambda** owns request processing and Bedrock invocation
 - **Bedrock Agent** owns reasoning and retrieval  
 - **Bedrock Knowledge Base** owns vector search and document retrieval  
 
@@ -39,5 +39,6 @@ All infrastructure changes must:
 No manual changes are permitted in:
 
 - CloudFront  
-- API Gateway  
-- IAM  
+- IAM
+- S3 bucket configuration  
+- Route53  

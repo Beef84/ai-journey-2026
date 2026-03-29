@@ -1,10 +1,17 @@
-- CloudFront terminates TLS  
-- API Gateway enforces HTTPS  
-- No public S3 access  
-- No public KB access  
-- No public Lambda URLs  
+- Lambda Function URL enforces HTTPS
+- No public S3 access
+- No public KB access
+- Lambda Function URL is protected by a shared secret header — direct calls without the header return 403
+- Dev CloudFront distribution is protected by CloudFront signed cookies — unauthenticated requests return 403
 
 ---
+
+## **4.4 Secret Governance**
+- `gateway_secret` is set in `terraform.tfvars` (gitignored) in both `backend/IaC/` and `frontend/IaC/`
+- The same value must be used in both stacks
+- The secret lives in Terraform state, which is encrypted at rest in S3
+- The CloudFront signed-cookie private key is stored only on the developer's local machine and is never committed
+- `terraform.tfvars` files must be added to `.gitignore` — committing them exposes the secret
 
 ## **4.3 Data Governance**
 - KB files are stored in S3 with restricted access  
@@ -17,10 +24,8 @@
 # **5. Operational Governance**
 
 ## **5.1 Logging**
-- Lambda logs are required  
-- API Gateway access logs are required  
-- API Gateway execution logs are required  
-- CloudFront logs are optional but recommended  
+- Lambda logs are required
+- CloudFront logs are optional but recommended
 
 Logs must not contain:
 
@@ -28,32 +33,3 @@ Logs must not contain:
 - Credentials  
 - AWS account identifiers  
 - Sensitive personal data  
-
----
-
-## **5.2 Monitoring**
-Monitoring includes:
-
-- Lambda error rates  
-- API Gateway 4xx/5xx rates  
-- CloudFront cache hit/miss ratios  
-- KB ingestion job status  
-- Bedrock agent invocation metrics  
-
-Alerts may be added as the system scales.
-
----
-
-## **5.3 Deployment Governance**
-Deployments must:
-
-- Run through CI/CD  
-- Use versioned artifacts  
-- Produce deterministic infrastructure  
-- Avoid manual console changes  
-
-Manual console edits are only allowed for:
-
-- Emergency rollback  
-- Temporary debugging  
-- AWS support troubleshooting  

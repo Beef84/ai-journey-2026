@@ -13,15 +13,15 @@ The system consists of four major layers:
    - S3 static hosting with Origin Access Control (OAC)  
    - Custom domain + ACM certificate + Route53  
 
-2. **API Layer**  
-   - API Gateway HTTP API  
-   - CloudFront → API Gateway integration  
-   - `/chat` endpoint mapped to Lambda  
+2. **API Layer**
+   - Lambda Function URL with response streaming (`invoke_mode = RESPONSE_STREAM`)
+   - CloudFront → Function URL integration
+   - `/chat` routed directly to Lambda with no intermediate gateway
 
-3. **Compute Layer**  
-   - Node.js 20 Lambda function  
-   - Bedrock Agent Runtime client  
-   - Environment variables for Agent ID + Alias ID  
+3. **Compute Layer**
+   - Node.js 20 Lambda function with `awslambda.streamifyResponse`
+   - Bedrock Agent Runtime client streaming SSE chunks as they arrive
+   - Environment variables for Agent ID, Alias ID, and Gateway Secret
 
 4. **AI Layer**  
    - Bedrock Agent  
@@ -33,9 +33,3 @@ The system consists of four major layers:
 All infrastructure is deployed via **Terraform**, with dynamic agent lifecycle operations handled by **GitHub Actions CI/CD**.
 
 ---
-
-# **2. Frontend Architecture**
-
-## **2.1 Static Hosting**
-- React SPA built and uploaded to an S3 bucket:
-  - Bucket name pattern: `mrbeefy-frontend-<random>`  

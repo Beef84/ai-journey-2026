@@ -1,1 +1,6 @@
+[Source: Jordan The Employee | Section: Where I see myself in 3–5 years]
+
+## Where I see myself in 3–5 years
 Over the next three to five years, I see myself moving further into architectural and leadership roles where I have the autonomy and scope to design systems end‑to‑end. I’m already doing architectural work today, but the structure of my current environment doesn’t always give me the space to fully drive solutions from concept to implementation the way I know I can. My natural trajectory is toward roles where I’m shaping the big picture — defining patterns, guiding engineering practices, and influencing how teams think about operational excellence, reliability, cost optimization, and long‑term maintainability.
+
+At the same time, I’m someone who genuinely enjoys staying close to technology. I’m constantly learning, experimenting, and building. I plan to earn all twelve AWS certifications, deepen my understanding of machine learning, and continue exploring frameworks like PyTorch so I can eventually build a full agentic music‑production system. I’m also actively developing Your Life and pursuing a patent for it, which reflects how I approach problems: I see opportunities, I validate them, and I build real solutions around them. I’m innovative and willing to take risks, but I’m also logical, cost‑conscious, and deliberate in how I design systems.

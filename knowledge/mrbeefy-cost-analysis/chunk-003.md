@@ -1,44 +1,28 @@
-| Data out to internet | $0.085 / GB (first 10TB) |
-| S3 → CloudFront | Free (same region) |
+[Source: Mrbeefy Cost Analysis | Section: 1.1 Amazon Bedrock — Nova Pro (Dominant Cost)]
 
-Static assets are small (<2MB SPA) and cached aggressively. At low traffic volumes, CloudFront costs **<$0.10/month**.
+## **1.1 Amazon Bedrock — Nova Pro (Dominant Cost)**
 
----
-
-## **1.6 Amazon S3**
-
-| Bucket | Storage | Est. Cost |
-|---|---|---|
-| Frontend assets | <10 MB | <$0.01/month |
-| Knowledge Base files | <5 MB | <$0.01/month |
-| Terraform state | <1 MB | <$0.01/month |
-
-S3 storage is negligible. The main S3 cost would come from GET requests during KB ingestion, which is also negligible at this scale.
-
----
-
-## **1.7 Amazon Route53**
+Nova Pro is the primary cost driver. It is charged per token regardless of caching or streaming.
 
 | Metric | Rate |
 |---|---|
-| Hosted zone | $0.50 / month |
-| DNS queries | $0.40 / million |
+| Input tokens | ~$0.0008 / 1K tokens |
+| Output tokens | ~$0.0032 / 1K tokens |
 
-Fixed cost: **$0.50/month** regardless of traffic.
+**Per chat request estimate:**
+
+A typical exchange involves:
+- ~300 tokens: system instruction block
+- ~800 tokens: KB context retrieved by the agent
+- ~100 tokens: user message
+- ~400 tokens: agent response
+
+| Component | Tokens | Cost |
+|---|---|---|
+| Input (prompt + context) | ~1,200 | ~$0.00096 |
+| Output (response) | ~400 | ~$0.00128 |
+| **Per request total** | | **~$0.0022** |
+
+Richer KB content and longer conversations increase this. Complex multi-turn queries can reach $0.005–$0.01 per exchange.
 
 ---
-
-## **1.8 ACM, DynamoDB (Terraform Locks), VPC**
-
-- ACM certificates: **Free**
-- DynamoDB (state locks): **<$0.01/month** (on-demand, effectively zero)
-- No VPC — fully managed services only
-
----
-
-# **2. Monthly Cost Estimates by Usage Tier**
-
-| Tier | Chat Requests/Month | Bedrock | Lambda | CloudFront | Route53 | **Total** |
-|---|---|---|---|---|---|---|
-| Idle | 0 | $0.00 | $0.00 | $0.00 | $0.50 | **~$0.50** |
-| Light | 100 | $0.22 | $0.004 | <$0.01 | $0.50 | **~$0.75** |

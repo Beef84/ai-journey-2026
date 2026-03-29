@@ -1,43 +1,16 @@
-- ACM certificate
-- Lambda function definition
-- Lambda Function URL
-- IAM roles and policies
-- Bedrock Agent (DRAFT definition only)
+[Source: Mrbeefy Design Decisions]
 
-Terraform **does not** manage:
+# **1. Guiding Principles**
 
-- Agent versions  
-- Agent aliases  
-- KB ingestion jobs  
-- Lambda environment variable updates for alias IDs  
+The design of Mr. Beefy followed a consistent set of engineering principles:
 
-These are dynamic and would cause drift if managed declaratively.
+- **Separation of concerns** between static infrastructure, dynamic agent lifecycle, and runtime behavior  
+- **Deterministic deployments** using Terraform for infrastructure and CI/CD for dynamic operations  
+- **Minimal surface area** for IAM permissions  
+- **Serverless-first architecture** for scalability and cost efficiency  
+- **Explicitness over convention**, especially with AWS services that have hidden or implicit state  
+- **Simplicity at the edges, intelligence at the core** — the frontend stays thin, the backend stays predictable, and Bedrock handles reasoning  
 
-## **2.2 CI/CD Owns Dynamic Lifecycle**
-GitHub Actions handles:
-
-- KB ingestion  
-- Agent alias creation (if missing)  
-- Lambda environment variable updates  
-- Deployment of Lambda code  
-- Uploading KB files  
-
-This ensures:
-
-- No stale alias IDs  
-- No Terraform drift  
-- No accidental recreation of agents  
-- Clean, predictable updates  
+These principles shaped every decision documented below.
 
 ---
-
-# **3. API Design Decisions**
-
-## **3.1 Lambda Function URL Instead of API Gateway**
-
-API Gateway was the original API layer. It was replaced with a Lambda Function URL when streaming was added.
-
-**Why API Gateway could not stay:**
-API Gateway HTTP API buffers the complete Lambda response before forwarding it to the client. This makes true SSE streaming impossible — the browser receives one large payload at the end rather than tokens as they arrive.
-
-**Why Lambda Function URL:**

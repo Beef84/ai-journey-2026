@@ -1,53 +1,16 @@
-## **9.2 Clean API Contract**
-Frontend only calls:
+[Source: Mrbeefy Design Decisions | Section: 3.1 Lambda Function URL Instead of API Gateway]
 
-```
-POST /chat
-```
+## **3.1 Lambda Function URL Instead of API Gateway**
 
-No other endpoints are exposed.
+API Gateway was the original API layer. It was replaced with a Lambda Function URL when streaming was added.
 
-## **9.3 CloudFront + S3 Hosting**
-Provides:
+**Why API Gateway could not stay:**
+API Gateway HTTP API buffers the complete Lambda response before forwarding it to the client. This makes true SSE streaming impossible — the browser receives one large payload at the end rather than tokens as they arrive.
 
-- Global caching  
-- Instant invalidation  
-- Zero server maintenance  
-- Strong security posture  
+**Why Lambda Function URL:**
+- `invoke_mode = RESPONSE_STREAM` enables chunked transfer directly from Lambda to CloudFront to browser
+- No stages, no routing rules, no CORS configuration needed — the Function URL is a direct HTTPS endpoint consumed only by CloudFront
+- Simpler: one fewer AWS service, one fewer IaC module to manage
+- Same security posture: the gateway secret header check in Lambda replaces API Gateway auth
 
----
-
-# **10. Deployment Design Decisions**
-
-## **10.1 Terraform for Infrastructure**
-Ensures:
-
-- Reproducibility  
-- Version control  
-- Clear diffs  
-- Safe rollbacks  
-
-## **10.2 CI/CD for Dynamic Operations**
-Ensures:
-
-- No stale alias IDs  
-- No Terraform drift  
-- Clean agent lifecycle  
-- Automated KB ingestion  
-
----
-
-# **11. Knowledge Base Lifecycle Design Decisions**
-
-## **11.1 Dual‑Path Ingestion Model**
-The system now supports two ingestion paths:
-
-1. **Backend Deployment Ingestion**  
-   - Runs automatically during backend deploys  
-   - Ensures the KB is refreshed whenever infrastructure or agent configuration changes  
-   - Acts as a safety net to guarantee consistency after releases  
-
-2. **Dedicated KB Ingestion Pipeline**  
-   - Runs independently of backend deploys  
-   - Allows documentation updates to be ingested without requiring a backend rollout  
-   - Provides a safe, isolated ingestion workflow  
+**Cost:** Lambda Function URLs have no per-request charge beyond the Lambda invocation itself. Removing API Gateway saves $1.00/million requests — negligible at this scale but a simplification win.

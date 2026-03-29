@@ -1,44 +1,15 @@
-# **7. Compliance Governance**
+[Source: Mrbeefy Governance | Section: 2.3 Runtime Ownership (AWS Services)]
 
-## **7.1 Documentation Requirements**
-All architectural changes must be documented in:
+## **2.3 Runtime Ownership (AWS Services)**
 
-- Architecture wiki  
-- Design decisions wiki  
-- Workflow wiki  
-- Governance wiki  
+At runtime:
 
-## **7.2 Code Review Requirements**
-All changes must undergo:
+- **CloudFront** owns request routing and caching
+- **Lambda Function URL** owns request receipt and secret validation
+- **Lambda** owns request processing and Bedrock invocation
+- **Bedrock Agent** owns reasoning and retrieval  
+- **Bedrock Knowledge Base** owns vector search and document retrieval  
 
-- Jordan's review 
-- CI validation  
-- Terraform plan review  
-
-## **7.3 Security Review Requirements**
-Any change affecting:
-
-- IAM  
-- Network access  
-- KB content  
-- Agent instructions  
-
-must undergo a security review.
-
----
-
-# **8. Summary**
-
-The governance model ensures:
-
-- Clear ownership  
-- Predictable deployments  
-- Strict separation of responsibilities  
-- Strong security posture  
-- Minimal operational risk  
-- Full reproducibility  
-- Long‑term maintainability  
-
-This governance structure supports a production‑grade AI platform that can evolve safely and efficiently.
+Each service is responsible for its own operational behavior, with no cross‑service responsibilities.
 
 ---

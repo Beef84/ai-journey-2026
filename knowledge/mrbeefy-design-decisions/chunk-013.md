@@ -1,22 +1,13 @@
-This avoids SSM costs and complexity for a personal project while keeping the secret out of source control.
+[Source: Mrbeefy Design Decisions | Section: 4.3 Behavior Design]
 
-## **13.3 Dev Access Control: CloudFront Signed Cookies**
+## **4.3 Behavior Design**
+- Default behavior → S3
+- Ordered behavior → `/chat` → Lambda Function URL
 
-The dev environment (`dev.mrbeefy.academy`) should be accessible only to the developer, not the public internet.
+This ensures:
 
-**Approach chosen:** CloudFront signed cookies with an RSA key pair.
+- The SPA loads instantly  
+- API calls bypass caching  
+- Only the intended path hits the backend  
 
-**Why signed cookies over alternatives:**
-
-| Option | Why rejected |
-|---|---|
-| WAF IP allowlist | IP changes break access (home, office, mobile); requires manual updates |
-| HTTP Basic Auth via Lambda@Edge | Adds a Lambda@Edge function and associated cost/complexity |
-| Signed URLs | Per-object scope — doesn't work well for a SPA with many assets |
-| Cognito + Lambda@Edge | Significant complexity for sole-developer access |
-
-Signed cookies work for the whole distribution with a single browser cookie. The private key never leaves the developer's machine. The public key is uploaded to CloudFront via Terraform — it is not a secret and is safe to store in state.
-
-## **13.4 Multi-Environment Strategy: Terraform Workspaces**
-
-Terraform workspaces were chosen over separate directories or separate accounts because:
+---

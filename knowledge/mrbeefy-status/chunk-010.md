@@ -1,22 +1,11 @@
-### **Infrastructure**
-- API Gateway removed — replaced with Lambda Function URL (`invoke_mode = RESPONSE_STREAM`)
-- `compress = false` set on the `/chat` CloudFront behavior — required to prevent response buffering
-- No API Gateway stages, CORS config, or routes needed — the Function URL is a direct HTTPS endpoint consumed only by CloudFront
+[Source: Mrbeefy Status | Section: What Changed > Lambda Function URL Protected by Secret Header]
 
-### **Frontend**
-- `fetch` + `ReadableStream` reads SSE chunks as they arrive
-- Each token is appended to the assistant message bubble in real time
-- Streaming state disables the send button and textarea while a response is in progress
-- A blinking cursor (`▍`) is shown on the active assistant bubble during streaming
-- Cursor and disabled state are removed when `[DONE]` is received
+### **Lambda Function URL Protected by Secret Header**
+API Gateway was replaced by a Lambda Function URL (required for SSE streaming). The raw Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is publicly reachable by default. It is now protected by a shared secret:
 
----
+- CloudFront injects an `x-cloudfront-secret` header on every request it forwards to the Function URL origin
+- Lambda validates this header and returns 403 for any request missing it
+- Direct Function URL access without the secret is rejected immediately — no Bedrock call is made
+- The secret lives in Terraform state and GitHub secrets — it is never committed to the repository
 
-## **Cost Impact**
-Zero. Streaming does not change token count, request count, or total bytes transferred. Bedrock, Lambda, and CloudFront costs are identical to the non-streaming implementation. The only cost change is the removal of API Gateway, which saves $1.00/million requests — negligible at personal/portfolio scale but eliminates one service entirely.
-
----
-
-# **🖥️ Frontend UI Updates**
-
-## **Overview**
+This applies to both prod and dev.

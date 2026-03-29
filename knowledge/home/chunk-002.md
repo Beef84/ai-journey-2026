@@ -1,47 +1,19 @@
-- Frontend delivery (CloudFront + S3 + OAC)  
-- API routing (CloudFront → Lambda Function URL with SSE streaming)
-- Compute layer (Lambda)  
-- AI layer (Bedrock Agent, Knowledge Base, vector store)  
-- CI/CD lifecycle and responsibilities  
-- IaC boundaries  
-- End‑to‑end request flow  
+[Source: Home]
 
-This section explains how the system is built and how each component interacts.
+# **Overview**
 
----
+This wiki serves as the **central documentation hub** for the Mr. Beefy platform — a fully serverless, production-grade AI agent system built on AWS using Bedrock Agents, Knowledge Bases, vector retrieval, CloudFront, Lambda Function URL (SSE streaming), and Infrastructure-as-Code.
 
-## **🧩 Design Decisions**
-A deep explanation of the reasoning behind the architecture:
+It provides a comprehensive view of:
 
-- IaC vs CI/CD ownership  
-- Serverless‑first design  
-- Explicit routing and origin mapping  
-- Agent lifecycle strategy  
-- KB ingestion strategy  
-- IAM least‑privilege boundaries  
-- Observability and reproducibility principles  
+- The platform’s **architecture and components**  
+- The **design decisions** that shaped the system  
+- The **operational workflows** that define how it runs  
+- The **governance model** that ensures stability and maintainability  
+- The **engineering philosophy** behind the project  
+- The **skills and experience** demonstrated through the work  
+- The **projects** that showcase long‑term technical depth  
 
-This section documents the “why” behind every major choice.
+This wiki is intended for engineers, reviewers, hiring managers, and collaborators who want to understand the system’s structure, rationale, and evolution.
 
 ---
-
-## **🔄 Workflows**
-Step‑by‑step operational flows for:
-
-- Frontend delivery  
-- Chat request processing  
-- Lambda → Bedrock invocation  
-- Knowledge Base ingestion  
-- Agent versioning and aliasing  
-- CI/CD deployment lifecycle  
-- Infrastructure provisioning  
-
-This section shows how the system behaves in practice.
-
----
-
-## **🛡️ Governance**
-The rules and boundaries that ensure system stability:
-
-- Ownership model (IaC, CI/CD, runtime)  
-- Change management processes  

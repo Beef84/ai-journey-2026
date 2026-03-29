@@ -81,7 +81,10 @@ if ($KB_ID -and $KB_ID -ne "None") {
 
     $TempDir     = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } elseif ($env:TEMP) { $env:TEMP } else { "/tmp" }
     $KbInputFile = "$TempDir/create_kb_input.json"
-    [System.IO.File]::WriteAllText($KbInputFile, $CreateKbInput, [System.Text.Encoding]::UTF8)
+    [System.IO.File]::WriteAllText($KbInputFile, $CreateKbInput, (New-Object System.Text.UTF8Encoding $false))
+
+    Write-Host "KB input file: $KbInputFile"
+    Write-Host "KB input JSON: $CreateKbInput"
 
     $KbJson = aws bedrock-agent create-knowledge-base `
       --cli-input-json "file://$KbInputFile" `

@@ -5,7 +5,7 @@
 
 # **Overview**
 
-This wiki serves as the **central documentation hub** for the Mr. Beefy platform — a fully serverless, production‑grade AI agent system built on AWS using Bedrock Agents, Knowledge Bases, vector retrieval, CloudFront, API Gateway, Lambda, and Infrastructure‑as‑Code.
+This wiki serves as the **central documentation hub** for the Mr. Beefy platform — a fully serverless, production-grade AI agent system built on AWS using Bedrock Agents, Knowledge Bases, vector retrieval, CloudFront, Lambda Function URL (SSE streaming), and Infrastructure-as-Code.
 
 It provides a comprehensive view of:
 

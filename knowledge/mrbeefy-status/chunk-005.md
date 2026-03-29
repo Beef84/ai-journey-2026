@@ -1,25 +1,22 @@
-The platform now includes a **standalone Knowledge Base ingestion pipeline** that operates independently from the backend deployment workflow. While the backend still performs a KB ingestion as part of a full system rollout, the new dedicated pipeline allows documentation updates to be ingested without requiring a backend deploy. This separation dramatically improves iteration speed, safety, and clarity across the system.
+The platform now supports two fully isolated environments within the same AWS account using Terraform workspaces: `default` (prod) and `dev`. Alongside this, the API backend — previously reachable by anyone who discovered the URL — is protected in both environments.
 
 ---
 
-# **🎯 Why This Pipeline Exists**
-Previously, the only way to refresh the Knowledge Base was to run the backend deployment pipeline. This created several problems:
+## **What Changed**
 
-- Documentation changes required a full backend deploy  
-- Ingestion was tightly coupled to Terraform outputs  
-- Failures in the KB ingest path could block backend releases  
-- The KB could not be updated independently or frequently  
+### **Lambda Function URL Protected by Secret Header**
+API Gateway was replaced by a Lambda Function URL (required for SSE streaming). The raw Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is publicly reachable by default. It is now protected by a shared secret:
 
-The new pipeline solves all of these issues by giving the KB its own lifecycle.
+- CloudFront injects an `x-cloudfront-secret` header on every request it forwards to the Function URL origin
+- Lambda validates this header and returns 403 for any request missing it
+- Direct Function URL access without the secret is rejected immediately — no Bedrock call is made
+- The secret lives in Terraform state and GitHub secrets — it is never committed to the repository
 
----
+This applies to both prod and dev.
 
-# **⚙️ How the System Works Now**
+### **Dev Environment**
+A `dev` Terraform workspace creates a fully isolated parallel stack:
 
-## **1. Backend still performs ingestion — but only during deploys**
-The backend pipeline continues to:
-
-- Deploy infrastructure  
-- Publish the knowledge bucket name to SSM  
-- Associate the KB with the agent  
-- Trigger a full ingestion as part of a release  
+- All AWS resources prefixed `mrbeefy-dev-*`
+- Hosted at `dev.mrbeefy.academy`
+- Own Terraform state (`env:/dev/...` in the same S3 bucket)

@@ -1,8 +1,8 @@
-- ACM certificate  
-- API Gateway HTTP API  
-- Lambda function definition  
-- IAM roles and policies  
-- Bedrock Agent (DRAFT definition only)  
+- ACM certificate
+- Lambda function definition
+- Lambda Function URL
+- IAM roles and policies
+- Bedrock Agent (DRAFT definition only)
 
 Terraform **does not** manage:
 
@@ -33,28 +33,11 @@ This ensures:
 
 # **3. API Design Decisions**
 
-## **3.1 HTTP API Instead of REST API**
-HTTP API was chosen because:
+## **3.1 Lambda Function URL Instead of API Gateway**
 
-- Lower latency  
-- Lower cost  
-- Simpler routing  
-- Native support for Lambda proxy integration  
-- Cleaner CORS configuration  
+API Gateway was the original API layer. It was replaced with a Lambda Function URL when streaming was added.
 
-REST API was unnecessary and would add complexity.
+**Why API Gateway could not stay:**
+API Gateway HTTP API buffers the complete Lambda response before forwarding it to the client. This makes true SSE streaming impossible — the browser receives one large payload at the end rather than tokens as they arrive.
 
-## **3.2 Single Route: `POST /chat`**
-The system intentionally exposes only one public API route:
-
-```
-POST /chat
-```
-
-This keeps:
-
-- The attack surface minimal  
-- The API contract simple  
-- The frontend integration straightforward  
-
-## **3.3 Stage Handling**
+**Why Lambda Function URL:**

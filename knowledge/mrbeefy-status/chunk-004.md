@@ -46,6 +46,6 @@ That’s the real story of Mr. Beefy.
 
 ---
 
-# **📚 Knowledge Base Ingestion Pipeline (Dedicated Workflow)**
+# **🔐 Multi-Environment Support and Security Hardening**
 
 ## **Overview**

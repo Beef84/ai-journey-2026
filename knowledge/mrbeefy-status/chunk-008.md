@@ -1,46 +1,43 @@
-- **Readable formatting for long answers**
+This ensures that every backend deploy results in a fully refreshed KB.
 
-This dramatically improves clarity and makes the agent feel more expressive and professional.
-
----
-
-## **2. Auto‑Scrolling Message Container**
-A new scroll anchor ensures the chat always snaps to the latest message. This mirrors modern messaging apps and prevents the user from manually scrolling after every response.
-
-- Smooth scroll behavior  
-- No layout jumpiness  
-- Works for both user and assistant messages  
+**But this is no longer the only ingestion path.**
 
 ---
 
-## **3. Improved Input Experience**
-The message input area has been rebuilt for a more natural chat workflow:
+## **2. The dedicated KB pipeline handles ingestion between deploys**
+This new pipeline is intentionally minimal and focused:
 
-- **Enter → send**
-- **Shift+Enter → newline**
-- **Auto‑resizing textarea** that grows with content
-- **Consistent padding and spacing**
-- **Predictable keyboard behavior**
+### **Inputs**
+- `/knowledge` directory  
+- SSM parameter: `mrbeefy.kb.bucket_name`  
+- SSM parameter: KB ID  
 
-This makes the UI feel responsive and intuitive during longer prompts.
+### **Actions**
+- Syncs knowledge files → S3 (non‑destructive)  
+- Triggers a Bedrock KB ingestion job  
+- Waits for ingestion to complete  
+- Reports success/failure  
 
----
-
-## **4. Message Bubble Redesign**
-User and assistant messages now have distinct, polished visual treatments:
-
-### **User Messages**
-- Right‑aligned  
-- Soft blue bubble  
-- High‑contrast text  
-- Subtle shadow  
-
-### **Assistant Messages**
-- Left‑aligned  
-- Warm white bubble  
-- Clean typography  
-- Balanced spacing  
-
-Both bubble types support Markdown formatting and long‑form content.
+### **Outputs**
+- Updated embeddings  
+- Updated vector index  
+- A refreshed KB without touching backend infrastructure  
 
 ---
+
+# **🔄 Why Both Pipelines Trigger Ingestion**
+
+### **Backend ingestion**
+- Ensures the KB is always correct after infra changes  
+- Guarantees the KB is aligned with the deployed agent  
+- Acts as a safety net during releases  
+
+### **Dedicated KB ingestion**
+- Allows rapid iteration on documentation  
+- Avoids unnecessary backend deploys  
+- Keeps the KB fresh even when the backend is stable  
+- Reduces risk by isolating ingestion failures from backend releases  
+
+Together, they create a **dual‑path ingestion model**:
+
+- **Backend deploy → full system refresh**  

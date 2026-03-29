@@ -1,22 +1,49 @@
-- Rounded corners  
-- Soft shadows  
-
-This creates a unified visual identity across the entire page.
+Only new or updated files are uploaded, preserving the integrity of the vector store.
 
 ---
 
-## **12.6 Minimal Scrollbar**
-A modern, unobtrusive scrollbar improves visual polish without sacrificing usability.
+## **11.5 Explicit, Isolated Ingestion Jobs**
+The KB pipeline triggers ingestion directly via the Bedrock API.
+
+This ensures:
+
+- Deterministic ingestion  
+- Clear failure boundaries  
+- No interference with backend deploys  
+- A clean, minimal workflow focused solely on knowledge updates  
+
+The backend still performs ingestion during deploys, but the KB pipeline owns ingestion during day‑to‑day updates.
 
 ---
 
-# **13. Final Summary**
+# **12. Frontend UI Design Decisions**
 
-The completed architecture reflects a coherent set of engineering principles and the mature system that emerged from them. Every layer of Mr. Beefy was shaped by intentional choices: keeping infrastructure declarative, keeping dynamic state out of Terraform, minimizing Lambda responsibilities, letting Bedrock handle intelligence, routing everything through CloudFront, and using CI/CD to manage all lifecycle operations. These principles ensured a system that is simple, explicit, secure by default, and easy to evolve.
+## **12.1 Rich Response Rendering**
+Markdown rendering was added to support:
 
-The resulting platform is now fully aligned with those goals:
+- Bold
+- Lists
+- Headings
+- Multi-paragraph responses
 
-- **Infrastructure** remains declarative, stable, and reproducible  
-- **Dynamic operations** such as agent aliasing and KB ingestion are handled cleanly by CI/CD  
-- **Knowledge ingestion** is decoupled, safe, and independently deployable through a dedicated pipeline  
-- **The frontend** is polished, expressive, and aligned with modern chat UX patterns  
+This improves readability and matches modern LLM output patterns.
+
+---
+
+## **12.2 Auto-Scrolling**
+The chat scrolls automatically to the latest message, improving conversational flow and eliminating manual scrolling after long responses.
+
+---
+
+## **12.3 Improved Input Behavior**
+The input box supports:
+
+- Enter → send
+- Shift+Enter → newline
+- Auto-resizing
+
+These changes align with modern chat UX expectations and make multi-line prompts natural to write.
+
+---
+
+## **12.4 Brand Identity: Beef AI Software Logo**

@@ -1,39 +1,22 @@
-### **3. Strengthen AI Infrastructure Engineering Skills**
-- Deepen expertise in:
-  - Bedrock Agents  
-  - Bedrock Knowledge Bases  
-  - Vector stores  
-  - Serverless orchestration  
-  - IaC patterns for AI systems  
-- Continue hands‑on learning through real architectural work  
+- Continue building a working prototype focused on the core multi‑tenant ideas (memory graph, ingestion + embeddings, agent orchestration) sufficient to demonstrate the concept.
 
-### **4. Earn AWS Cloud Practitioner Certification**
-- Complete the certification as a baseline  
-- Use it as a stepping stone toward more advanced AWS certifications  
+6. Move the Finance app toward SaaS readiness
+- Begin the work required to make the Finance app deployable and maintainable as a cloud service (containerization and CI/CD planning).
 
-### **5. Build Out the Documentation Set**
-- Architecture  
-- Design decisions  
-- Workflow  
-- Governance  
-- Engineering philosophy  
-- Roadmap  
-- Future vision  
+7. Begin agentic music research
+- Start exploratory experiments into agentic music production workflows and PyTorch experiments; record findings and small prototypes.
 
 ---
 
-# **Long‑Term Goals (3–12 Months)**
+# Medium‑Term Goals (3–12 Months)
 
-### **1. Transition Into a Full‑Time AI Infrastructure Engineering Role**
-- Use Mr. Beefy as a portfolio centerpiece  
-- Demonstrate real‑world, production‑grade AI platform engineering  
-- Show end‑to‑end ownership of architecture, IaC, CI/CD, and runtime  
-- Position myself for senior‑level AI Infra roles  
+1. Continue the 12‑month AWS certification plan
+- Maintain momentum and complete the remaining certifications toward the 12‑cert roadmap.
 
-### **2. Build Scalable, Production‑Grade AI Systems**
-- Apply the patterns learned here to larger, more complex systems  
-- Build reusable frameworks for:
-  - Agent orchestration  
-  - KB ingestion  
-  - Retrieval pipelines  
-  - Serverless AI backends  
+2. Secure the new role and expand contributions
+- Accept a position that lets me lead AI infrastructure efforts and apply Developer/ML Associate skills in production.
+
+3. Formalize Beef AI Software and early product planning
+- Develop a plan for early offerings (Your Life MVP and Finance SaaS), initial pricing model, and go‑to‑market considerations.
+
+4. Evolve the Your Life prototype into a demonstrable product

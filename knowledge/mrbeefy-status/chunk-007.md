@@ -1,36 +1,25 @@
-- **KB pipeline → documentation‑only refresh**  
-
-This mirrors real‑world AI infra patterns where knowledge updates and infrastructure updates move at different speeds.
+The platform now includes a **standalone Knowledge Base ingestion pipeline** that operates independently from the backend deployment workflow. While the backend still performs a KB ingestion as part of a full system rollout, the new dedicated pipeline allows documentation updates to be ingested without requiring a backend deploy. This separation dramatically improves iteration speed, safety, and clarity across the system.
 
 ---
 
-# **🚀 Impact**
-The addition of the dedicated KB ingestion pipeline provides:
+# **🎯 Why This Pipeline Exists**
+Previously, the only way to refresh the Knowledge Base was to run the backend deployment pipeline. This created several problems:
 
-- Faster documentation iteration  
-- Safer ingestion cycles  
-- Clear separation of concerns  
-- Reduced coupling between infra and knowledge  
-- A more resilient and maintainable architecture  
+- Documentation changes required a full backend deploy  
+- Ingestion was tightly coupled to Terraform outputs  
+- Failures in the KB ingest path could block backend releases  
+- The KB could not be updated independently or frequently  
 
-The backend still owns ingestion during deploys, but the KB pipeline now owns ingestion during day‑to‑day updates — exactly the right division of responsibilities.
-
----
-
-# **🖥️ Frontend UI Updates**
-
-## **Overview**
-The frontend has evolved from a minimal prototype into a polished, production‑quality chat interface that reflects the engineering philosophy behind Mr. Beefy. The UI now supports rich agent responses, improved interaction patterns, and a cohesive visual design aligned with the rest of the platform.
+The new pipeline solves all of these issues by giving the KB its own lifecycle.
 
 ---
 
-# **✨ Major Improvements**
+# **⚙️ How the System Works Now**
 
-## **1. Markdown Rendering for Agent Responses**
-The UI now uses a Markdown renderer to display assistant messages. This enables:
+## **1. Backend still performs ingestion — but only during deploys**
+The backend pipeline continues to:
 
-- **Bold and italic text**
-- **Headings**
-- **Lists**
-- **Multi‑paragraph responses**
-- **Code blocks**
+- Deploy infrastructure  
+- Publish the knowledge bucket name to SSM  
+- Associate the KB with the agent  
+- Trigger a full ingestion as part of a release  

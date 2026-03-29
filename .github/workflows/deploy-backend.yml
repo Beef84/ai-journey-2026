@@ -157,32 +157,17 @@ jobs:
         echo "ERROR: Agent did not reach PREPARED in time" && exit 1
 
     # -----------------------------
-    # Create New Agent Version from DRAFT
-    # A new version is required on every deploy so the alias always points
-    # to a version that includes the current KB association.
+    # Create or Recreate Alias
+    # Omitting --routing-configuration causes Bedrock to automatically snapshot
+    # the current prepared DRAFT as a new implicit version and route the alias
+    # to it. This is the only supported way to version a Bedrock Agent via CLI.
+    # We always delete and recreate so each deploy gets a fresh implicit version.
     # -----------------------------
-    - name: Create Agent Version
-      id: agent_version
-      shell: bash
-      env:
-        AGENT_ID: ${{ steps.tfout.outputs.agent_id }}
-      run: |
-        set -euo pipefail
-        pip install boto3 -q
-        VERSION=$(python3 backend/cli/create_agent_version.py)
-        echo "agent_version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Created agent version: $VERSION"
-
-    # -----------------------------
-    # Create or Update Alias
-    # Always update routing to the freshly created version.
-    # -----------------------------
-    - name: Create or Update Alias
+    - name: Create or Recreate Alias
       id: create_or_update_alias
       shell: bash
       env:
         AGENT_ID: ${{ steps.tfout.outputs.agent_id }}
-        AGENT_VERSION: ${{ steps.agent_version.outputs.agent_version }}
         ALIAS_NAME: prod
         AWS_REGION: us-east-1
       run: |
@@ -194,26 +179,24 @@ jobs:
           --query "agentAliasSummaries[?agentAliasName=='${ALIAS_NAME}'] | [0].agentAliasId" \
           --output text 2>/dev/null || true)
 
-        if [ -z "$EXISTING_ALIAS_ID" ] || [ "$EXISTING_ALIAS_ID" = "None" ]; then
-          aws bedrock-agent create-agent-alias \
+        if [ -n "$EXISTING_ALIAS_ID" ] && [ "$EXISTING_ALIAS_ID" != "None" ]; then
+          echo "Deleting existing alias $EXISTING_ALIAS_ID..."
+          aws bedrock-agent delete-agent-alias \
             --agent-id "$AGENT_ID" \
-            --agent-alias-name "$ALIAS_NAME" \
-            --routing-configuration "[{\"agentVersion\":\"${AGENT_VERSION}\"}]" \
-            --region "$AWS_REGION" \
-            --output json > alias.json
-          ALIAS_ID=$(jq -r '.agentAlias.agentAliasId' alias.json)
-        else
-          ALIAS_ID="$EXISTING_ALIAS_ID"
-          aws bedrock-agent update-agent-alias \
-            --agent-id "$AGENT_ID" \
-            --agent-alias-id "$ALIAS_ID" \
-            --agent-alias-name "$ALIAS_NAME" \
-            --routing-configuration "[{\"agentVersion\":\"${AGENT_VERSION}\"}]" \
+            --agent-alias-id "$EXISTING_ALIAS_ID" \
             --region "$AWS_REGION" > /dev/null
         fi
 
+        echo "Creating alias (Bedrock will snapshot DRAFT as a new implicit version)..."
+        aws bedrock-agent create-agent-alias \
+          --agent-id "$AGENT_ID" \
+          --agent-alias-name "$ALIAS_NAME" \
+          --region "$AWS_REGION" \
+          --output json > alias.json
+
+        ALIAS_ID=$(jq -r '.agentAlias.agentAliasId' alias.json)
         echo "alias_id=$ALIAS_ID" >> $GITHUB_OUTPUT
-        echo "Alias $ALIAS_NAME ($ALIAS_ID) now routes to version $AGENT_VERSION"
+        echo "Alias $ALIAS_NAME created: $ALIAS_ID"
 
     # -----------------------------
     # Update Lambda Environment

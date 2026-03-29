@@ -1,31 +1,11 @@
-- Python for automation and ML experimentation  
+- Supported production container workloads running on Azure Container Apps and OpenShift, including troubleshooting, diagnostics, and performance tuning.
+- Improved scalability and runtime stability of containerized services through configuration hardening, resource tuning, and environment‑specific deployment patterns.
 
-### **Observability & Reliability**
-- Logging, metrics, diagnostics  
-- Rollout safety and feature‑flag governance  
-- On‑call readiness and production support  
+### CI/CD, Automation & Platform Engineering
+- Architected and delivered enterprise CI/CD platforms using Azure DevOps, YAML pipelines, and reusable automation modules adopted across engineering teams.
+- Introduced DevOps automation that improved deployment repeatability, rollback safety, and operational reliability.
+- Developed migration tooling for Azure DevOps projects, reducing manual overhead and standardizing pipeline patterns across the organization.
 
-### **Leadership & Collaboration**
-- Mentoring senior engineers  
-- Leading technical initiatives and platform adoption  
-- Cross‑team collaboration with DevOps, cloud, product, and security  
-- Strong documentation and structured SDLC practices  
-
-### **Continuous Learning**
-- AWS Certified AI Practitioner (2026)  
-- Actively studying for AWS Machine Learning Engineer – Associate  
-- Ongoing ML and PyTorch study  
-
----
-
-# **Current Trajectory**
-
-In addition to my established background in distributed systems and cloud automation, I am now expanding into **AI Infrastructure Engineering**, with hands‑on experience building:
-
-- Bedrock Agents  
-- Bedrock Knowledge Bases  
-- Vector store retrieval systems  
-- Serverless AI backends  
-- CloudFront‑routed API architectures  
-- Fully automated IaC + CI/CD AI platforms  
-- Use of agent‑enabled AI orchestration frameworks like ClaudeCode and GitHub Copilot for automation and development acceleration
+### Observability, Reliability & Production Ownership
+- Owned LaunchDarkly integrations, improving observability, rollout safety, and feature‑flag governance across distributed systems.
+- Participated in incident response and root‑cause analysis, driving durable fixes across application, integration, and infrastructure layers.

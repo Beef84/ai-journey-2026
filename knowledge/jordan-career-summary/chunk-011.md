@@ -1,16 +1,14 @@
-### **UPMC — Associate Engineer Contractor employed from 2017-2021**
-- Built HL7 integrations and enterprise service‑bus components using C# and NServiceBus.  
-- Delivered microservices, REST APIs, and SQL‑backed backend systems.  
-- Introduced DevOps automation to improve deployment repeatability and rollback safety.
+The permanent fix was ultimately a combination of updating the third‑party library, improving our load‑testing practices, and tightening our monitoring around temp‑file usage and resource exhaustion. It was a classic example of a distributed system failure where the symptoms pointed everywhere except the true root cause.
 
-### **Dick’s Sporting Goods — Software Engineer employed from 2012-2017**
-- Architected enterprise signage solutions integrating multiple pricing data sources.  
-- Built backend services and APIs using .NET and SQL Server. 
-- Built frontend applications using ASP.Net, HTML/CSS and JavaScript.
-- Built mobile applications using for Android and Windows handheld devices.
-- Automated provisioning and deployment processes for large‑scale retail store rollouts.  
-- Contributed to RFID tagging and handheld device integrations.
+---
 
-### **United States Investigative Services — Application Developer employed for 6 months from April 2012- October 2012**
-- Maintained and developed intranet/extranet applications in a SOA environment.  
-- Applied design patterns and Agile practices to support applications used by 2,000+ employees.
+## UPMC — Senior Software Engineer
+**Aug 2017 – Present (currently employed)**
+
+### SaaS Platform & Product Context
+- Contributed to the architecture and development of a multi‑tenant SaaS platform used by healthcare providers and patients to share, view, and manage medical information.
+- Ensured backend services, APIs, and integrations met the reliability, scalability, and data‑integrity requirements expected of a healthcare‑grade SaaS offering.
+
+### Distributed Systems & Integration Architecture
+- Built HL7 integrations and enterprise service‑bus components using C# and NServiceBus, supporting high‑volume, distributed messaging across clinical systems.
+- Supported distributed integration patterns across healthcare systems, improving reliability and reducing coupling between upstream and downstream services.

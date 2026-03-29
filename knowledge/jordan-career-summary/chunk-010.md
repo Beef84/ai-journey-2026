@@ -1,9 +1,4 @@
-The permanent fix was ultimately a combination of updating the third‑party library, improving our load‑testing practices, and tightening our monitoring around temp‑file usage and resource exhaustion. It was a classic example of a distributed system failure where the symptoms pointed everywhere except the true root cause.
+The next step was to involve the vendor of the .NET PDF library the system relied on. After sharing our logs, test results, and all the troubleshooting we had done, their support team identified the underlying issue: a Microsoft package method their library used to generate temporary files had a known problem where it failed to clean up temp files. Over time, this caused the temp directory to hit its maximum file count, which in turn caused the library to fail silently in exactly the way we were seeing.
 
-### **UPMC — Senior Software Engineer employed from 2021-2026 (Currently employed in this position)**
-- Architected enterprise CI/CD platforms using Azure DevOps, YAML pipelines, and reusable automation modules that standardized deployments across dozens of teams.  
-- Built IaC tooling using Bicep, ARM, Azure CLI, PowerShell, and Bash to provision cloud environments with consistent configuration and governance.  
-- Supported and operated distributed production systems running on Docker, Kubernetes, and OpenShift.  
-- Owned LaunchDarkly integrations, enabling safe rollouts, real‑time visibility, and consistent feature‑flag usage across backend services.  
-- Developed migration tooling for Azure DevOps projects, reducing operational overhead and improving maintainability.  
-- Mentored engineers and guided architecture decisions across multiple teams.
+### Fix and follow-up
+Once the vendor provided a patched version of the library, we ran our penetration tests again in lower environments to validate the fix under load. After confirming the issue was resolved, we deployed the update to production and monitored the servers closely. The failures stopped, and we were able to remove the extra servers we had added. We kept the automated reboots in place as a precaution, but the system remained stable going forward.

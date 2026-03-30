@@ -82,8 +82,8 @@ Write-Host ""
 Write-Host "========================================="
 Write-Host " CloudFront Signed Cookies — dev env"
 Write-Host "========================================="
-Write-Host (" Domain  : {0}" -f $Domain)
-Write-Host (" Expires : {0} UTC (+{1}h)" -f $ExpiryDisplay, $ExpiryHours)
+Write-Host " Domain  : $Domain"
+Write-Host " Expires : $ExpiryDisplay UTC (+$($ExpiryHours)h)"
 Write-Host " Key ID  : $KeyPairId"
 Write-Host ""
 Write-Host "--- Browser (DevTools -> Application -> Cookies -> https://$Domain) ---"

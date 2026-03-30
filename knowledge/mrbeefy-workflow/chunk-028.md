@@ -1,13 +1,17 @@
-[Source: Mrbeefy Workflow | Section: 7.1 Terraform Apply]
+[Source: Mrbeefy Workflow]
 
-### **7.1 Terraform Apply**
-Terraform provisions:
+# Backend first
+cd backend/IaC
+terraform workspace new dev   # first time only
+terraform workspace select dev
+terraform apply
 
-- S3 buckets
-- IAM roles
-- Lambda function definition
-- Lambda Function URL
-- CloudFront
-- Route53
-- ACM certificate
-- Bedrock Agent (DRAFT)
+# Frontend
+cd frontend/IaC
+terraform workspace new dev   # first time only
+terraform workspace select dev
+terraform apply \
+  -var="cloudfront_public_key_pem=$(cat /path/to/dev-cf-public.pem)"
+```
+
+---

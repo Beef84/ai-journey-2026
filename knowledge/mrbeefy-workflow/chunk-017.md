@@ -1,11 +1,10 @@
-[Source: Mrbeefy Workflow | Section: 4.2 Ingestion Workflow]
+[Source: Mrbeefy Workflow | Section: 8.1 Access Control]
 
-### **4.2 Ingestion Workflow**
-**Exact behavior (no vague phrasing):**
-
-1. CI/CD calls the Bedrock Knowledge Base ingestion API to start a new ingestion job.  
-2. Bedrock performs the ingestion process:
-   - Reads documents from the KB S3 bucket  
-   - Generates embeddings using Titan V2  
-   - Writes vectors to the S3 Vector Store  
-   - Updates the vector index
+### **8.1 Access Control**
+- S3 frontend bucket locked behind OAC
+- KB bucket restricted to KB role
+- Lambda role restricted to logging + InvokeAgent
+- Agent execution role restricted to model + KB access
+- CloudFront restricted via `AWS:SourceArn`
+- Lambda Function URL protected by `x-cloudfront-secret` header (both environments)
+- Dev CloudFront protected by signed cookies

@@ -1,14 +1,17 @@
-[Source: Mrbeefy Architecture | Section: 3.3 Streaming Response Format]
+[Source: Mrbeefy Architecture | Section: 5.2 Agent Execution Role]
 
-## **3.3 Streaming Response Format**
-Lambda streams responses as **Server-Sent Events (SSE)**:
+### **KB S3 Access**
+- `s3:ListBucket`  
+- `s3:GetObject`
 
-```
-data: {"token": "Hello"}\n\n
-data: {"token": ", world"}\n\n
-data: [DONE]\n\n
-```
-
-The browser reads chunks via `fetch` + `ReadableStream` and appends tokens to the message bubble as they arrive. Errors stream as `data: {"error": "..."}` before the stream closes.
+### **Vector Store**
+- `s3vectors:CreateIndex`  
+- `s3vectors:DeleteIndex`  
+- `s3vectors:GetIndex`  
+- `s3vectors:ListIndexes`  
+- `s3vectors:PutVectors`  
+- `s3vectors:GetVectors`  
+- `s3vectors:DeleteVectors`  
+- `s3vectors:QueryVectors`  
 
 ---

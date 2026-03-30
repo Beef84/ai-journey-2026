@@ -1,15 +1,8 @@
-[Source: Mrbeefy Status | Section: 1. Backend still performs ingestion — but only during deploys]
+[Source: Mrbeefy Status]
 
-## **1. Backend still performs ingestion — but only during deploys**
-The backend pipeline continues to:
+# **📚 Knowledge Base Ingestion Pipeline (Dedicated Workflow)**
 
-- Deploy infrastructure  
-- Publish the knowledge bucket name to SSM  
-- Associate the KB with the agent  
-- Trigger a full ingestion as part of a release  
-
-This ensures that every backend deploy results in a fully refreshed KB.
-
-**But this is no longer the only ingestion path.**
+## **Overview**
+The platform now includes a **standalone Knowledge Base ingestion pipeline** that operates independently from the backend deployment workflow. While the backend still performs a KB ingestion as part of a full system rollout, the new dedicated pipeline allows documentation updates to be ingested without requiring a backend deploy. This separation dramatically improves iteration speed, safety, and clarity across the system.
 
 ---

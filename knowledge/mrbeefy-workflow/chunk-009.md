@@ -1,7 +1,17 @@
-[Source: Mrbeefy Workflow | Section: 3.2 CloudFront Routing]
+[Source: Mrbeefy Workflow]
 
-### **3.2 CloudFront Routing**
-1. CloudFront matches the `/chat` ordered behavior.
-2. CloudFront forwards the request to the Lambda Function URL origin.
-3. CloudFront injects the `x-cloudfront-secret` custom header on the outbound request.
-4. `compress = false` is set on this behavior — CloudFront does not buffer the response, enabling SSE streaming.
+# **4. Knowledge Base Workflow**
+
+### **4.1 KB File Management**
+1. Machine‑readable KB files are stored in a dedicated folder in the repository.  
+2. CI/CD uploads these files to the Knowledge Base S3 bucket.
+
+### **4.2 Ingestion Workflow**
+**Exact behavior (no vague phrasing):**
+
+1. CI/CD calls the Bedrock Knowledge Base ingestion API to start a new ingestion job.  
+2. Bedrock performs the ingestion process:
+   - Reads documents from the KB S3 bucket  
+   - Generates embeddings using Titan V2  
+   - Writes vectors to the S3 Vector Store  
+   - Updates the vector index

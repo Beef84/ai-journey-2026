@@ -1,8 +1,13 @@
-[Source: Mrbeefy Architecture | Section: 4.2 Lambda IAM Role > Bedrock Agent Runtime]
+[Source: Mrbeefy Architecture]
 
-### **Bedrock Agent Runtime**
-- `bedrock:InvokeAgent`  
+## **8.2 Terraform Does NOT Own**
+- Agent versions  
+- Agent aliases  
+- KB ingestion jobs  
+- Lambda environment variable updates for alias IDs  
 
-Lambda does **not** need direct access to S3 or vector store — the agent handles retrieval.
+These are handled by CI/CD to avoid drift and stale state.
 
 ---
+
+# **9. End‑to‑End Request Flow**

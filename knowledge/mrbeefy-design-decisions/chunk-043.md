@@ -1,15 +1,12 @@
-[Source: Mrbeefy Design Decisions | Section: 11.5 Explicit, Isolated Ingestion Jobs]
+[Source: Mrbeefy Design Decisions | Section: 12.3 Improved Input Behavior]
 
-## **11.5 Explicit, Isolated Ingestion Jobs**
-The KB pipeline triggers ingestion directly via the Bedrock API.
+## **12.3 Improved Input Behavior**
+The input box supports:
 
-This ensures:
+- Enter → send
+- Shift+Enter → newline
+- Auto-resizing
 
-- Deterministic ingestion  
-- Clear failure boundaries  
-- No interference with backend deploys  
-- A clean, minimal workflow focused solely on knowledge updates  
-
-The backend still performs ingestion during deploys, but the KB pipeline owns ingestion during day‑to‑day updates.
+These changes align with modern chat UX expectations and make multi-line prompts natural to write.
 
 ---

@@ -1,21 +1,15 @@
-[Source: Mrbeefy Governance | Section: 3.1 Infrastructure Changes]
+[Source: Mrbeefy Governance]
 
-## **3.1 Infrastructure Changes**
-All infrastructure changes must:
+# **4. Security Governance**
 
-- Be made in Terraform  
-- Pass validation (`terraform validate`)  
-- Pass plan review (`terraform plan`)  
-- Be deployed via CI/CD  
+## **4.1 IAM Governance**
+IAM roles follow strict least‑privilege rules:
 
-No manual changes are permitted in:
+- Lambda role: logging + `InvokeAgent`  
+- Agent execution role: model invocation + KB retrieval + vector store access  
+- KB role: S3 read + vector store operations + Titan embedding model  
+- CloudFront OAC: `s3:GetObject` with `AWS:SourceArn` restriction  
 
-- CloudFront  
-- IAM
-- S3 bucket configuration  
-- Route53  
-- Lambda configuration (except environment variables updated by CI/CD)
-
-This prevents drift and ensures reproducibility.
+No role may be expanded without explicit justification.
 
 ---

@@ -1,10 +1,13 @@
-[Source: Mrbeefy Architecture | Section: 6.3 KB Ingestion]
+[Source: Mrbeefy Architecture]
 
-## **6.3 KB Ingestion**
-- Triggered explicitly via CI/CD  
-- Uses KB role with:
-  - S3 read permissions  
-  - s3vectors permissions  
-  - Titan embedding model permissions  
+# **9. End‑to‑End Request Flow**
 
----
+### **1. User sends message from UI**
+```
+POST https://mrbeefy.academy/chat
+```
+
+### **2. CloudFront behavior matches `/chat`**
+- Forwards request to the Lambda Function URL origin
+- Injects `x-cloudfront-secret` custom header
+- `compress = false` — ensures CloudFront does not buffer the streaming response

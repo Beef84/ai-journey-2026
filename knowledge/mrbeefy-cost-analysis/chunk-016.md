@@ -1,15 +1,9 @@
-[Source: Mrbeefy Cost Analysis | Section: 4.3 Cost Impact]
+[Source: Mrbeefy Cost Analysis | Section: 5.4 Nova Pro Over Claude for Agent Reasoning]
 
-## **4.3 Cost Impact**
+## **5.4 Nova Pro Over Claude for Agent Reasoning**
 
-| Component | Before | After | Delta |
-|---|---|---|---|
-| Bedrock tokens | Same | Same | **$0** |
-| Lambda duration | ~10s | ~10s (same wall time) | **~$0** |
-| API Gateway | $1.00/million requests | **Removed** | **-$1.00/M** |
-| Lambda Function URL | n/a | $0 additional | **$0** |
-| CloudFront | Same bytes transferred | Same bytes, incremental delivery | **$0** |
+Claude models (Sonnet, Haiku) have higher per-token costs than Nova Pro. At ~$0.0022/request with Nova Pro, Claude Haiku would be slightly cheaper (~$0.0008–0.001/request) but Nova Pro produces higher-quality, more structured responses for agent workflows.
 
-Streaming saves the API Gateway per-request charge ($1.00/million) while adding zero new cost. At personal/portfolio scale this saving is negligible, but eliminating API Gateway simplifies the architecture and removes one operational surface.
+**Decision:** Nova Pro. Quality over marginal per-request savings at this scale.
 
 ---

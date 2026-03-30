@@ -1,20 +1,15 @@
-[Source: Mrbeefy Cost Analysis]
+[Source: Mrbeefy Cost Analysis | Section: 4.3 Cost Impact]
 
-# **3. Dev Environment Cost**
+## **4.3 Cost Impact**
 
-The dev workspace adds a parallel set of AWS resources, but most carry no fixed monthly cost when idle.
+| Component | Before | After | Delta |
+|---|---|---|---|
+| Bedrock tokens | Same | Same | **$0** |
+| Lambda duration | ~10s | ~10s (same wall time) | **~$0** |
+| API Gateway | $1.00/million requests | **Removed** | **-$1.00/M** |
+| Lambda Function URL | n/a | $0 additional | **$0** |
+| CloudFront | Same bytes transferred | Same bytes, incremental delivery | **$0** |
 
-| Resource | Added Cost |
-|---|---|
-| CloudFront distribution (dev) | $0 (no per-distribution fee) |
-| ACM certificate (dev subdomain) | $0 |
-| S3 buckets (dev) | <$0.01/month |
-| Lambda + Function URL (dev) | $0 when idle, same rate when used |
-| Bedrock | Same per-token rate as prod |
-| Route53 | No additional charge (same hosted zone) |
-
-**Dev incremental cost when idle: <$0.01/month**
-
-When actively testing, dev costs accumulate at the same per-request rate as prod. A typical dev session of 50–100 test chats adds **$0.10–$0.25** to the monthly bill.
+Streaming saves the API Gateway per-request charge ($1.00/million) while adding zero new cost. At personal/portfolio scale this saving is negligible, but eliminating API Gateway simplifies the architecture and removes one operational surface.
 
 ---

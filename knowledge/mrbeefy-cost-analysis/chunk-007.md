@@ -1,13 +1,13 @@
-[Source: Mrbeefy Cost Analysis | Section: 1.5 Amazon CloudFront]
+[Source: Mrbeefy Cost Analysis | Section: 1.6 Amazon S3]
 
-## **1.5 Amazon CloudFront**
+## **1.6 Amazon S3**
 
-| Metric | Rate |
-|---|---|
-| HTTPS requests | $0.0085 / 10K requests |
-| Data out to internet | $0.085 / GB (first 10TB) |
-| S3 → CloudFront | Free (same region) |
+| Bucket | Storage | Est. Cost |
+|---|---|---|
+| Frontend assets | <10 MB | <$0.01/month |
+| Knowledge Base files | <5 MB | <$0.01/month |
+| Terraform state | <1 MB | <$0.01/month |
 
-Static assets are small (<2MB SPA) and cached aggressively. At low traffic volumes, CloudFront costs **<$0.10/month**.
+S3 storage is negligible. The main S3 cost would come from GET requests during KB ingestion, which is also negligible at this scale.
 
 ---

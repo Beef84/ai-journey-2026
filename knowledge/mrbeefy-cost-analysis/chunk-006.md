@@ -1,9 +1,13 @@
-[Source: Mrbeefy Cost Analysis | Section: 1.4 Lambda Function URL]
+[Source: Mrbeefy Cost Analysis | Section: 1.5 Amazon CloudFront]
 
-## **1.4 Lambda Function URL**
+## **1.5 Amazon CloudFront**
 
-Lambda Function URLs have no per-request charge beyond the Lambda invocation itself. The previous API Gateway ($1.00/million requests) has been removed from the architecture.
+| Metric | Rate |
+|---|---|
+| HTTPS requests | $0.0085 / 10K requests |
+| Data out to internet | $0.085 / GB (first 10TB) |
+| S3 → CloudFront | Free (same region) |
 
-**Cost: $0** — absorbed into the Lambda invocation cost already captured in section 1.3.
+Static assets are small (<2MB SPA) and cached aggressively. At low traffic volumes, CloudFront costs **<$0.10/month**.
 
 ---

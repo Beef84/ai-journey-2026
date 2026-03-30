@@ -1,18 +1,15 @@
-[Source: Mrbeefy Design Decisions | Section: 11.1 Dual‑Path Ingestion Model]
+[Source: Mrbeefy Design Decisions | Section: 11.5 Explicit, Isolated Ingestion Jobs]
 
-## **11.1 Dual‑Path Ingestion Model**
-The system now supports two ingestion paths:
+## **11.5 Explicit, Isolated Ingestion Jobs**
+The KB pipeline triggers ingestion directly via the Bedrock API.
 
-1. **Backend Deployment Ingestion**  
-   - Runs automatically during backend deploys  
-   - Ensures the KB is refreshed whenever infrastructure or agent configuration changes  
-   - Acts as a safety net to guarantee consistency after releases  
+This ensures:
 
-2. **Dedicated KB Ingestion Pipeline**  
-   - Runs independently of backend deploys  
-   - Allows documentation updates to be ingested without requiring a backend rollout  
-   - Provides a safe, isolated ingestion workflow  
+- Deterministic ingestion  
+- Clear failure boundaries  
+- No interference with backend deploys  
+- A clean, minimal workflow focused solely on knowledge updates  
 
-This separation reflects the reality that **knowledge evolves faster than infrastructure**.
+The backend still performs ingestion during deploys, but the KB pipeline owns ingestion during day‑to‑day updates.
 
 ---

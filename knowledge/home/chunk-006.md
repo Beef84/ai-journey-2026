@@ -1,16 +1,16 @@
-[Source: Home | Section: 🔄 Workflows]
+[Source: Home | Section: 🧠 Engineering Philosophy]
 
-## **🔄 Workflows**
-Step‑by‑step operational flows for:
+## **🧠 Engineering Philosophy**
+The principles that guide the system’s design and evolution:
 
-- Frontend delivery  
-- Chat request processing  
-- Lambda → Bedrock invocation  
-- Knowledge Base ingestion  
-- Agent versioning and aliasing  
-- CI/CD deployment lifecycle  
-- Infrastructure provisioning  
+- Explicitness over convention  
+- Reproducibility  
+- Observability  
+- Separation of concerns  
+- Small, focused components  
+- Continuous learning  
+- Building systems that tell the truth  
 
-This section shows how the system behaves in practice.
+This section provides insight into the engineering mindset behind the platform.
 
 ---

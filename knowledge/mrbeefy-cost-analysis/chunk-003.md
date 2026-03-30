@@ -1,28 +1,17 @@
-[Source: Mrbeefy Cost Analysis | Section: 1.1 Amazon Bedrock — Nova Pro (Dominant Cost)]
+[Source: Mrbeefy Cost Analysis | Section: 1.2 Amazon Bedrock — Titan V2 Embeddings (KB Ingestion)]
 
-## **1.1 Amazon Bedrock — Nova Pro (Dominant Cost)**
+## **1.2 Amazon Bedrock — Titan V2 Embeddings (KB Ingestion)**
 
-Nova Pro is the primary cost driver. It is charged per token regardless of caching or streaming.
+Titan V2 is used only during KB ingestion, not during chat.
 
 | Metric | Rate |
 |---|---|
-| Input tokens | ~$0.0008 / 1K tokens |
-| Output tokens | ~$0.0032 / 1K tokens |
+| Embedding tokens | ~$0.00002 / 1K tokens |
 
-**Per chat request estimate:**
+**Per ingestion run:**
+- Current KB: ~200 chunks × ~1,200 chars each ≈ ~60,000 tokens
+- Cost per ingestion: ~$0.0012
 
-A typical exchange involves:
-- ~300 tokens: system instruction block
-- ~800 tokens: KB context retrieved by the agent
-- ~100 tokens: user message
-- ~400 tokens: agent response
-
-| Component | Tokens | Cost |
-|---|---|---|
-| Input (prompt + context) | ~1,200 | ~$0.00096 |
-| Output (response) | ~400 | ~$0.00128 |
-| **Per request total** | | **~$0.0022** |
-
-Richer KB content and longer conversations increase this. Complex multi-turn queries can reach $0.005–$0.01 per exchange.
+Even running ingestion daily, this is **~$0.04/month** — essentially free.
 
 ---

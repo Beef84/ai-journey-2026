@@ -1,17 +1,23 @@
-[Source: Mrbeefy Governance | Section: 2.2 Application Lifecycle Ownership (CI/CD)]
+[Source: Mrbeefy Governance]
 
-## **2.2 Application Lifecycle Ownership (CI/CD)**
+# **3. Change Management**
 
-CI/CD owns all dynamic, stateful, or versioned operations:
+## **3.1 Infrastructure Changes**
+All infrastructure changes must:
 
-- Building and deploying Lambda code  
-- Uploading Knowledge Base files  
-- Starting Knowledge Base ingestion jobs  
-- Associating the KB with the agent  
-- Creating the agent alias if missing  
-- Updating Lambda environment variables with alias IDs  
-- Invalidating CloudFront cache  
+- Be made in Terraform  
+- Pass validation (`terraform validate`)  
+- Pass plan review (`terraform plan`)  
+- Be deployed via CI/CD  
 
-CI/CD is the **single source of truth** for runtime configuration and agent lifecycle.
+No manual changes are permitted in:
+
+- CloudFront  
+- IAM
+- S3 bucket configuration  
+- Route53  
+- Lambda configuration (except environment variables updated by CI/CD)
+
+This prevents drift and ensures reproducibility.
 
 ---

@@ -1,9 +1,12 @@
-[Source: Mrbeefy Architecture | Section: 5.1 Bedrock Agent]
+[Source: Mrbeefy Architecture]
 
-## **5.1 Bedrock Agent**
-- Foundation model: **amazon.nova-pro-v1:0**  
-- Instruction block defines:
-  - KB usage rules  
-  - Response rules  
-  - Action rules  
-- Agent resource role attached
+### **3. Lambda Function URL receives**
+```
+POST https://<url-id>.lambda-url.us-east-1.on.aws
+```
+- Lambda validates the `x-cloudfront-secret` header → 403 if missing or wrong
+- Lambda opens an SSE response stream
+
+### **4. Lambda calls Bedrock Agent Runtime**
+- Using Agent ID + Alias ID
+- Bedrock streams response chunks back to Lambda

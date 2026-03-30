@@ -1,15 +1,14 @@
-[Source: Mrbeefy Governance | Section: 2.3 Runtime Ownership (AWS Services)]
+[Source: Mrbeefy Governance | Section: 3.2 Agent Lifecycle Changes]
 
-## **2.3 Runtime Ownership (AWS Services)**
+## **3.2 Agent Lifecycle Changes**
+All agent lifecycle changes must be performed through CI/CD:
 
-At runtime:
+- Alias creation  
+- Alias updates  
+- KB ingestion  
+- KB association  
+- Lambda environment variable updates  
 
-- **CloudFront** owns request routing and caching
-- **Lambda Function URL** owns request receipt and secret validation
-- **Lambda** owns request processing and Bedrock invocation
-- **Bedrock Agent** owns reasoning and retrieval  
-- **Bedrock Knowledge Base** owns vector search and document retrieval  
-
-Each service is responsible for its own operational behavior, with no cross‑service responsibilities.
+Terraform must not manage these resources to avoid drift and stale state.
 
 ---

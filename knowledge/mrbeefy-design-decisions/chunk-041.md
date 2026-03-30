@@ -1,20 +1,13 @@
-[Source: Mrbeefy Design Decisions | Section: 11.3 SSM as the Source of Truth]
+[Source: Mrbeefy Design Decisions | Section: 12.1 Rich Response Rendering]
 
-## **11.3 SSM as the Source of Truth**
-The backend pipeline now publishes:
+## **12.1 Rich Response Rendering**
+Markdown rendering was added to support:
 
-- KB bucket name  
-- KB ID  
+- Bold
+- Lists
+- Headings
+- Multi-paragraph responses
 
-…into SSM parameters.
-
-The KB pipeline reads these values at runtime, ensuring:
-
-- No Terraform coupling  
-- No querying the KB for data source ARNs  
-- No brittle assumptions about resource recreation  
-- A stable, explicit contract between pipelines  
-
-SSM becomes the **canonical interface** between backend deploys and KB ingestion.
+This improves readability and matches modern LLM output patterns.
 
 ---

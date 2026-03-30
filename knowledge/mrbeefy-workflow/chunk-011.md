@@ -1,6 +1,17 @@
-[Source: Mrbeefy Workflow | Section: 3.4 Lambda Calls Bedrock]
+[Source: Mrbeefy Workflow]
 
-### **3.4 Lambda Calls Bedrock**
-1. Lambda initializes the Bedrock Agent Runtime client.
-2. Lambda invokes the Bedrock Agent using the stored `AGENT_ID` and `AGENT_ALIAS_ID`.
-3. The agent call returns an async event stream.
+# **5. Agent Lifecycle Workflow**
+
+### **5.1 Agent Definition**
+Terraform defines the agent in DRAFT state, including:
+
+- Instruction block  
+- Execution role  
+- Foundation model
+
+### **5.2 Alias Lifecycle**
+1. CI/CD checks whether the alias exists.  
+2. If the alias does not exist, CI/CD creates it.  
+3. CI/CD updates Lambda environment variables with:
+   - `AGENT_ID`  
+   - `AGENT_ALIAS_ID`

@@ -1,29 +1,18 @@
-[Source: Mrbeefy Design Decisions | Section: 2.1 Terraform Owns Static Infrastructure]
+[Source: Mrbeefy Design Decisions]
 
-## **2.1 Terraform Owns Static Infrastructure**
-Terraform manages all resources that are:
+# **3. API Design Decisions**
 
-- Declarative  
-- Long‑lived  
-- Stable  
-- Not subject to frequent versioning  
+## **3.1 Lambda Function URL Instead of API Gateway**
 
-This includes:
+API Gateway was the original API layer. It was replaced with a Lambda Function URL when streaming was added.
 
-- S3 buckets (frontend + knowledge)
-- CloudFront distribution
-- Route53 records
-- ACM certificate
-- Lambda function definition
-- Lambda Function URL
-- IAM roles and policies
-- Bedrock Agent (DRAFT definition only)
+**Why API Gateway could not stay:**
+API Gateway HTTP API buffers the complete Lambda response before forwarding it to the client. This makes true SSE streaming impossible — the browser receives one large payload at the end rather than tokens as they arrive.
 
-Terraform **does not** manage:
+**Why Lambda Function URL:**
+- `invoke_mode = RESPONSE_STREAM` enables chunked transfer directly from Lambda to CloudFront to browser
+- No stages, no routing rules, no CORS configuration needed — the Function URL is a direct HTTPS endpoint consumed only by CloudFront
+- Simpler: one fewer AWS service, one fewer IaC module to manage
+- Same security posture: the gateway secret header check in Lambda replaces API Gateway auth
 
-- Agent versions  
-- Agent aliases  
-- KB ingestion jobs  
-- Lambda environment variable updates for alias IDs  
-
-These are dynamic and would cause drift if managed declaratively.
+**Cost:** Lambda Function URLs have no per-request charge beyond the Lambda invocation itself. Removing API Gateway saves $1.00/million requests — negligible at this scale but a simplification win.

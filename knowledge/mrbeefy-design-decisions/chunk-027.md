@@ -1,5 +1,6 @@
-[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege > Lambda Role]
+[Source: Mrbeefy Design Decisions | Section: 12.2 Auto-Scrolling]
 
-### **Lambda Role**
-- Logging  
-- `bedrock:InvokeAgent`
+## **12.2 Auto-Scrolling**
+The chat scrolls automatically to the latest message, improving conversational flow and eliminating manual scrolling after long responses.
+
+---

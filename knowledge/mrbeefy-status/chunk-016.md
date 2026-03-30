@@ -1,13 +1,13 @@
-[Source: Mrbeefy Status]
+[Source: Mrbeefy Status | Section: What Changed > Dev Access via Signed Cookies]
 
-# **🎯 Why This Pipeline Exists**
-Previously, the only way to refresh the Knowledge Base was to run the backend deployment pipeline. This created several problems:
+### **Dev Access via Signed Cookies**
+The dev CloudFront distribution requires a valid CloudFront signed cookie for every request. This means:
 
-- Documentation changes required a full backend deploy  
-- Ingestion was tightly coupled to Terraform outputs  
-- Failures in the KB ingest path could block backend releases  
-- The KB could not be updated independently or frequently  
+- Only the developer (who holds the RSA private key) can generate valid cookies
+- The public key is uploaded to CloudFront via Terraform — not a secret
+- The private key lives locally and is never committed
+- Unauthenticated requests receive a 403
 
-The new pipeline solves all of these issues by giving the KB its own lifecycle.
+See the Workflow wiki for the full setup guide.
 
 ---

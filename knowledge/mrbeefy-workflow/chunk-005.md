@@ -1,5 +1,7 @@
-[Source: Mrbeefy Workflow | Section: 2.2 Deployment]
+[Source: Mrbeefy Workflow | Section: 3.3 Lambda Validates and Opens Stream]
 
-### **2.2 Deployment**
-1. CI/CD uploads the build artifacts to the S3 frontend bucket.  
-2. CI/CD issues a CloudFront invalidation to propagate updates globally.
+### **3.3 Lambda Validates and Opens Stream**
+1. Lambda Function URL receives the request.
+2. Lambda checks the `x-cloudfront-secret` header against the `GATEWAY_SECRET` environment variable.
+3. If the header is missing or wrong, Lambda returns 403 immediately — no Bedrock call is made.
+4. Lambda opens an SSE response stream using `awslambda.streamifyResponse`.

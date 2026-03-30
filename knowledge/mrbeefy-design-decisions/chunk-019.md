@@ -1,8 +1,10 @@
-[Source: Mrbeefy Design Decisions | Section: 6.1 Nova Pro for Reasoning]
+[Source: Mrbeefy Design Decisions | Section: 9.2 Clean API Contract]
 
-## **6.1 Nova Pro for Reasoning**
-Nova Pro was selected because:
+## **9.2 Clean API Contract**
+Frontend only calls:
 
-- Strong reasoning capabilities  
-- Fast response times  
-- High-quality output for agent workflows
+```
+POST /chat
+```
+
+No other endpoints are exposed.

@@ -1,15 +1,20 @@
-[Source: Mrbeefy Design Decisions | Section: 4.2 Two-Origin Architecture]
+[Source: Mrbeefy Design Decisions]
 
-## **4.2 Two-Origin Architecture**
-CloudFront uses:
+## **5.3 Environment Variables**
+Lambda receives:
 
-1. **S3 Origin**
-   - For static frontend assets
-   - Protected by OAC
-   - No public access
+- `AGENT_ID`  
+- `AGENT_ALIAS_ID`  
 
-2. **Lambda Function URL Origin**
-   - For dynamic `/chat` requests
-   - HTTPS-only
-   - No `origin_path` — requests go directly to the function
-   - `compress = false` — required to prevent SSE stream buffering
+These are updated by CI/CD to avoid Terraform drift.
+
+---
+
+# **6. Bedrock Agent Design Decisions**
+
+## **6.1 Nova Pro for Reasoning**
+Nova Pro was selected because:
+
+- Strong reasoning capabilities  
+- Fast response times  
+- High-quality output for agent workflows

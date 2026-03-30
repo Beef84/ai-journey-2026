@@ -11,7 +11,7 @@
 param(
   [string]$PrivateKeyPath = "dev-cf-private.pem",
   [string]$Domain         = "dev.mrbeefy.academy",
-  [int]$ExpiryHours       = 24,
+  [int]$ExpiryHours       = 720,
   [int]$CdpPort           = 9222,
   [switch]$PrintOnly,
   [switch]$ThirtyDays
@@ -86,11 +86,14 @@ Write-Host " Domain  : $Domain"
 Write-Host (" Expires : " + $ExpiryDisplay + " UTC (+" + $ExpiryHours + "h)")
 Write-Host " Key ID  : $KeyPairId"
 Write-Host ""
-Write-Host "--- Browser (DevTools -> Application -> Cookies -> https://$Domain) ---"
-Write-Host "Name                      Value"
-Write-Host "CloudFront-Policy         $PolicyB64"
-Write-Host "CloudFront-Signature      $SigB64"
-Write-Host "CloudFront-Key-Pair-Id    $KeyPairId"
+$MaxAge = $ExpiryHours * 3600
+$CookieAttrs = "domain=$Domain; path=/; secure; max-age=$MaxAge"
+
+Write-Host "--- DevTools Console (navigate to https://$Domain first, then paste) ---"
+Write-Host ("document.cookie = " + '"' + "CloudFront-Policy=$PolicyB64; $CookieAttrs" + '";')
+Write-Host ("document.cookie = " + '"' + "CloudFront-Signature=$SigB64; $CookieAttrs" + '";')
+Write-Host ("document.cookie = " + '"' + "CloudFront-Key-Pair-Id=$KeyPairId; $CookieAttrs" + '";')
+Write-Host "location.reload();"
 Write-Host ""
 
 if ($PrintOnly) { exit 0 }

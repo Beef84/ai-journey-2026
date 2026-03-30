@@ -1,8 +1,12 @@
-[Source: Jordan Skills | Section: CI/CD Platform Engineering]
+[Source: Jordan Skills]
 
-### **CI/CD Platform Engineering**
-- Azure DevOps Pipelines (YAML, templates, reusable modules)  
-- GitHub Actions  
-- Release orchestration and deployment automation  
-- Rollback strategies and safe deployment patterns  
-- Artifact management and versioning
+### **Technical Leadership**
+- Mentoring senior and mid‑level engineers  
+- Leading platform adoption initiatives  
+- Driving architectural decisions across teams  
+- Establishing engineering standards and patterns
+
+### **Cross‑Team Collaboration**
+- Working with DevOps, cloud, product, and security teams  
+- Coordinating across backend, frontend, and infrastructure groups  
+- Translating business requirements into technical architecture

@@ -1,4 +1,7 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Leadership & Cross‑Team Collaboration]
 
-## UPMC — Senior Software Engineer
-**Aug 2017 – Present (currently employed)**
+### Leadership & Cross‑Team Collaboration
+- Mentored engineers, shaped engineering practices, and guided architectural decisions across multiple teams.
+- Partnered with platform, cloud, and product groups to align shared services, integration standards, and modernization strategies.
+
+---

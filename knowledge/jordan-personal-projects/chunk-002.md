@@ -1,9 +1,13 @@
-[Source: Jordan Personal Projects | Section: Mr. Beefy — AI Infrastructure & Interactive Resume Platform]
+[Source: Jordan Personal Projects | Section: Your Life — Multi‑Tenant AI SaaS Platform (In Development)]
 
-## Mr. Beefy — AI Infrastructure & Interactive Resume Platform
+## Your Life — Multi‑Tenant AI SaaS Platform (In Development)
 
-- Fully serverless AI agent hosted at https://mrbeefy.academy
-- Built on AWS using Bedrock Agents, Lambda Function URL (SSE streaming), S3 with CloudFront (OAC), and Terraform for all infrastructure
-- React frontend with dynamic agent interaction and knowledge‑driven routing
-- Custom ingestion pipeline using S3 events, vector embeddings, and retrieval‑augmented generation
-- Codebase hosted in GitHub with GitHub Actions for CI/CD, automated deployments, and environment promotion
+- Architected around three independently scalable planes:
+  - Control Plane: identity, tenant provisioning, metadata, configuration, and global orchestration
+  - Tenant Plane: user‑facing APIs, private agents, ingestion endpoints, and tenant‑isolated data stores
+  - AI Plane: ingestion, embeddings, analytics, and generative AI workflows
+- AI Plane integrates AWS Rekognition, Translate, Transcribe, and SageMaker foundational models, exposed through TypeScript services and both TypeScript and Python SDKs
+- Uses Lambda, API Gateway, S3, SNS/SQS, DynamoDB, OpenSearch/Vector DB, and Step Functions for orchestration
+- React frontend for user interaction and agent experiences
+- Infrastructure managed through AWS CodeCommit, CloudFormation, CodePipeline, and CodeDeploy
+- Patent work in progress for core architectural concepts

@@ -1,9 +1,11 @@
-[Source: Mrbeefy Design Decisions | Section: 5.1 Node.js 20 Runtime]
+[Source: Mrbeefy Design Decisions]
 
-## **5.1 Node.js 20 Runtime**
-Chosen for:
+# **7. Knowledge Base Design Decisions**
 
-- Fast cold starts  
-- Native AWS SDK v3 support  
-- Simple JSON handling  
-- Lightweight deployment package
+## **7.1 S3 Vector Store**
+Chosen because:
+
+- Fully managed  
+- Scales automatically  
+- Integrates with Titan embeddings  
+- No infrastructure to maintain

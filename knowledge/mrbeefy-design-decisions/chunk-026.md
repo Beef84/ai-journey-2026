@@ -1,4 +1,15 @@
-[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege]
+[Source: Mrbeefy Design Decisions]
 
-## **8.1 Least Privilege**
-Each role has only the permissions required for its function.
+# **12. Frontend UI Design Decisions**
+
+## **12.1 Rich Response Rendering**
+Markdown rendering was added to support:
+
+- Bold
+- Lists
+- Headings
+- Multi-paragraph responses
+
+This improves readability and matches modern LLM output patterns.
+
+---

@@ -1,6 +1,7 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Distributed Systems & Integration Architecture]
+[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > Application Architecture & Multi‑Channel Integration]
 
-### Distributed Systems & Integration Architecture
-- Built HL7 integrations and enterprise service‑bus components using C# and NServiceBus, supporting high‑volume, distributed messaging across clinical systems.
-- Supported distributed integration patterns across healthcare systems, improving reliability and reducing coupling between upstream and downstream services.
-- Developed API and service‑to‑service communication patterns that improved consistency and reduced integration friction across teams.
+### Application Architecture & Multi‑Channel Integration
+- Designed and developed a Windows‑based GUI for corporate signage teams, enabling drag‑and‑drop placement of template objects whose metadata was later consumed by backend services.
+- Built a WCF service responsible for merging template metadata with real‑time item, pricing, and promotion data sourced from SQL Server and multiple distributed systems.
+- Architected and delivered corporate and store‑facing intranet applications (C#, ASP.NET) that generated sign data and integrated with pricing, item, and promotional databases.
+- Ensured consistent behavior across desktop, intranet, and mobile channels, aligning UI, API, and data‑layer contracts.

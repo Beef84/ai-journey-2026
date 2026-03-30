@@ -1,13 +1,8 @@
-[Source: Mrbeefy Design Decisions | Section: 4.3 Behavior Design]
+[Source: Mrbeefy Design Decisions | Section: 6.2 Titan V2 for Embeddings]
 
-## **4.3 Behavior Design**
-- Default behavior → S3
-- Ordered behavior → `/chat` → Lambda Function URL
+## **6.2 Titan V2 for Embeddings**
+Titan V2 was chosen because:
 
-This ensures:
-
-- The SPA loads instantly  
-- API calls bypass caching  
-- Only the intended path hits the backend  
-
----
+- High-quality text embeddings  
+- Native integration with S3 Vector Store  
+- Optimized for retrieval tasks

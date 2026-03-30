@@ -1,4 +1,4 @@
-[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Scalability and planes]
+[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Trade-offs considered]
 
-### Scalability and planes
-Scalability is handled by structuring the platform into independently scalable planes. The Control Plane manages identity, tenant metadata, and provisioning. The Tenant Plane handles user‑facing application logic and API surfaces. The AI Plane processes ingestion, summarization, vector search, and AI enabled features like transcription, translation, recognition, and generation capabilities. Each plane scales horizontally based on its own workload characteristics, which prevents bottlenecks and keeps the system efficient as usage grows.
+### Trade-offs considered
+Before finalizing the architecture, I evaluated several competing designs: single‑tenant versus multi‑tenant databases, monolithic versus distributed ingestion, single versus dual agent models, and shared versus per‑tenant vector stores. I documented the trade‑offs behind each option, including isolation guarantees, operational complexity, performance characteristics, and cost implications. This documentation sits alongside the infrastructure and DevOps standards I’m writing for the platform, ensuring that my future self and future contributors understand not just what the architecture is, but why it is that way.

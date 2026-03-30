@@ -1,12 +1,5 @@
-[Source: Jordan Career Summary | Section: United States Investigative Services — Application Developer]
+[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > Mobile, Device & Edge Integrations]
 
-## United States Investigative Services — Application Developer
-**Apr 2012 – Oct 2012**
-
-- Maintained and enhanced ASP.NET and C# intranet and extranet applications used by private investigators performing government‑contracted background checks for federal clearance levels.
-- Worked within a service‑oriented architecture, supporting distributed workflows that handled sensitive investigative data across multiple internal systems.
-- Implemented features, fixed defects, and improved application reliability for tools used by 2,000+ employees across field operations and corporate teams.
-- Applied foundational design patterns, Agile practices, and structured SDLC processes while working directly with the department director on high‑priority enhancements.
-- Contributed to data‑driven application logic, UI updates, and integration points that supported secure information flow between investigative teams and backend services.
-
----
+### Mobile, Device & Edge Integrations
+- Built Windows and Android mobile applications enabling store associates to generate and print signs directly from handheld devices, integrating with mobile printers for real‑time, in‑aisle signage updates.
+- Leveraged mobile‑device experience to contribute to an RFID‑based firearm inventory solution, designing scanning workflows and integrating mobile data capture with backend systems.

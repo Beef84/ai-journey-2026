@@ -1,15 +1,19 @@
-[Source: Mrbeefy Workflow | Section: 9.1 Generate the Gateway Secret]
+[Source: Mrbeefy Workflow]
 
-## **9.1 Generate the Gateway Secret**
+### **8.2 TLS**
+- ACM certificate for domain
+- CloudFront enforces HTTPS
+- Lambda Function URL enforces HTTPS
 
-> **What it is:** A shared secret that Lambda checks on every request. Any call to the raw Lambda Function URL without this header returns 403 immediately — Bedrock is never reached. CloudFront injects it automatically, so legitimate browser requests always pass.
+### **8.3 IAM Separation**
+Each component has a dedicated role with least‑privilege permissions.
 
-Run this once in any terminal (PowerShell, Git Bash, WSL, or macOS/Linux shell — openssl is available in all of them):
+---
 
-```bash
-openssl rand -hex 32
-```
+# **9. First-Time Manual Setup**
 
-Copy the output. You will paste this same value into three places in the next two steps. **It must be identical in all three.**
+This section is the complete checklist of every manual step required to stand up Mr. Beefy from scratch. These steps are performed once per environment and are **not automated by CI/CD**. Do them in order — each step depends on the one before it.
+
+> **Prod vs Dev:** Steps 9.1–9.5 are required for **both** environments. Steps 9.6–9.9 are **dev only** — the dev CloudFront distribution requires signed cookies; prod does not.
 
 ---

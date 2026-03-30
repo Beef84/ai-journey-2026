@@ -1,14 +1,21 @@
-[Source: Mrbeefy Design Decisions | Section: 11.4 Non‑Destructive S3 Sync]
+[Source: Mrbeefy Design Decisions]
 
-## **11.4 Non‑Destructive S3 Sync**
-The KB pipeline intentionally avoids destructive sync flags.
+## **9.3 CloudFront + S3 Hosting**
+Provides:
 
-This prevents:
-
-- Metadata loss  
-- Embedding corruption  
-- Ingestion failures caused by missing files  
-
-Only new or updated files are uploaded, preserving the integrity of the vector store.
+- Global caching  
+- Instant invalidation  
+- Zero server maintenance  
+- Strong security posture  
 
 ---
+
+# **10. Deployment Design Decisions**
+
+## **10.1 Terraform for Infrastructure**
+Ensures:
+
+- Reproducibility  
+- Version control  
+- Clear diffs  
+- Safe rollbacks

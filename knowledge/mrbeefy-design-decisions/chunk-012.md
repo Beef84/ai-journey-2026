@@ -3,18 +3,12 @@
 ## **5.3 Environment Variables**
 Lambda receives:
 
-- `AGENT_ID`  
-- `AGENT_ALIAS_ID`  
+- `AGENT_ID`
+- `AGENT_ALIAS_ID`
+- `KB_ID`
 
-These are updated by CI/CD to avoid Terraform drift.
+`AGENT_ALIAS_ID` and `KB_ID` are placeholders in Terraform; CI/CD overwrites them with real values after alias creation and KB setup.
 
 ---
 
 # **6. Bedrock Agent Design Decisions**
-
-## **6.1 Nova Pro for Reasoning**
-Nova Pro was selected because:
-
-- Strong reasoning capabilities  
-- Fast response times  
-- High-quality output for agent workflows

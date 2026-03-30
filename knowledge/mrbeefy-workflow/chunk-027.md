@@ -1,16 +1,22 @@
-[Source: Mrbeefy Workflow | Section: 9.7 Deploy the Dev Environment (Dev only)]
+[Source: Mrbeefy Workflow]
 
-## **9.7 Deploy the Dev Environment** *(Dev only)*
+# Generate a 2048-bit RSA private key
+openssl genrsa -out dev-cf-private.pem 2048
 
-The dev workspace creates a fully isolated parallel stack (`mrbeefy-dev-*`) at `dev.mrbeefy.academy`.
+# Extract the public key from it
+openssl rsa -pubout -in dev-cf-private.pem -out dev-cf-public.pem
+```
 
-**Via CI/CD (recommended):**
+**Add the public key as a GitHub secret:**
 
-1. Go to **GitHub Actions → deploy-backend → Run workflow**. Set `environment: dev`. This creates all backend resources including the `mrbeefy-dev-kb` Knowledge Base.
-2. Go to **GitHub Actions → deploy-frontend → Run workflow**. Set `environment: dev`. This creates the CloudFront distribution, uploads the public key, and creates the key group.
+Go to: **GitHub repo → Settings → Secrets and Variables → Actions → New repository secret**
 
-Pushes to the `dev` branch trigger both pipelines automatically.
+| Secret Name | Value |
+|---|---|
+| `DEV_CF_PUBLIC_KEY` | Full contents of `dev-cf-public.pem` (including `-----BEGIN PUBLIC KEY-----` header/footer) |
 
-**Via Terraform locally (alternative):**
+The CI/CD frontend pipeline reads this secret and passes it to Terraform when deploying the dev environment.
 
-```bash
+> `dev-cf-public.pem` is not a secret — it goes into CloudFront via Terraform. `dev-cf-private.pem` is a secret — keep it safe and never commit it. The repo `.gitignore` excludes all `*.pem` files.
+
+---

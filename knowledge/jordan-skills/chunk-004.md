@@ -1,10 +1,9 @@
 [Source: Jordan Skills]
 
 ### **Containerization & Orchestration**
-- Docker  
-- Kubernetes  
-- OpenShift  
-- Containerized production workloads  
+- Docker
+- OpenShift
+- Containerized production workloads
 - Deployment automation for container platforms
 
 ### **Infrastructure‑as‑Code (IaC)**

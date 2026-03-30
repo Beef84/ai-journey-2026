@@ -1,9 +1,6 @@
-[Source: Mrbeefy Design Decisions | Section: 12.6 Typography: Permanent Marker + Nunito]
+[Source: Mrbeefy Design Decisions | Section: 12.2 Auto-Scrolling]
 
-## **12.6 Typography: Permanent Marker + Nunito**
-Two fonts were chosen to match the logo's hand-drawn personality:
-
-- **Permanent Marker** (Google Fonts) — used for the page title and section headings. Matches the brush-lettered style of the logo text.
-- **Nunito** — used for body text, input, and button labels. Clean and friendly, complements the display font without competing with it.
+## **12.2 Auto-Scrolling**
+The chat scrolls automatically to the latest message, improving conversational flow and eliminating manual scrolling after long responses.
 
 ---

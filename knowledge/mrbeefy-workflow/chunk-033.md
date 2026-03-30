@@ -1,18 +1,17 @@
 [Source: Mrbeefy Workflow]
 
-# **11. Summary**
+# **10. Monitoring Workflow**
 
-The Mr. Beefy workflow is a fully serverless, tightly integrated system that:
+### **10.1 CloudWatch**
+- Lambda logs
+- CloudFront access logs (optional)
 
-- Delivers a global frontend
-- Routes chat requests through CloudFront to Lambda Function URL
-- Validates every request via secret header before touching Bedrock
-- Streams responses token-by-token via SSE
-- Delegates reasoning to Bedrock
-- Retrieves context from a vectorized Knowledge Base
-- Automates lifecycle operations via CI/CD
-- Maintains infrastructure via Terraform
+### **10.2 CloudFront**
+- Cache hit/miss metrics
+- Optional standard logs
 
-This workflow ensures the system is scalable, maintainable, secure, and production-ready.
+### **10.3 Bedrock**
+- KB ingestion job status
+- Agent invocation metrics
 
 ---

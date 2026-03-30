@@ -1,16 +1,8 @@
-[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege]
+[Source: Mrbeefy Design Decisions | Section: 7.2 Explicit Ingestion]
 
-### **Lambda Role**
-- Logging  
-- `bedrock:InvokeAgent`
+## **7.2 Explicit Ingestion**
+KB ingestion is triggered manually via CI/CD because:
 
-### **Agent Execution Role**
-- Model invocation  
-- KB retrieval  
-- S3 read access  
-- Vector store operations
-
-### **KB Role**
-- S3 read  
-- s3vectors operations  
-- Titan embedding model invocation
+- AWS does not auto-ingest
+- Ingestion should be deterministic
+- KB updates should be intentional

@@ -9,8 +9,8 @@ Titan V2 is used only during KB ingestion, not during chat.
 | Embedding tokens | ~$0.00002 / 1K tokens |
 
 **Per ingestion run:**
-- Current KB: ~200 chunks × ~1,200 chars each ≈ ~60,000 tokens
-- Cost per ingestion: ~$0.0012
+- Current KB: ~267 chunks × ~1,500 chars each ≈ ~100,000 tokens
+- Cost per ingestion: ~$0.002
 
 Even running ingestion daily, this is **~$0.04/month** — essentially free.
 

@@ -1,13 +1,24 @@
-[Source: Jordan Career Summary | Section: Integrated Management Systems — Developer / Systems Support Specialist]
+[Source: Jordan Career Summary]
 
-## Integrated Management Systems — Developer / Systems Support Specialist
-**Apr 2011 – Apr 2012**
+### **Continuous Learning**
+- AWS Certified AI Practitioner (2026)  
+- Actively studying for AWS Machine Learning Engineer – Associate  
+- Ongoing ML and PyTorch study  
 
-- Supported a suite of COBOL‑based business applications used by stone quarries and aggregate‑industry clients, troubleshooting system and network issues across customer environments.
-- Modernized legacy workflows by designing and developing VB.NET and SQL Server components that extended and enhanced the existing COBOL system.
-- Architected and built a modern desktop GUI that served as the new entry point for the platform, replacing outdated COBOL screens with a contemporary Windows‑based interface.
-- Developed SQL Server 2008 data structures and supporting logic to integrate modern .NET components with legacy COBOL processes.
-- Redesigned and rebuilt the company’s public website using HTML, CSS, and JavaScript.
-- Provided hands‑on customer support, system troubleshooting, and environment maintenance for small‑business clients.
+---
+
+# **Current Trajectory**
+
+In addition to my established background in distributed systems and cloud automation, I am now expanding into **AI Infrastructure Engineering**, with hands‑on experience building:
+
+- Bedrock Agents  
+- Bedrock Knowledge Bases  
+- Vector store retrieval systems  
+- Serverless AI backends  
+- CloudFront‑routed API architectures  
+- Fully automated IaC + CI/CD AI platforms  
+- Use of agent‑enabled AI orchestration frameworks like ClaudeCode and GitHub Copilot for automation and development acceleration
+
+This work demonstrates end‑to‑end ownership of a modern AI system — architecture, infrastructure, backend, frontend, automation, and documentation.
 
 ---

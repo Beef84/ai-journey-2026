@@ -1,15 +1,13 @@
-[Source: Mrbeefy Design Decisions]
+[Source: Mrbeefy Design Decisions | Section: 11.2 Why a Separate KB Pipeline Was Introduced]
 
-# **12. Frontend UI Design Decisions**
+## **11.2 Why a Separate KB Pipeline Was Introduced**
+Originally, KB ingestion was tied to backend deployments. This created friction:
 
-## **12.1 Rich Response Rendering**
-Markdown rendering was added to support:
+- Documentation updates required a full backend deploy  
+- KB ingestion failures could block infrastructure releases  
+- Terraform outputs were tightly coupled to ingestion  
+- No safe way to update the KB independently  
 
-- Bold
-- Lists
-- Headings
-- Multi-paragraph responses
-
-This improves readability and matches modern LLM output patterns.
+The dedicated pipeline resolves these issues by giving the KB its own lifecycle.
 
 ---

@@ -1,17 +1,18 @@
-[Source: Mrbeefy Workflow | Section: 9.5 First-Time Production Deploy Sequence]
+[Source: Mrbeefy Workflow | Section: 9.4 Verify .gitignore Covers the Secret Files]
 
-## **9.5 First-Time Production Deploy Sequence**
+## **9.4 Verify .gitignore Covers the Secret Files**
 
-> **Why this order matters:** The frontend Terraform needs the Lambda Function URL domain as an input variable. That value only exists after the backend is deployed. Do backend first, capture the output, then deploy frontend. After this first time, CI/CD handles the handoff via SSM automatically.
+> **Why:** If `terraform.tfvars` is accidentally committed, the gateway secret is exposed in git history. Verify this before running any git commands.
 
-**Step 1 — Initialize and select the prod workspace (default):**
-```bash
-cd backend/IaC
-terraform init
-terraform workspace list        # confirm "default" exists
-terraform workspace select default
+In both `backend/IaC/` and `frontend/IaC/`, confirm `.gitignore` contains at minimum:
+
+```
+terraform.tfvars
+.terraform/
+*.tfstate
+*.tfstate.backup
 ```
 
-**Step 2 — Deploy the backend:**
-```bash
-terraform apply
+If these lines are missing, add them before doing anything else.
+
+---

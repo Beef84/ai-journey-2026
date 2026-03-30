@@ -1,30 +1,13 @@
-[Source: Mrbeefy Design Decisions]
+[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege]
 
-## **10.2 CI/CD for Dynamic Operations**
-Ensures:
+### **KB Role**
+- S3 read  
+- s3vectors operations  
+- Titan embedding model invocation
 
-- No stale alias IDs  
-- No Terraform drift  
-- Clean agent lifecycle  
-- Automated KB ingestion  
+### **CloudFront OAC**
+- `s3:GetObject` with `AWS:SourceArn` condition  
 
----
-
-# **11. Knowledge Base Lifecycle Design Decisions**
-
-## **11.1 Dual‑Path Ingestion Model**
-The system now supports two ingestion paths:
-
-1. **Backend Deployment Ingestion**  
-   - Runs automatically during backend deploys  
-   - Ensures the KB is refreshed whenever infrastructure or agent configuration changes  
-   - Acts as a safety net to guarantee consistency after releases  
-
-2. **Dedicated KB Ingestion Pipeline**  
-   - Runs independently of backend deploys  
-   - Allows documentation updates to be ingested without requiring a backend rollout  
-   - Provides a safe, isolated ingestion workflow  
-
-This separation reflects the reality that **knowledge evolves faster than infrastructure**.
+This structure isolates responsibilities and minimizes blast radius.
 
 ---

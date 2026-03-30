@@ -1,13 +1,14 @@
-[Source: Mrbeefy Design Decisions | Section: 12.1 Rich Response Rendering]
+[Source: Mrbeefy Design Decisions | Section: 13.4 Multi-Environment Strategy: Terraform Workspaces]
 
-## **12.1 Rich Response Rendering**
-Markdown rendering was added to support:
+## **13.4 Multi-Environment Strategy: Terraform Workspaces**
 
-- Bold
-- Lists
-- Headings
-- Multi-paragraph responses
+Terraform workspaces were chosen over separate directories or separate accounts because:
 
-This improves readability and matches modern LLM output patterns.
+- **Same account:** No cross-account IAM complexity for a personal project
+- **Workspace-aware naming:** `terraform.workspace` drives the resource prefix, keeping dev and prod fully isolated by name
+- **Automatic state isolation:** Each workspace gets its own state key in S3 with no extra configuration
+- **Minimal code duplication:** One set of Terraform files serves all environments
+
+The `default` workspace maps to prod, preserving all existing resource names with no migration needed.
 
 ---

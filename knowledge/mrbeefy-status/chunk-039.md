@@ -1,10 +1,6 @@
-[Source: Mrbeefy Status | Section: 2. Auto‑Scrolling Message Container]
+[Source: Mrbeefy Status]
 
-## **2. Auto‑Scrolling Message Container**
-A new scroll anchor ensures the chat always snaps to the latest message. This mirrors modern messaging apps and prevents the user from manually scrolling after every response.
+# **🧠 Phase 2: Intelligent Chunking & Retrieval**
 
-- Smooth scroll behavior  
-- No layout jumpiness  
-- Works for both user and assistant messages  
-
----
+## **Overview**
+Replaced the inline wiki chunker with a standalone two-pass algorithm and increased KB retrieval depth.

@@ -1,7 +1,7 @@
-[Source: Jordan Career Summary | Section: Leadership & Collaboration]
+[Source: Jordan Career Summary | Section: DevOps & CI/CD]
 
-### **Leadership & Collaboration**
-- Mentoring senior engineers  
-- Leading technical initiatives and platform adoption  
-- Cross‑team collaboration with DevOps, cloud, product, and security  
-- Strong documentation and structured SDLC practices
+### **DevOps & CI/CD**
+- Azure DevOps Pipelines (YAML, templates, automation modules)  
+- Git, GitHub, SCM workflows  
+- Automated deployments, release orchestration, rollback strategies  
+- Monitoring, diagnostics, incident management

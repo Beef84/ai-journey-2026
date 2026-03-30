@@ -1,22 +1,19 @@
-[Source: Mrbeefy Workflow | Section: 9.3 Create Local Terraform Variable Files (only needed for manual local deploys)]
+[Source: Mrbeefy Workflow | Section: 9.2 Add GitHub Repository Secrets]
 
-## **9.3 Create Local Terraform Variable Files** *(only needed for manual local deploys)*
+## **9.2 Add GitHub Repository Secrets**
 
-> **What these are:** The CI/CD pipelines receive `gateway_secret` directly from GitHub secrets and pass it to Terraform via `-var` flags — no local file needed for pipeline runs. These `terraform.tfvars` files are only required if you run `terraform apply` manually from your own machine. If you always deploy through CI/CD, you can skip this step entirely.
+> **What these are:** GitHub Actions injects these into every CI/CD run. Without them the pipelines cannot authenticate to AWS or protect the Lambda endpoint.
 
-If you do want to run Terraform locally, create these files. They must never be committed.
+Go to: **GitHub repo → Settings → Secrets and Variables → Actions → New repository secret**
 
-**`backend/IaC/terraform.tfvars`:**
-```hcl
-gateway_secret = "paste-your-value-from-9.1-here"
-```
+Add all three:
 
-**`frontend/IaC/terraform.tfvars`:**
-```hcl
-gateway_secret      = "paste-your-value-from-9.1-here"
-function_url_domain = ""
-```
+| Secret Name | Where to get the value |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | IAM user in AWS Console → Security credentials |
+| `AWS_SECRET_ACCESS_KEY` | Same IAM user — only shown once at creation |
+| `GATEWAY_SECRET` | The value you generated in step 9.1 |
 
-> Leave `function_url_domain` blank for now. You will fill it in after the first backend deploy in step 9.5.
+> **Never** put these values in code or commit them to the repository.
 
 ---

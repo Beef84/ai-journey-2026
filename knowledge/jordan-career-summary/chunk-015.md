@@ -1,6 +1,6 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > CI/CD, Automation & Platform Engineering]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Cloud, Containers & Infrastructure‑as‑Code]
 
-### CI/CD, Automation & Platform Engineering
-- Architected and delivered enterprise CI/CD platforms using Azure DevOps, YAML pipelines, and reusable automation modules adopted across engineering teams.
-- Introduced DevOps automation that improved deployment repeatability, rollback safety, and operational reliability.
-- Developed migration tooling for Azure DevOps projects, reducing manual overhead and standardizing pipeline patterns across the organization.
+### Cloud, Containers & Infrastructure‑as‑Code
+- Built IaC tooling for Azure provisioning using Bicep, ARM, Azure CLI, PowerShell, and Bash, enabling consistent, repeatable environment creation.
+- Supported production container workloads running on Azure Container Apps and OpenShift, including troubleshooting, diagnostics, and performance tuning.
+- Improved scalability and runtime stability of containerized services through configuration hardening, resource tuning, and environment‑specific deployment patterns.

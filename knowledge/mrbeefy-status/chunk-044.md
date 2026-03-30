@@ -1,11 +1,10 @@
-[Source: Mrbeefy Status | Section: 6. Dark Theme with Teal Accent Palette]
+[Source: Mrbeefy Status | Section: Agent Instruction Improvements]
 
-## **6. Dark Theme with Teal Accent Palette**
-The entire site now uses a dark theme derived from the logo:
+## **Agent Instruction Improvements**
 
-- **Background:** pure black
-- **Shell and card:** dark teal-tinted surfaces — distinct from the background without being obviously colored
-- **Accent color:** `#5b9090` — sampled directly from the logo’s "BEEF AI SOFTWARE" text
-- **Buttons, borders, scrollbars, cursor:** all use the teal accent
+### **Identity — Non-Negotiable**
+The agent was responding as a "question answering agent" or denying it was Mr. Beefy when asked directly. The instruction now explicitly:
 
----
+- Forbids describing itself as a "question answering agent", "AI assistant", or any generic label
+- Requires answering identity questions in first person using KB content
+- Clarifies that KB documentation about Mr. Beefy is written in third person as reference material — but refers to the agent itself

@@ -1,5 +1,7 @@
-[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > Mobile, Device & Edge Integrations]
+[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > Application Architecture & Multi‑Channel Integration]
 
-### Mobile, Device & Edge Integrations
-- Built Windows and Android mobile applications enabling store associates to generate and print signs directly from handheld devices, integrating with mobile printers for real‑time, in‑aisle signage updates.
-- Leveraged mobile‑device experience to contribute to an RFID‑based firearm inventory solution, designing scanning workflows and integrating mobile data capture with backend systems.
+### Application Architecture & Multi‑Channel Integration
+- Designed and developed a Windows‑based GUI for corporate signage teams, enabling drag‑and‑drop placement of template objects whose metadata was later consumed by backend services.
+- Built a WCF service responsible for merging template metadata with real‑time item, pricing, and promotion data sourced from SQL Server and multiple distributed systems.
+- Architected and delivered corporate and store‑facing intranet applications (C#, ASP.NET) that generated sign data and integrated with pricing, item, and promotional databases.
+- Ensured consistent behavior across desktop, intranet, and mobile channels, aligning UI, API, and data‑layer contracts.

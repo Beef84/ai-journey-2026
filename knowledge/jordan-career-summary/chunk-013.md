@@ -1,7 +1,6 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Architecture, Modernization & Scalability]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Distributed Systems & Integration Architecture]
 
-### Architecture, Modernization & Scalability
-- Decoupled a legacy monolith into independently deployable Business Capabilities, each delivered through vertical repositories containing their own database, services, APIs, UI, and automated tests — improving scalability, maintainability, and deployment safety.
-- Converted .NET Framework applications and libraries to .NET 6, documenting modernization patterns and establishing repeatable upgrade practices for other teams.
-- Delivered microservices, REST APIs, and SQL Server–backed backend systems, improving performance, reliability, and long‑term maintainability.
-- Designed and enforced architectural patterns for LaunchDarkly usage, including .NET and Angular wrappers that standardized naming conventions, integration patterns, and rollout safety across distributed systems.
+### Distributed Systems & Integration Architecture
+- Built HL7 integrations and enterprise service‑bus components using C# and NServiceBus, supporting high‑volume, distributed messaging across clinical systems.
+- Supported distributed integration patterns across healthcare systems, improving reliability and reducing coupling between upstream and downstream services.
+- Developed API and service‑to‑service communication patterns that improved consistency and reduced integration friction across teams.

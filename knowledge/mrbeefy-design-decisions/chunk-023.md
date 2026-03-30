@@ -1,20 +1,10 @@
-[Source: Mrbeefy Design Decisions | Section: 11.3 SSM as the Source of Truth]
+[Source: Mrbeefy Design Decisions | Section: 9.2 Clean API Contract]
 
-## **11.3 SSM as the Source of Truth**
-The backend pipeline now publishes:
+## **9.2 Clean API Contract**
+Frontend only calls:
 
-- KB bucket name  
-- KB ID  
+```
+POST /chat
+```
 
-…into SSM parameters.
-
-The KB pipeline reads these values at runtime, ensuring:
-
-- No Terraform coupling  
-- No querying the KB for data source ARNs  
-- No brittle assumptions about resource recreation  
-- A stable, explicit contract between pipelines  
-
-SSM becomes the **canonical interface** between backend deploys and KB ingestion.
-
----
+No other endpoints are exposed.

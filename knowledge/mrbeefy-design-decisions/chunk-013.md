@@ -1,8 +1,8 @@
-[Source: Mrbeefy Design Decisions | Section: 6.2 Titan V2 for Embeddings]
+[Source: Mrbeefy Design Decisions | Section: 6.1 Claude 3.5 Haiku for Reasoning]
 
-## **6.2 Titan V2 for Embeddings**
-Titan V2 was chosen because:
+## **6.1 Claude 3.5 Haiku for Reasoning**
+Claude 3.5 Haiku was selected because:
 
-- High-quality text embeddings  
-- Native integration with S3 Vector Store  
-- Optimized for retrieval tasks
+- Strong reasoning capabilities for agent workflows
+- Low per-token cost at portfolio scale
+- Native Bedrock integration via cross-region inference profile (`us.anthropic.claude-3-5-haiku-20241022-v1:0`)

@@ -1,10 +1,8 @@
-[Source: Jordan Career Summary]
+[Source: Jordan Career Summary | Section: Cloud & Infrastructure]
 
-### **Automation & Scripting**
-- PowerShell, Bash, Azure CLI  
-- Python for automation and ML experimentation
-
-### **Observability & Reliability**
-- Logging, metrics, diagnostics  
-- Rollout safety and feature‑flag governance  
-- On‑call readiness and production support
+### **Cloud & Infrastructure**
+- Azure (App Service, API Management, Container Apps)
+- Cloud‑agnostic patterns applicable to AWS/GCP
+- Docker, OpenShift
+- Environment provisioning, configuration, governance  
+- IaC with Bicep, ARM, Terraform concepts

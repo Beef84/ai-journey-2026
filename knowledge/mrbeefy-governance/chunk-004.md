@@ -1,26 +1,15 @@
-[Source: Mrbeefy Governance | Section: 2.1 Infrastructure Ownership (Terraform)]
+[Source: Mrbeefy Governance | Section: 2.3 Runtime Ownership (AWS Services)]
 
-## **2.1 Infrastructure Ownership (Terraform)**
-Terraform owns:
+## **2.3 Runtime Ownership (AWS Services)**
 
-- S3 buckets  
-- CloudFront distribution  
-- Route53 DNS records  
-- ACM certificates  
-- Lambda Function URL
-- Lambda function definition
-- IAM roles and policies  
-- Bedrock Agent (DRAFT definition only)  
+At runtime:
 
-Terraform is the **single source of truth** for all static, long‑lived infrastructure.
+- **CloudFront** owns request routing and caching
+- **Lambda Function URL** owns request receipt and secret validation
+- **Lambda** owns request processing and Bedrock invocation
+- **Bedrock Agent** owns reasoning and retrieval  
+- **Bedrock Knowledge Base** owns vector search and document retrieval  
 
-Terraform does **not** own:
-
-- Agent versions  
-- Agent aliases  
-- KB ingestion jobs  
-- Lambda environment variable updates for alias IDs  
-
-These are dynamic and governed by CI/CD.
+Each service is responsible for its own operational behavior, with no cross‑service responsibilities.
 
 ---

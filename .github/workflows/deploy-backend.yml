@@ -1,25 +1,61 @@
+# Deploy Mr. Beefy Backend
+# Environment-aware: main branch -> prod, dev branch -> dev.
+# Manual dispatch allows choosing the target environment explicitly.
+
 name: Deploy Mr. Beefy Backend
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths:
       - "backend/**"
   workflow_dispatch:
     inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "prod"
+        type: choice
+        options:
+          - prod
+          - dev
       reason:
         description: "Why are you manually deploying?"
         required: false
         default: "Manual trigger"
 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      # Derive environment: manual input takes priority, then branch name, default to prod.
+      DEPLOY_ENV: ${{ inputs.environment || (github.ref_name == 'dev' && 'dev') || 'prod' }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    # -----------------------------
+    # Resolve Environment
+    # prod uses the "default" Terraform workspace (local.prefix = "mrbeefy").
+    # dev uses the "dev" workspace (local.prefix = "mrbeefy-dev").
+    # -----------------------------
+    - name: Resolve Environment
+      id: env
+      run: |
+        if [ "$DEPLOY_ENV" = "dev" ]; then
+          echo "tf_workspace=dev"           >> $GITHUB_OUTPUT
+          echo "ssm_prefix=/mrbeefy-dev"    >> $GITHUB_OUTPUT
+          echo "kb_name=mrbeefy-dev-kb"     >> $GITHUB_OUTPUT
+          echo "alias_name=dev"             >> $GITHUB_OUTPUT
+        else
+          echo "tf_workspace=default"       >> $GITHUB_OUTPUT
+          echo "ssm_prefix=/mrbeefy"        >> $GITHUB_OUTPUT
+          echo "kb_name=mrbeefy-kb"         >> $GITHUB_OUTPUT
+          echo "alias_name=prod"            >> $GITHUB_OUTPUT
+        fi
+        echo "Deploying to: $DEPLOY_ENV"
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -62,9 +98,23 @@ jobs:
       working-directory: backend/IaC
       run: terraform init -upgrade
 
+    - name: Select Terraform Workspace
+      working-directory: backend/IaC
+      run: |
+        if [ "${{ steps.env.outputs.tf_workspace }}" != "default" ]; then
+          terraform workspace select "${{ steps.env.outputs.tf_workspace }}" \
+            || terraform workspace new "${{ steps.env.outputs.tf_workspace }}"
+        else
+          terraform workspace select default
+        fi
+
     - name: Terraform Apply
       working-directory: backend/IaC
-      run: terraform apply -auto-approve -var="gateway_secret=${{ secrets.GATEWAY_SECRET }}"
+      run: |
+        terraform apply -auto-approve \
+          -var="gateway_secret=$GATEWAY_SECRET"
+      env:
+        GATEWAY_SECRET: ${{ env.DEPLOY_ENV == 'dev' && secrets.DEV_GATEWAY_SECRET || secrets.GATEWAY_SECRET }}
 
     # -----------------------------
     # Capture Terraform Outputs
@@ -73,10 +123,12 @@ jobs:
       id: tfout
       working-directory: backend/IaC
       run: |
-        echo "bucket=$(terraform output -raw knowledge_bucket)"           >> $GITHUB_OUTPUT
-        echo "agent_id=$(terraform output -raw agent_id)"                 >> $GITHUB_OUTPUT
+        echo "bucket=$(terraform output -raw knowledge_bucket)"                 >> $GITHUB_OUTPUT
+        echo "bucket_arn=$(terraform output -raw knowledge_bucket_arn)"         >> $GITHUB_OUTPUT
+        echo "kb_role_arn=$(terraform output -raw kb_role_arn)"                 >> $GITHUB_OUTPUT
+        echo "agent_id=$(terraform output -raw agent_id)"                       >> $GITHUB_OUTPUT
         echo "function_url_domain=$(terraform output -raw function_url_domain)" >> $GITHUB_OUTPUT
-        echo "function_name=$(terraform output -raw function_name)"       >> $GITHUB_OUTPUT
+        echo "function_name=$(terraform output -raw function_name)"             >> $GITHUB_OUTPUT
 
     # -----------------------------
     # Ensure AWS CLI v2
@@ -99,22 +151,32 @@ jobs:
         aws s3 sync knowledge/ s3://${{ steps.tfout.outputs.bucket }}/ --delete
 
     # -----------------------------
+    # Create KB if not exists
+    # Creates the S3 Vectors bucket, Knowledge Base, and data source on first deploy.
+    # Idempotent — safe to run on every deploy.
+    # -----------------------------
+    - name: Create KB if not exists
+      id: kb
+      working-directory: backend/cli
+      shell: pwsh
+      run: |
+        $KB_ID = ./create_kb.ps1 `
+          -KbName    "${{ steps.env.outputs.kb_name }}" `
+          -KbRoleArn "${{ steps.tfout.outputs.kb_role_arn }}" `
+          -BucketArn "${{ steps.tfout.outputs.bucket_arn }}"
+
+        # create_kb.ps1 outputs the KB ID as the last line
+        $KB_ID = $KB_ID | Select-Object -Last 1
+        echo "kb_id=$KB_ID" >> $env:GITHUB_OUTPUT
+
+    # -----------------------------
     # Trigger KB Ingestion
     # -----------------------------
     - name: Trigger KB Ingestion
       working-directory: backend/cli
       shell: pwsh
       run: |
-        $KB_ID = aws bedrock-agent list-knowledge-bases `
-          --query "knowledgeBaseSummaries[?name=='mrbeefy-kb'] | [0].knowledgeBaseId" `
-          --output text
-
-        if (-not $KB_ID -or $KB_ID -eq "None") {
-            Write-Error "Knowledge Base 'mrbeefy-kb' not found."
-            exit 1
-        }
-
-        ./ingest.ps1 -KbId $KB_ID
+        ./ingest.ps1 -KbId "${{ steps.kb.outputs.kb_id }}"
 
     # -----------------------------
     # Associate KB with Agent (DRAFT)
@@ -123,18 +185,9 @@ jobs:
       working-directory: backend/cli
       shell: pwsh
       run: |
-        $KB_ID = aws bedrock-agent list-knowledge-bases `
-          --query "knowledgeBaseSummaries[?name=='mrbeefy-kb'] | [0].knowledgeBaseId" `
-          --output text
-
-        if (-not $KB_ID -or $KB_ID -eq "None") {
-            Write-Error "Knowledge Base 'mrbeefy-kb' not found."
-            exit 1
-        }
-
         ./associate_kb.ps1 `
           -AgentId "${{ steps.tfout.outputs.agent_id }}" `
-          -KbId $KB_ID
+          -KbId    "${{ steps.kb.outputs.kb_id }}"
 
     # -----------------------------
     # Prepare Agent
@@ -168,7 +221,7 @@ jobs:
       shell: bash
       env:
         AGENT_ID: ${{ steps.tfout.outputs.agent_id }}
-        ALIAS_NAME: prod
+        ALIAS_NAME: ${{ steps.env.outputs.alias_name }}
         AWS_REGION: us-east-1
       run: |
         set -euo pipefail
@@ -204,18 +257,22 @@ jobs:
     # so AGENT_ID, AGENT_ALIAS_ID, and GATEWAY_SECRET must all be included here.
     # -----------------------------
     - name: Update Lambda Environment Variables
+      env:
+        GATEWAY_SECRET: ${{ env.DEPLOY_ENV == 'dev' && secrets.DEV_GATEWAY_SECRET || secrets.GATEWAY_SECRET }}
       run: |
         aws lambda update-function-configuration \
           --function-name ${{ steps.tfout.outputs.function_name }} \
-          --environment "Variables={AGENT_ID=${{ steps.tfout.outputs.agent_id }},AGENT_ALIAS_ID=${{ steps.create_or_update_alias.outputs.alias_id }},GATEWAY_SECRET=${{ secrets.GATEWAY_SECRET }}}"
+          --environment "Variables={AGENT_ID=${{ steps.tfout.outputs.agent_id }},AGENT_ALIAS_ID=${{ steps.create_or_update_alias.outputs.alias_id }},KB_ID=${{ steps.kb.outputs.kb_id }},GATEWAY_SECRET=$GATEWAY_SECRET}"
 
     # -----------------------------
     # Write Outputs to SSM Parameter Store
+    # SSM paths are namespaced per environment so frontend and knowledge
+    # workflows can read the correct values for their target environment.
     # -----------------------------
     - name: Store Function URL Domain in SSM
       run: |
         aws ssm put-parameter \
-          --name "/mrbeefy/function_url_domain" \
+          --name "${{ steps.env.outputs.ssm_prefix }}/function_url_domain" \
           --type "String" \
           --value "${{ steps.tfout.outputs.function_url_domain }}" \
           --overwrite
@@ -223,7 +280,7 @@ jobs:
     - name: Store Knowledge Bucket in SSM
       run: |
         aws ssm put-parameter \
-          --name "/mrbeefy/knowledge_bucket" \
+          --name "${{ steps.env.outputs.ssm_prefix }}/knowledge_bucket" \
           --type "String" \
           --value "${{ steps.tfout.outputs.bucket}}" \
           --overwrite
@@ -232,4 +289,4 @@ jobs:
     # DONE
     # -----------------------------
     - name: Deployment Complete
-      run: echo "Mr. Beefy backend deployed successfully."
+      run: echo "Mr. Beefy backend (${{ env.DEPLOY_ENV }}) deployed successfully."

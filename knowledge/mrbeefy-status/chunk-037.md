@@ -1,15 +1,11 @@
-[Source: Mrbeefy Status | Section: 1. Markdown Rendering for Agent Responses]
+[Source: Mrbeefy Status | Section: 6. Dark Theme with Teal Accent Palette]
 
-## **1. Markdown Rendering for Agent Responses**
-The UI now uses a Markdown renderer to display assistant messages. This enables:
+## **6. Dark Theme with Teal Accent Palette**
+The entire site now uses a dark theme derived from the logo:
 
-- **Bold and italic text**
-- **Headings**
-- **Lists**
-- **Multi‑paragraph responses**
-- **Code blocks**
-- **Readable formatting for long answers**
-
-This dramatically improves clarity and makes the agent feel more expressive and professional.
+- **Background:** pure black
+- **Shell and card:** dark teal-tinted surfaces — distinct from the background without being obviously colored
+- **Accent color:** `#5b9090` — sampled directly from the logo’s "BEEF AI SOFTWARE" text
+- **Buttons, borders, scrollbars, cursor:** all use the teal accent
 
 ---

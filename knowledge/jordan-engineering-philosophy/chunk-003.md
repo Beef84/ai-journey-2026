@@ -1,22 +1,20 @@
 [Source: Jordan Engineering Philosophy]
 
-# **2. Separate Declarative and Dynamic Concerns**
+# **3. Favor Explicitness Over Convention**
 
-This is one of my core engineering beliefs.
+Defaults hide behavior.  
+Hidden behavior becomes hidden bugs.
 
-- **Infrastructure‑as‑Code (IaC)** owns static, long‑lived infrastructure  
-- **CI/CD** owns dynamic, versioned, stateful operations  
-- **Runtime** owns execution, not configuration  
+So I make everything explicit:
 
-Mixing these responsibilities creates drift, brittleness, and unpredictable deployments.
+- Regions  
+- Permissions  
+- Routing paths  
+- Origin mappings  
+- Environment variables  
+- Deployment steps  
+- Ingestion triggers  
 
-By separating them:
-
-- Infrastructure stays reproducible  
-- Agent lifecycle stays flexible  
-- Deployments stay clean  
-- Debugging stays sane  
-
-This principle shaped the entire Mr. Beefy architecture.
+Explicit systems are easier to reason about, easier to debug, and easier to evolve.
 
 ---

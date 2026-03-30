@@ -1,6 +1,7 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > CI/CD, Automation & Platform Engineering]
+[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > DevOps, Deployment & Operational Support]
 
-### CI/CD, Automation & Platform Engineering
-- Architected and delivered enterprise CI/CD platforms using Azure DevOps, YAML pipelines, and reusable automation modules adopted across engineering teams.
-- Introduced DevOps automation that improved deployment repeatability, rollback safety, and operational reliability.
-- Developed migration tooling for Azure DevOps projects, reducing manual overhead and standardizing pipeline patterns across the organization.
+### DevOps, Deployment & Operational Support
+- Automated provisioning and deployment processes for large‑scale store rollouts, improving reliability and reducing manual operational overhead.
+- Trained corporate users, onboarded store teams, and provided ongoing support for the signage platform, ensuring smooth adoption and long‑term stability.
+
+---

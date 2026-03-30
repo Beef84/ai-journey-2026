@@ -1,14 +1,10 @@
-[Source: Mrbeefy Status]
+[Source: Mrbeefy Status | Section: What Changed]
 
-# **🚀 Impact**
-The addition of the dedicated KB ingestion pipeline provides:
+## **What Changed**
 
-- Faster documentation iteration  
-- Safer ingestion cycles  
-- Clear separation of concerns  
-- Reduced coupling between infra and knowledge  
-- A more resilient and maintainable architecture  
-
-The backend still owns ingestion during deploys, but the KB pipeline now owns ingestion during day‑to‑day updates — exactly the right division of responsibilities.
-
----
+### **Lambda Handler**
+- Replaced the standard handler with `awslambda.streamifyResponse`
+- Bedrock chunks are piped directly to the response stream as they arrive
+- Output formatted as Server-Sent Events: `data: {"token": "..."}\n\n`
+- Final sentinel: `data: [DONE]\n\n`
+- Content-Type set to `text/event-stream`

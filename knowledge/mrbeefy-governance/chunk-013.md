@@ -1,12 +1,13 @@
-[Source: Mrbeefy Governance | Section: 4.2 Network Governance]
+[Source: Mrbeefy Governance | Section: 5.2 Monitoring]
 
-## **4.2 Network Governance**
-- All traffic is HTTPS-only
-- CloudFront terminates TLS
-- Lambda Function URL enforces HTTPS
-- No public S3 access
-- No public KB access
-- Lambda Function URL is protected by a shared secret header — direct calls without the header return 403
-- Dev CloudFront distribution is protected by CloudFront signed cookies — unauthenticated requests return 403
+## **5.2 Monitoring**
+Monitoring includes:
+
+- Lambda error rates
+- CloudFront cache hit/miss ratios
+- KB ingestion job status  
+- Bedrock agent invocation metrics  
+
+Alerts may be added as the system scales.
 
 ---

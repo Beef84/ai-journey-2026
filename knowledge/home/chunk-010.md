@@ -1,18 +1,16 @@
-[Source: Home | Section: 🧩 Skills]
+[Source: Home]
 
-## **🧩 Skills**
-A comprehensive inventory of technical and leadership skills demonstrated across:
+# **Purpose of This Wiki**
 
-- Distributed systems  
-- Backend engineering  
-- Cloud and IaC  
-- CI/CD and automation  
-- AI infrastructure  
-- Serverless architecture  
-- Observability and reliability  
-- Leadership and documentation  
-- ML and continuous learning  
+The documentation is designed to:
 
-This section reflects the full depth of engineering capability behind the platform.
+- Provide a complete technical reference for the Mr. Beefy platform  
+- Showcase end‑to‑end ownership of a modern AI system  
+- Support future enhancements and architectural evolution  
+- Serve as a professional portfolio artifact  
+- Enable others to understand, evaluate, and learn from the system  
+- Establish a foundation for potential future SaaS development  
+
+The goal is clarity, structure, and technical authority — reflecting the standards expected of senior‑level engineering work.
 
 ---

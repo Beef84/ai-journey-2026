@@ -1,16 +1,10 @@
-[Source: Jordan Career Summary | Section: Employment History]
+[Source: Jordan Career Summary | Section: Most recent accomplishments (last two jobs)]
 
-## Employment History
+## Most recent accomplishments (last two jobs)
 
-Jordan Oberrath has worked at the following companies:
+### UPMC — Azure DevOps Platform Engineering (most recent accomplishment)
+My most recent accomplishment at UPMC involved delivering the first Azure‑based infrastructure and deployment pipeline on a newly formed DevOps Engineering team created by merging my former on‑premises DevOps team with the Consumer Technology cloud team. Historically, my team focused on OpenShift and on‑premises workloads, while the cloud team worked exclusively in Azure. When a new .NET 8 application—consisting of worker services and APIs—was approved for deployment as Azure Container Apps, I was responsible for building the entire foundation needed to support it.
 
-| Employer | Title | Years |
-|---|---|---|
-| **UPMC** | Senior Software Engineer | Aug 2017 – present (currently employed) |
-| **Dick’s Sporting Goods** | Software Engineer | Oct 2012 – Aug 2017 |
-| **United States Investigative Services (USIS)** | Application Developer | Apr 2012 – Oct 2012 |
-| **Integrated Management Systems** | Developer / Systems Support Specialist | Apr 2011 – Apr 2012 |
+Because our existing DevOps template repositories had no Infrastructure‑as‑Code patterns for Azure Container App Managed Environments or Azure Container Apps themselves, my first task was to design and implement these templates from scratch. This required aligning with company policies, architectural standards, and established conventions within our template repos, including naming rules, structural layout, and coding practices such as using typed parameter objects in Bicep for complex configurations.
 
-Jordan has over 14 years of professional software engineering experience. His current and most recent employer is **UPMC**, where he has worked since August 2017. Before UPMC, Jordan worked at **Dick’s Sporting Goods** from October 2012 to August 2017. Earlier in his career he held roles at **United States Investigative Services** and **Integrated Management Systems**.
-
----
+Once the IaC patterns were in place, I built the CI/CD pipeline that provisions the application’s managed environment and deploys its first two container apps. This work not only enabled the new application to move forward but also established reusable patterns that the broader organization can now adopt for future Azure Container Apps workloads; representing a significant step in unifying the on‑premises and cloud engineering practices, and providing a modern, scalable deployment model that didn’t exist before.

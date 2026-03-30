@@ -1,7 +1,13 @@
-[Source: Mrbeefy Architecture | Section: 2.3 DNS]
+[Source: Mrbeefy Architecture]
 
-## **2.3 DNS**
-- Route53 A‑record alias → CloudFront distribution  
-- Certificate validated via DNS  
+# **4. Compute Architecture (Lambda)**
 
----
+## **4.1 Lambda Function**
+- Runtime: **Node.js 20.x**
+- Handler: `index.handler`
+- Timeout: 30 seconds
+- Deployed via CI/CD (zip artifact)
+- Environment variables:
+  - `AGENT_ID`
+  - `AGENT_ALIAS_ID` (updated by CI/CD after alias creation)
+  - `GATEWAY_SECRET` (set by Terraform from `terraform.tfvars`, never committed)

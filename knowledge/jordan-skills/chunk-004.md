@@ -1,8 +1,17 @@
-[Source: Jordan Skills | Section: Messaging & Integration]
+[Source: Jordan Skills]
 
-### **Messaging & Integration**
-- HL7 integrations  
-- NServiceBus  
-- Distributed messaging patterns  
-- Event sourcing and pub/sub concepts  
-- Experience adjacent to Kafka‑style architectures
+### **Containerization & Orchestration**
+- Docker  
+- Kubernetes  
+- OpenShift  
+- Containerized production workloads  
+- Deployment automation for container platforms
+
+### **Infrastructure‑as‑Code (IaC)**
+- Bicep  
+- ARM templates  
+- Terraform concepts and patterns  
+- CDK / CloudFormation  
+- Modular IaC design  
+- Environment provisioning and configuration governance  
+- Cloud resource automation and lifecycle management

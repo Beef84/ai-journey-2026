@@ -1,6 +1,9 @@
-[Source: Mrbeefy Status | Section: Overview]
+[Source: Mrbeefy Status | Section: What Changed > Dev Environment]
 
-## **Overview**
-The platform now includes a **standalone Knowledge Base ingestion pipeline** that operates independently from the backend deployment workflow. While the backend still performs a KB ingestion as part of a full system rollout, the new dedicated pipeline allows documentation updates to be ingested without requiring a backend deploy. This separation dramatically improves iteration speed, safety, and clarity across the system.
+### **Dev Environment**
+A `dev` Terraform workspace creates a fully isolated parallel stack:
 
----
+- All AWS resources prefixed `mrbeefy-dev-*`
+- Hosted at `dev.mrbeefy.academy`
+- Own Terraform state (`env:/dev/...` in the same S3 bucket)
+- Requires the developer to set up signed cookies to access it

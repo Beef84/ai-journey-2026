@@ -1,11 +1,17 @@
-[Source: Mrbeefy Design Decisions | Section: 4.1 CloudFront as the Routing Layer]
+[Source: Mrbeefy Design Decisions | Section: 5.2 Minimal Responsibility]
 
-## **4.1 CloudFront as the Routing Layer**
-CloudFront was chosen to:
+## **5.2 Minimal Responsibility**
+Lambda does not:
 
-- Serve static assets globally
-- Terminate TLS
-- Route `/chat` to the Lambda Function URL origin
-- Apply security headers
-- Enforce caching policies
-- Protect S3 via OAC
+- Perform retrieval  
+- Perform embeddings  
+- Manage KB ingestion  
+- Manage agent versions  
+
+Lambda only:
+
+- Accepts user input  
+- Calls Bedrock Agent Runtime  
+- Returns the response  
+
+This keeps the function small, predictable, and low-maintenance.

@@ -1,16 +1,16 @@
-[Source: Home | Section: 🧩 Design Decisions]
+[Source: Home | Section: 🛡️ Governance]
 
-## **🧩 Design Decisions**
-A deep explanation of the reasoning behind the architecture:
+## **🛡️ Governance**
+The rules and boundaries that ensure system stability:
 
-- IaC vs CI/CD ownership  
-- Serverless‑first design  
-- Explicit routing and origin mapping  
-- Agent lifecycle strategy  
-- KB ingestion strategy  
-- IAM least‑privilege boundaries  
-- Observability and reproducibility principles  
+- Ownership model (IaC, CI/CD, runtime)  
+- Change management processes  
+- Security governance  
+- IAM boundaries  
+- Drift prevention  
+- Rollback strategy  
+- Documentation requirements  
 
-This section documents the “why” behind every major choice.
+This section defines how the platform is maintained safely and consistently.
 
 ---

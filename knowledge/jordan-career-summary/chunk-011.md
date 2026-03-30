@@ -1,3 +1,8 @@
-[Source: Jordan Career Summary | Section: Existing system improvements > Signage system modernization (Dick’s Sporting Goods)]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer]
 
-Through this project, I was able to modernize a fragmented system built on incompatible technologies and dependent on developer intervention. The result was a stable, .NET‑ and SQL Server–based distributed platform that cleanly separated IT and business responsibilities, supported multi‑tenant branding, and delivered meaningful improvements in scalability, performance, and maintainability.
+## UPMC — Senior Software Engineer
+**Aug 2017 – Present (currently employed)**
+
+### SaaS Platform & Product Context
+- Contributed to the architecture and development of a multi‑tenant SaaS platform used by healthcare providers and patients to share, view, and manage medical information.
+- Ensured backend services, APIs, and integrations met the reliability, scalability, and data‑integrity requirements expected of a healthcare‑grade SaaS offering.

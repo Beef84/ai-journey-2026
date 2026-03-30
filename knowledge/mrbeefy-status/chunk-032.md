@@ -1,10 +1,10 @@
-[Source: Mrbeefy Status | Section: What Changed > Frontend]
+[Source: Mrbeefy Status | Section: 2. Auto‑Scrolling Message Container]
 
-### **Frontend**
-- `fetch` + `ReadableStream` reads SSE chunks as they arrive
-- Each token is appended to the assistant message bubble in real time
-- Streaming state disables the send button and textarea while a response is in progress
-- A blinking cursor (`▍`) is shown on the active assistant bubble during streaming
-- Cursor and disabled state are removed when `[DONE]` is received
+## **2. Auto‑Scrolling Message Container**
+A new scroll anchor ensures the chat always snaps to the latest message. This mirrors modern messaging apps and prevents the user from manually scrolling after every response.
+
+- Smooth scroll behavior  
+- No layout jumpiness  
+- Works for both user and assistant messages  
 
 ---

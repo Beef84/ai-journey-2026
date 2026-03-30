@@ -1,9 +1,12 @@
-[Source: Jordan Skills | Section: AI Platform Engineering]
+[Source: Jordan Skills]
 
-### **AI Platform Engineering**
-- AWS Bedrock Agents  
-- AWS Bedrock Knowledge Bases  
-- Retrieval‑augmented generation (RAG) patterns  
-- Vector store architecture (S3 Vector Store)  
-- Embedding models (Titan V2)  
-- Foundation model integration (Nova Pro, SageMaker models)
+### **Containerized Production Systems**
+- Supported Docker, Kubernetes, and OpenShift workloads  
+- Improved reliability and performance for mission‑critical services
+
+### **AI Agent Platform (Mr. Beefy)**
+- Architected a full serverless AI platform  
+- Built Bedrock Agent + KB + vector store integration  
+- Designed CloudFront → API Gateway → Lambda → Bedrock flow  
+- Implemented IaC + CI/CD automation  
+- Created a complete documentation and governance system

@@ -1,18 +1,16 @@
 [Source: Jordan Engineering Philosophy]
 
-# **4. Design for Observability First**
+# **5. Keep Each Component Small and Focused**
 
-A system without visibility is a system waiting to fail.
+Every part of the system should have a single, clear responsibility.
 
-I design with observability as a first‑class requirement:
+- Lambda handles request → agent invocation  
+- Agent handles reasoning  
+- KB handles retrieval  
+- CloudFront handles routing  
+- IaC handles infrastructure  
+- CI/CD handles lifecycle  
 
-- Lambda logs  
-- API Gateway access logs  
-- API Gateway execution logs  
-- CloudFront metrics  
-- KB ingestion status  
-- Bedrock invocation metrics  
-
-If something goes wrong, I want the system to tell me *exactly* where and why.
+When each piece does one thing well, the whole system becomes easier to maintain, scale, and extend.
 
 ---

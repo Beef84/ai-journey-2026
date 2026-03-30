@@ -1,13 +1,19 @@
-[Source: Mrbeefy Governance | Section: 5.2 Monitoring]
+[Source: Mrbeefy Governance | Section: 5.3 Deployment Governance]
 
-## **5.2 Monitoring**
-Monitoring includes:
+## **5.3 Deployment Governance**
+Deployments must:
 
-- Lambda error rates
-- CloudFront cache hit/miss ratios
-- KB ingestion job status  
-- Bedrock agent invocation metrics  
+- Run through CI/CD  
+- Use versioned artifacts  
+- Produce deterministic infrastructure  
+- Avoid manual console changes  
 
-Alerts may be added as the system scales.
+Manual console edits are only allowed for:
+
+- Emergency rollback  
+- Temporary debugging  
+- AWS support troubleshooting  
+
+Any manual change must be documented and reverted into Terraform if permanent.
 
 ---

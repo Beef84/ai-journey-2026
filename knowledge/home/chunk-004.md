@@ -1,16 +1,16 @@
-[Source: Home | Section: 📐 Architecture]
+[Source: Home | Section: 🔄 Workflows]
 
-## **📐 Architecture**
-A detailed breakdown of the final production architecture, including:
+## **🔄 Workflows**
+Step‑by‑step operational flows for:
 
-- Frontend delivery (CloudFront + S3 + OAC)  
-- API routing (CloudFront → Lambda Function URL with SSE streaming)
-- Compute layer (Lambda)  
-- AI layer (Bedrock Agent, Knowledge Base, vector store)  
-- CI/CD lifecycle and responsibilities  
-- IaC boundaries  
-- End‑to‑end request flow  
+- Frontend delivery  
+- Chat request processing  
+- Lambda → Bedrock invocation  
+- Knowledge Base ingestion  
+- Agent versioning and aliasing  
+- CI/CD deployment lifecycle  
+- Infrastructure provisioning  
 
-This section explains how the system is built and how each component interacts.
+This section shows how the system behaves in practice.
 
 ---

@@ -1,16 +1,12 @@
-[Source: Home | Section: 🛡️ Governance]
+[Source: Home | Section: 🎯 Goals]
 
-## **🛡️ Governance**
-The rules and boundaries that ensure system stability:
+## **🎯 Goals**
+A structured overview of:
 
-- Ownership model (IaC, CI/CD, runtime)  
-- Change management processes  
-- Security governance  
-- IAM boundaries  
-- Drift prevention  
-- Rollback strategy  
-- Documentation requirements  
+- Short‑term goals  
+- Long‑term goals  
+- Future vision, including potential SaaS expansion  
 
-This section defines how the platform is maintained safely and consistently.
+This section outlines the direction and evolution of the project.
 
 ---

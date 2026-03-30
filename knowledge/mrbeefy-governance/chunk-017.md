@@ -1,14 +1,13 @@
-[Source: Mrbeefy Governance | Section: 5.1 Logging]
+[Source: Mrbeefy Governance | Section: 5.2 Monitoring]
 
-## **5.1 Logging**
-- Lambda logs are required
-- CloudFront logs are optional but recommended
+## **5.2 Monitoring**
+Monitoring includes:
 
-Logs must not contain:
+- Lambda error rates
+- CloudFront cache hit/miss ratios
+- KB ingestion job status  
+- Bedrock agent invocation metrics  
 
-- Secrets  
-- Credentials  
-- AWS account identifiers  
-- Sensitive personal data  
+Alerts may be added as the system scales.
 
 ---

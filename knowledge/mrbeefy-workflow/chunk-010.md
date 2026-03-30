@@ -1,7 +1,11 @@
-[Source: Mrbeefy Workflow | Section: 3.3 Lambda Validates and Opens Stream]
+[Source: Mrbeefy Workflow | Section: 4.3 Retrieval Workflow]
 
-### **3.3 Lambda Validates and Opens Stream**
-1. Lambda Function URL receives the request.
-2. Lambda checks the `x-cloudfront-secret` header against the `GATEWAY_SECRET` environment variable.
-3. If the header is missing or wrong, Lambda returns 403 immediately — no Bedrock call is made.
-4. Lambda opens an SSE response stream using `awslambda.streamifyResponse`.
+### **4.3 Retrieval Workflow**
+During a chat request:
+
+1. The agent embeds the user query.  
+2. The agent queries the vector index.  
+3. Relevant documents are returned.  
+4. The agent uses retrieved content to generate the final answer.
+
+---

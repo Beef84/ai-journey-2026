@@ -1,9 +1,18 @@
-[Source: Mrbeefy Workflow | Section: 3.5 Bedrock Agent Workflow]
+[Source: Mrbeefy Workflow]
 
-### **3.5 Bedrock Agent Workflow**
-1. The agent receives the request.
-2. The agent performs a Knowledge Base search:
-   - Embeds the query using Titan V2
-   - Queries the S3 Vector Store
-   - Retrieves relevant documents
-3. The agent generates a response using Nova Pro, streamed back in chunks.
+### **5.3 Versioning**
+- Bedrock automatically creates implicit versions.  
+- Terraform does not manage versions or aliases.  
+- CI/CD ensures the alias always points to the correct version.
+
+---
+
+# **6. CI/CD Workflow**
+
+### **6.1 Trigger Conditions**
+Pipeline runs on:
+
+- Push to main  
+- Manual dispatch  
+- KB file changes  
+- Lambda code changes

@@ -46,12 +46,13 @@ resource "aws_lambda_function" "api" {
   filename         = var.lambda_zip_path
   source_code_hash = filebase64sha256(var.lambda_zip_path)
 
-  # AGENT_ALIAS_ID is a placeholder; CI overwrites it with the real alias ID
-  # via aws lambda update-function-configuration after alias creation.
+  # AGENT_ALIAS_ID and KB_ID are placeholders; CI overwrites them with real
+  # values via aws lambda update-function-configuration after alias creation.
   environment {
     variables = {
       AGENT_ID        = var.agent_id
       AGENT_ALIAS_ID  = ""
+      KB_ID           = ""
       GATEWAY_SECRET  = var.gateway_secret
     }
   }

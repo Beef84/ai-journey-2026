@@ -1,9 +1,9 @@
-[Source: Mrbeefy Cost Analysis | Section: 5.1 Lambda Function URL Over API Gateway]
+[Source: Mrbeefy Cost Analysis | Section: 5.6 Single AWS Account with Terraform Workspaces]
 
-## **5.1 Lambda Function URL Over API Gateway**
+## **5.6 Single AWS Account with Terraform Workspaces**
 
-API Gateway HTTP API costs $1.00/million requests. Lambda Function URLs cost nothing beyond the Lambda invocation. At personal/portfolio scale the difference is ~$0.001/month — negligible. The decision to switch was driven primarily by the technical requirement for streaming, not cost. But the cost saving is real and the architecture is simpler.
+Multi-account setups provide stronger isolation but add cross-account IAM complexity and potential inter-account data transfer costs. For a personal project, workspaces in a single account provide sufficient isolation (separate state, separate resource names) with zero overhead.
 
-**Decision:** Use Lambda Function URL. Remove API Gateway entirely.
+**Decision:** Single account + workspaces. Cost and complexity overhead of multi-account is not justified.
 
 ---

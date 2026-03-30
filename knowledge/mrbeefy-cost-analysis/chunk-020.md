@@ -1,9 +1,11 @@
-[Source: Mrbeefy Cost Analysis | Section: 5.3 S3 Vector Store Over OpenSearch]
+[Source: Mrbeefy Cost Analysis | Section: 6.2 Recommended Controls]
 
-## **5.3 S3 Vector Store Over OpenSearch**
+## **6.2 Recommended Controls**
 
-OpenSearch Serverless (the other Bedrock KB vector store option) has a minimum cost of ~$700/month for two OCUs. S3 Vector Store has no fixed cost — it charges only for storage and vector operations, which at KB size are negligible.
+| Control | Mechanism | Cost Impact |
+|---|---|---|
+| AWS Budget alert | Set at $10/month, alert at 80% | No cost, early warning |
+| Lambda reserved concurrency | Cap concurrent Lambda invocations | Limits runaway usage |
+| CloudWatch anomaly detection | Alert on unusual Lambda invocation spikes | No cost |
 
-**Decision:** S3 Vector Store. OpenSearch is cost-prohibitive for personal/portfolio use.
-
----
+At personal/portfolio scale, the risk of unexpected cost is low — a viral moment hitting 10,000 chats in a month would cost ~$23, which is acceptable. Budgets and alerts are still good hygiene.

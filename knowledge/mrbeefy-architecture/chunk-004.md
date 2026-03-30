@@ -1,7 +1,12 @@
-[Source: Mrbeefy Architecture | Section: 2.1 Static Hosting]
+[Source: Mrbeefy Architecture | Section: 2.2 CloudFront Distribution > Behaviors]
 
-## **2.1 Static Hosting**
-- React SPA built and uploaded to an S3 bucket:
-  - Bucket name pattern: `mrbeefy-frontend-<random>`  
-  - Public access fully blocked  
-  - Access controlled exclusively through CloudFront OAC
+### **Behaviors**
+- **Default behavior** → S3 frontend  
+- **Ordered behavior**:
+  - `path_pattern = "/chat"`  
+  - Allowed methods:  
+    `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE`  
+  - Cached methods:  
+    `GET, HEAD`  
+  - Cache policy: API no‑cache policy  
+  - Origin request policy: forwards `Content-Type` header + all query strings

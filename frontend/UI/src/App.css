@@ -174,7 +174,6 @@ body {
     max-width: 80%;
     line-height: 1.55;
     font-size: 0.95rem;
-    white-space: pre-wrap;
     box-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 
@@ -184,6 +183,7 @@ body {
         background: rgba(180, 210, 255, 0.9);
         color: #0a1a2b;
         border: 1px solid rgba(255, 255, 255, 0.4);
+        white-space: pre-wrap;
     }
 
     /* Assistant bubble — dark */
@@ -203,7 +203,11 @@ body {
     }
 
     .message p {
-        margin: 0 0 8px 0;
+        margin: 0 0 14px 0;
+    }
+
+    .message p:last-child {
+        margin-bottom: 0;
     }
 
     .message ul {

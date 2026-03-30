@@ -1,8 +1,11 @@
-[Source: Mrbeefy Design Decisions | Section: 9.1 React SPA]
+[Source: Mrbeefy Design Decisions | Section: 12.7 Message Bubble Design]
 
-## **9.1 React SPA**
-Chosen for:
+## **12.7 Message Bubble Design**
+User and assistant messages have distinct visual treatments:
 
-- Fast development  
-- Simple deployment  
-- Easy integration with CloudFront + Lambda Function URL
+- **User:** right-aligned, teal-tinted bubble with teal border
+- **Assistant:** left-aligned, dark bubble with subtle teal border
+
+Both support Markdown formatting and long-form content.
+
+---

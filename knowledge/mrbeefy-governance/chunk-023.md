@@ -1,9 +1,3 @@
-[Source: Mrbeefy Governance | Section: 6.3 Rollback Strategy]
+[Source: Mrbeefy Governance]
 
-## **6.3 Rollback Strategy**
-- Terraform supports infrastructure rollback  
-- CI/CD supports Lambda rollback  
-- Alias pinning ensures agent rollback  
-- KB ingestion is versioned implicitly  
-
----
+# **7. Compliance Governance**

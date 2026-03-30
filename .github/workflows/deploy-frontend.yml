@@ -1,26 +1,58 @@
+# Deploy Mr. Beefy Frontend
+# Environment-aware: main branch -> prod, dev branch -> dev.
+# Manual dispatch allows choosing the target environment explicitly.
+# Dev deploys to dev.mrbeefy.academy with signed cookies enforced.
+
 name: Deploy Mr. Beefy Frontend
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths:
       - "frontend/**"
   workflow_dispatch:
     inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "prod"
+        type: choice
+        options:
+          - prod
+          - dev
       reason:
         description: "Why are you manually deploying?"
         required: false
         default: "Manual trigger"
 
-
-
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
 
+    env:
+      # Derive environment: manual input takes priority, then branch name, default to prod.
+      DEPLOY_ENV: ${{ inputs.environment || (github.ref_name == 'dev' && 'dev') || 'prod' }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    # -----------------------------
+    # Resolve Environment
+    # prod uses the "default" Terraform workspace (domain = mrbeefy.academy).
+    # dev uses the "dev" workspace (domain = dev.mrbeefy.academy, signed cookies enabled).
+    # -----------------------------
+    - name: Resolve Environment
+      id: env
+      run: |
+        if [ "$DEPLOY_ENV" = "dev" ]; then
+          echo "tf_workspace=dev"         >> $GITHUB_OUTPUT
+          echo "ssm_prefix=/mrbeefy-dev"  >> $GITHUB_OUTPUT
+        else
+          echo "tf_workspace=default"     >> $GITHUB_OUTPUT
+          echo "ssm_prefix=/mrbeefy"      >> $GITHUB_OUTPUT
+        fi
+        echo "Deploying to: $DEPLOY_ENV"
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -37,7 +69,7 @@ jobs:
       id: api
       run: |
         FUNCTION_URL_DOMAIN=$(aws ssm get-parameter \
-          --name "/mrbeefy/function_url_domain" \
+          --name "${{ steps.env.outputs.ssm_prefix }}/function_url_domain" \
           --query "Parameter.Value" \
           --output text)
         echo "function_url_domain=$FUNCTION_URL_DOMAIN" >> $GITHUB_OUTPUT
@@ -69,12 +101,34 @@ jobs:
       working-directory: frontend/IaC
       run: terraform init -upgrade
 
+    - name: Select Terraform Workspace
+      working-directory: frontend/IaC
+      run: |
+        if [ "${{ steps.env.outputs.tf_workspace }}" != "default" ]; then
+          terraform workspace select "${{ steps.env.outputs.tf_workspace }}" \
+            || terraform workspace new "${{ steps.env.outputs.tf_workspace }}"
+        else
+          terraform workspace select default
+        fi
+
     - name: Terraform Apply
       working-directory: frontend/IaC
       run: |
-        terraform apply -auto-approve \
-          -var="function_url_domain=${{ steps.api.outputs.function_url_domain }}" \
-          -var="gateway_secret=${{ secrets.GATEWAY_SECRET }}"
+        # Dev requires cloudfront_public_key_pem for signed cookie key group.
+        # Store the RSA public key PEM as DEV_CF_PUBLIC_KEY in GitHub secrets.
+        if [ "$DEPLOY_ENV" = "dev" ]; then
+          terraform apply -auto-approve \
+            -var="function_url_domain=${{ steps.api.outputs.function_url_domain }}" \
+            -var="gateway_secret=$GATEWAY_SECRET" \
+            -var="cloudfront_public_key_pem=$CF_PUBLIC_KEY"
+        else
+          terraform apply -auto-approve \
+            -var="function_url_domain=${{ steps.api.outputs.function_url_domain }}" \
+            -var="gateway_secret=$GATEWAY_SECRET"
+        fi
+      env:
+        GATEWAY_SECRET: ${{ env.DEPLOY_ENV == 'dev' && secrets.DEV_GATEWAY_SECRET || secrets.GATEWAY_SECRET }}
+        CF_PUBLIC_KEY: ${{ secrets.DEV_CF_PUBLIC_KEY }}
 
     # -----------------------------
     # Capture Terraform Outputs
@@ -110,4 +164,4 @@ jobs:
     # Done
     # -----------------------------
     - name: Deployment Complete
-      run: echo "Frontend deployed successfully."
+      run: echo "Mr. Beefy frontend (${{ env.DEPLOY_ENV }}) deployed successfully."

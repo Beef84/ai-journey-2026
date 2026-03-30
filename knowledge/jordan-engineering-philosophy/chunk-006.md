@@ -1,16 +1,23 @@
 [Source: Jordan Engineering Philosophy]
 
-# **5. Keep Each Component Small and Focused**
+# **6. Build for Reproducibility**
 
-Every part of the system should have a single, clear responsibility.
+If I can’t destroy the entire system and rebuild it cleanly, then the architecture isn’t good enough.
 
-- Lambda handles request → agent invocation  
-- Agent handles reasoning  
-- KB handles retrieval  
-- CloudFront handles routing  
-- IaC handles infrastructure  
-- CI/CD handles lifecycle  
+Reproducibility means:
 
-When each piece does one thing well, the whole system becomes easier to maintain, scale, and extend.
+- No manual console changes  
+- No hidden configuration  
+- No untracked state  
+- No one‑off fixes  
+
+Everything must be:
+
+- Declarative  
+- Versioned  
+- Documented  
+- Automated  
+
+This ensures the system can survive time, growth, and future engineers.
 
 ---

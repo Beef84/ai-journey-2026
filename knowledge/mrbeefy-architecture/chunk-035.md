@@ -1,11 +1,10 @@
-[Source: Mrbeefy Architecture | Section: 8.2 Terraform Does NOT Own]
+[Source: Mrbeefy Architecture | Section: 10.3 Function URL Protection (Both Environments)]
 
-## **8.2 Terraform Does NOT Own**
-- Agent versions  
-- Agent aliases  
-- KB ingestion jobs  
-- Lambda environment variable updates for alias IDs  
+## **10.3 Function URL Protection (Both Environments)**
+The raw Lambda Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is protected in both environments:
 
-These are handled by CI/CD to avoid drift and stale state.
+- CloudFront injects `x-cloudfront-secret` on every request forwarded to the API origin
+- Lambda validates the header and returns 403 if it is absent or does not match `GATEWAY_SECRET`
+- The secret is set via `terraform.tfvars` (gitignored) and never committed to the repository
 
 ---

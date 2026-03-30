@@ -1,6 +1,6 @@
-[Source: Mrbeefy Design Decisions | Section: 12.4 Brand Identity: Beef AI Software Logo]
+[Source: Mrbeefy Design Decisions | Section: 12.8 Minimal Scrollbar]
 
-## **12.4 Brand Identity: Beef AI Software Logo**
-The Beef AI Software logo is displayed prominently above the title in the hero section. The logo PNG is also used as the browser favicon. The black background was removed from the PNG using a custom Node.js script that makes near-black pixels transparent, allowing the logo to sit cleanly against the dark site background.
+## **12.8 Minimal Scrollbar**
+A modern, unobtrusive scrollbar with a teal thumb matches the accent palette without drawing attention.
 
 ---

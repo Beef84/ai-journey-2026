@@ -1,7 +1,9 @@
-[Source: Mrbeefy Cost Analysis | Section: 4.2 Architecture Change: API Gateway → Lambda Function URL]
+[Source: Mrbeefy Cost Analysis | Section: 5.3 S3 Vector Store Over OpenSearch]
 
-## **4.2 Architecture Change: API Gateway → Lambda Function URL**
+## **5.3 S3 Vector Store Over OpenSearch**
 
-Streaming required replacing API Gateway with a Lambda Function URL. API Gateway HTTP API buffers the complete Lambda response before forwarding it — true SSE streaming is impossible through it.
+OpenSearch Serverless (the other Bedrock KB vector store option) has a minimum cost of ~$700/month for two OCUs. S3 Vector Store has no fixed cost — it charges only for storage and vector operations, which at KB size are negligible.
 
-Lambda Function URL with `invoke_mode = RESPONSE_STREAM` enables chunked transfer directly from Lambda to CloudFront to browser with no buffering.
+**Decision:** S3 Vector Store. OpenSearch is cost-prohibitive for personal/portfolio use.
+
+---

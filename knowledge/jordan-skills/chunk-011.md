@@ -1,3 +1,12 @@
 [Source: Jordan Skills]
 
-# **3. DevOps, CI/CD, and Automation**
+### **Reliability Engineering**
+- Rollout safety (LaunchDarkly)  
+- Progressive delivery  
+- Failure isolation  
+- High‑availability patterns  
+- Diagnostics for distributed systems  
+
+---
+
+# **7. Leadership, Collaboration & Architecture**

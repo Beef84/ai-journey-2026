@@ -1,6 +1,11 @@
-[Source: Mrbeefy Architecture | Section: 6.2 Vector Store]
+[Source: Mrbeefy Architecture | Section: 8.2 Terraform Does NOT Own]
 
-## **6.2 Vector Store**
-- Backed by **S3 Vector Store**  
-- Embedding model: **amazon.titan-embed-text-v2:0**  
-- Index created and managed by Bedrock
+## **8.2 Terraform Does NOT Own**
+- Agent versions  
+- Agent aliases  
+- KB ingestion jobs  
+- Lambda environment variable updates for alias IDs  
+
+These are handled by CI/CD to avoid drift and stale state.
+
+---

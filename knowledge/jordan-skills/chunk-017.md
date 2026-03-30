@@ -1,8 +1,8 @@
-[Source: Jordan Skills | Section: Serverless Architecture]
+[Source: Jordan Skills | Section: Oberrath Farms Website (Azure‑Hosted .NET Razor + SQL Server)]
 
-### **Serverless Architecture**
-- AWS Lambda (Node.js / Python)  
-- API Gateway (HTTP API)  
-- CloudFront routing and behaviors (OAC)  
-- S3 static hosting with OAC  
-- Serverless security and IAM boundary design
+### **Oberrath Farms Website (Azure‑Hosted .NET Razor + SQL Server)**
+- Built a full .NET Razor Pages website for Oberrath Farms  
+- Designed SQL Server backend for content, inventory, and farm operations  
+- Hosted on Azure App Service with Azure SQL Database  
+- Implemented authentication, data models, and admin workflows  
+- Managed deployment, hosting, and long‑term maintenance

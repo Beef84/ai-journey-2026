@@ -1,10 +1,14 @@
-[Source: Mrbeefy Design Decisions | Section: 7.2 Explicit Ingestion]
+[Source: Mrbeefy Design Decisions | Section: 11.4 Non‑Destructive S3 Sync]
 
-## **7.2 Explicit Ingestion**
-KB ingestion is triggered manually via CI/CD because:
+## **11.4 Non‑Destructive S3 Sync**
+The KB pipeline intentionally avoids destructive sync flags.
 
-- AWS does not auto-ingest  
-- Ingestion should be deterministic  
-- KB updates should be intentional  
+This prevents:
+
+- Metadata loss  
+- Embedding corruption  
+- Ingestion failures caused by missing files  
+
+Only new or updated files are uploaded, preserving the integrity of the vector store.
 
 ---

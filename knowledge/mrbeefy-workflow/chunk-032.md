@@ -1,10 +1,17 @@
-[Source: Mrbeefy Workflow | Section: 8.1 Access Control]
+[Source: Mrbeefy Workflow]
 
-### **8.1 Access Control**
-- S3 frontend bucket locked behind OAC
-- KB bucket restricted to KB role
-- Lambda role restricted to logging + InvokeAgent
-- Agent execution role restricted to model + KB access
-- CloudFront restricted via `AWS:SourceArn`
-- Lambda Function URL protected by `x-cloudfront-secret` header (both environments)
-- Dev CloudFront protected by signed cookies
+# **10. Monitoring Workflow**
+
+### **10.1 CloudWatch**
+- Lambda logs
+- CloudFront access logs (optional)
+
+### **10.2 CloudFront**
+- Cache hit/miss metrics
+- Optional standard logs
+
+### **10.3 Bedrock**
+- KB ingestion job status
+- Agent invocation metrics
+
+---

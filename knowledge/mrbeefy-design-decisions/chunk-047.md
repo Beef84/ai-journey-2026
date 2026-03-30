@@ -1,12 +1,11 @@
-[Source: Mrbeefy Design Decisions | Section: 12.3 Improved Input Behavior]
+[Source: Mrbeefy Design Decisions | Section: 12.7 Message Bubble Design]
 
-## **12.3 Improved Input Behavior**
-The input box supports:
+## **12.7 Message Bubble Design**
+User and assistant messages have distinct visual treatments:
 
-- Enter → send
-- Shift+Enter → newline
-- Auto-resizing
+- **User:** right-aligned, teal-tinted bubble with teal border
+- **Assistant:** left-aligned, dark bubble with subtle teal border
 
-These changes align with modern chat UX expectations and make multi-line prompts natural to write.
+Both support Markdown formatting and long-form content.
 
 ---

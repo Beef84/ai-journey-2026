@@ -3,14 +3,17 @@
 # in Edge automatically via Chrome DevTools Protocol. Requires node.js.
 #
 # Usage:
-#   pwsh scripts/open-dev.ps1
-#   powershell -File scripts/open-dev.ps1 -PrivateKeyPath "C:\users\oberr\dev-cf-private.pem" -ExpiryHours 8
+#   powershell -File scripts/open-dev.ps1 -PrivateKeyPath "C:\users\oberr\dev-cf-private.pem"
+#   powershell -File scripts/open-dev.ps1 -PrivateKeyPath "C:\users\oberr\dev-cf-private.pem" -PrintOnly
+#
+# -PrintOnly: generate and print cookie values for manual DevTools setup (no Edge launched)
 
 param(
   [string]$PrivateKeyPath = "dev-cf-private.pem",
   [string]$Domain         = "dev.mrbeefy.academy",
   [int]$ExpiryHours       = 720,
-  [int]$CdpPort           = 9222
+  [int]$CdpPort           = 9222,
+  [switch]$PrintOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -22,7 +25,7 @@ if (-not (Test-Path $PrivateKeyPath)) {
     exit 1
 }
 
-if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
+if (-not $PrintOnly -and -not (Get-Command node -ErrorAction SilentlyContinue)) {
     Write-Error "node not found. Install Node.js to use this script."
     exit 1
 }
@@ -70,7 +73,24 @@ $SigB64 = ConvertTo-CfBase64 $SigFile
 
 Remove-Item $PolicyFile, $SigFile -ErrorAction SilentlyContinue
 
-Write-Host "Cookies generated (key: $KeyPairId, expires in ${ExpiryHours}h)"
+$ExpiryDisplay = [DateTimeOffset]::FromUnixTimeSeconds($Expiry).UtcDateTime.ToString("yyyy-MM-dd HH:mm:ss")
+
+Write-Host ""
+Write-Host "========================================="
+Write-Host " CloudFront Signed Cookies — dev env"
+Write-Host "========================================="
+Write-Host (" Domain  : {0}" -f $Domain)
+Write-Host (" Expires : {0} UTC (+{1}h)" -f $ExpiryDisplay, $ExpiryHours)
+Write-Host " Key ID  : $KeyPairId"
+Write-Host ""
+Write-Host "--- Browser (DevTools -> Application -> Cookies -> https://$Domain) ---"
+Write-Host "Name                      Value"
+Write-Host "CloudFront-Policy         $PolicyB64"
+Write-Host "CloudFront-Signature      $SigB64"
+Write-Host "CloudFront-Key-Pair-Id    $KeyPairId"
+Write-Host ""
+
+if ($PrintOnly) { exit 0 }
 
 # --- Start Edge with CDP remote debugging if not already running ---
 $cdpActive = $false

@@ -10,7 +10,7 @@ set -euo pipefail
 
 PRIVATE_KEY="${1:-}"
 DOMAIN="dev.mrbeefy.academy"
-EXPIRY_HOURS="${2:-24}"
+EXPIRY_HOURS="${2:-720}"
 
 if [ -z "$PRIVATE_KEY" ]; then
   echo "Usage: bash scripts/gen-dev-cookies.sh <path-to-dev-cf-private.pem> [expiry-hours]"

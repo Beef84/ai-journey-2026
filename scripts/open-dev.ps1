@@ -11,10 +11,13 @@
 param(
   [string]$PrivateKeyPath = "dev-cf-private.pem",
   [string]$Domain         = "dev.mrbeefy.academy",
-  [int]$ExpiryHours       = 720,
+  [int]$ExpiryHours       = 24,
   [int]$CdpPort           = 9222,
-  [switch]$PrintOnly
+  [switch]$PrintOnly,
+  [switch]$ThirtyDays
 )
+
+if ($ThirtyDays) { $ExpiryHours = 720 }
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path

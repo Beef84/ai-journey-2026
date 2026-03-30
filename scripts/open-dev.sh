@@ -14,7 +14,7 @@ set -euo pipefail
 
 PRIVATE_KEY="${1:-dev-cf-private.pem}"
 DOMAIN="dev.mrbeefy.academy"
-EXPIRY_HOURS="${2:-24}"
+EXPIRY_HOURS="${2:-720}"
 CDP_PORT=9222
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

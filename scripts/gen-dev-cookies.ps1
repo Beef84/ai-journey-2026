@@ -9,7 +9,7 @@
 param(
   [string]$PrivateKeyPath = "dev-cf-private.pem",
   [string]$Domain         = "dev.mrbeefy.academy",
-  [int]$ExpiryHours       = 24
+  [int]$ExpiryHours       = 720
 )
 
 $ErrorActionPreference = "Stop"

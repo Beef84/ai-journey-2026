@@ -24,7 +24,7 @@ fi
 
 echo "Looking up CloudFront key pair ID..."
 KEY_PAIR_ID=$(MSYS_NO_PATHCONV=1 aws cloudfront list-public-keys \
-  --query "PublicKeyList.Items[?Name=='mrbeefy-dev-cf-public-key'].Id | [0]" \
+  --query "PublicKeyList.Items[?starts_with(Name, 'mrbeefy-dev-cf-public-key-')].Id | [0]" \
   --output text)
 
 if [ -z "$KEY_PAIR_ID" ] || [ "$KEY_PAIR_ID" = "None" ]; then

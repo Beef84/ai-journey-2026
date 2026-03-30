@@ -1,131 +1,148 @@
-# **AI Infrastructure Engineering Journey 2026**  
-*A practical, project‑driven roadmap documenting my transition from Senior DevOps Engineer to AI Infrastructure Engineer — centered around building a real, public-facing AI system on AWS.*
+# 🐄 **Mr. Beefy — Repository Overview (Directory by Directory)**  
+*A technical walkthrough of the system architecture, engineering practices, and operational design behind this project.*
 
-For more than a decade, my work has focused on **DevOps engineering, cloud automation, and backend systems**, with deep experience in:
+This repository contains **Mr. Beefy**, a fully deployed, production‑style serverless AI agent that functions as an **interactive resume**, a **personal knowledge engine**, and a **demonstration of my engineering approach**.  
 
-- CI/CD pipelines and release automation  
-- Infrastructure‑as‑Code  
-- .NET and distributed backend engineering  
-- Containerization and cloud-native workflows  
-- Designing reproducible, scalable environments  
+It is designed to show senior engineers and hiring committees how I structure systems, automate infrastructure, manage knowledge, and build reliable AI‑driven applications on AWS.
 
-In 2025, I expanded into **GPU‑accelerated model workflows** and multimodal experimentation. That work made something clear:  
-**AI infrastructure engineering is the natural evolution of my DevOps background.**
-
-This repository documents my journey to formalize that transition — not through theory, but through a **real, production-style AI system** that demonstrates the skills modern ML platform teams expect.
+The repo is intentionally organized to reflect **real production patterns**: clear separation of concerns, Infrastructure‑as‑Code, automated documentation pipelines, and environment‑aware CI/CD.
 
 ---
 
-# **🚀 Flagship Project: Public AWS Bedrock Agent**
+# 🚀 **High‑Level Architecture (Concise + Engineering‑Focused)**
 
-The centerpiece of this journey is a fully deployed, public-facing AI agent built on **AWS Bedrock**.  
-This agent:
+Mr. Beefy is built using a modern, cloud‑native architecture aligned with current AI platform best practices:
 
-- Lives inside a **single‑page web UI**  
-- Uses **Bedrock Agents** for orchestration  
-- Retrieves information from a **vector knowledge base**  
-- Learns from documentation stored in this repo under `/knowledge`  
-- Explains its own architecture, pricing, and design decisions  
-- Demonstrates real-world **ML engineering**, **DevOps**, and **cloud architecture** skills  
-- Is deployed end‑to‑end through **CI/CD pipelines**  
+- **Frontend** — React + Vite SPA hosted on S3 and delivered via CloudFront with OAC.  
+- **Backend** — Serverless Lambda runtime providing a streaming API/Function URL for low‑latency responses.  
+- **AI Layer** — AWS Bedrock Agents orchestrating reasoning and retrieval from a vectorized knowledge base stored in S3.  
+- **IaC** — Terraform modules provisioning CDN, certificates, storage, Bedrock agent, knowledge bucket, Lambda/API, and IAM.  
+- **CI/CD** — GitHub Actions automating builds, deploys, and wiki→knowledge synchronization.
 
-This is not a toy demo — it’s a production‑style system designed to show employers how I think, build, automate, and operate AI infrastructure.
+The system is designed for **reproducibility, maintainability, and operational clarity**.
 
 ---
 
-# **🎯 What This Repository Demonstrates**
+# 📁 **Directory Breakdown (Tailored for Engineers)**
 
-This project focuses on the practical, high‑impact skills that matter in modern AI engineering roles:
+## **/frontend**
+Implements the public interface and delivery pipeline.
 
-### **✔ Serverless AI Agents on AWS Bedrock**  
-Designing and deploying a public agent that employers can interact with directly.
+- **UI/** — React + Vite SPA (HTML, JSX, CSS, client logic).  
+  Key files: `index.html`, `vite.config.js`, `package.json`, `src/`.
 
-### **✔ Retrieval‑Augmented Generation (RAG)**  
-Using AWS Bedrock Knowledge Bases backed by S3 to ingest and embed documentation from `/knowledge`.
+- **IaC/** — Terraform modules for frontend infrastructure:  
+  - `cdn/` — CloudFront distribution with OAC  
+  - `certificate/` — TLS certificates  
+  - `storage/` — S3 hosting bucket  
 
-### **✔ Cost‑Optimized Cloud Architecture**  
-Selecting efficient models, storage layers, and serverless components to keep a public agent affordable and reliable.
-
-### **✔ Infrastructure‑as‑Code for AI Systems**  
-Defining Bedrock Agents, Knowledge Bases, API Gateway, Lambda, S3, and CloudFront using IaC for reproducibility and clarity.
-
-### **✔ CI/CD Pipelines for AI + Infrastructure**  
-Automating deployment of:
-- the frontend (SPA),  
-- the backend (Lambda/API),  
-- and the infrastructure (IaC)  
-
-using GitHub Actions and AWS CodePipeline/CodeBuild.
-
-### **✔ Automated Knowledge Base Synchronization**  
-Every commit to `/knowledge` triggers a pipeline that syncs updated Markdown files to S3, enabling automatic re‑indexing.
-
-### **✔ Production‑Style Observability and Operations**  
-Logging, metrics, and basic safeguards for a public AI endpoint.
-
-### **✔ Self‑Documenting AI Architecture**  
-The agent can explain:
-- how it is built,  
-- why each AWS service was chosen,  
-- how much it costs to run,  
-- and how the CI/CD pipeline works  
-
-using the same knowledge base that powers its retrieval.
-
-This project is intentionally scoped to highlight **ML engineering**, **DevOps**, and **cloud architecture** — the intersection where modern AI infrastructure roles live.
+This layer demonstrates secure static hosting, CDN configuration, and frontend deployment automation.
 
 ---
 
-# **📂 Repository Structure**
+## **/backend**
+Implements the runtime that connects the UI to AWS Bedrock.
+
+- **lambda/** — TypeScript Lambda implementing the Bedrock Agent runtime and SSE streaming.  
+  Key files: `handler.ts`, `package.json`, `tsconfig.json`.
+
+- **IaC/** — Terraform modules defining the AI system:  
+  - `bedrock_agent/` — Agent configuration and orchestration  
+  - `knowledge_bucket/` — S3 bucket for vectorized knowledge  
+  - `lambda_api/` — Lambda + API Gateway or Function URL  
+  - IAM policies for least‑privilege access  
+
+- **cli/** — Local + CI helper scripts for knowledge ingestion and Bedrock configuration.  
+  Includes PowerShell tools like `ingest.ps1`, `create_kb.ps1`, `associate_kb.ps1`.
+
+This layer demonstrates serverless backend design, AI runtime integration, and operational tooling.
+
+---
+
+## **/knowledge**
+The structured knowledge base powering retrieval.
+
+- Contains **generated Markdown chunks** used as source documents for the vector KB.  
+- Covers two domains:  
+  - **Human (Jordan)** — career summary, skills, goals, projects, engineering philosophy, work style  
+  - **System (Mr. Beefy)** — architecture, workflows, design decisions, governance, cost analysis, system status  
+
+### **Important for reviewers**
+This directory is **machine‑generated** by the workflow:
+
 ```
-ai-journey-2026/
-│
-├── frontend/           # Single-page UI hosting the public agent
-├── backend/            # Lambda/API logic for Bedrock Agent Runtime
-├── infra/              # IaC for Bedrock Agent, KB, API Gateway, Lambda, S3, CloudFront
-│
-├── knowledge/          # Source files for the vector Knowledge Base
-│   ├── architecture.md
-│   ├── costs.md
-│   ├── cicd.md
-│   ├── model-selection.md
-│   ├── design-decisions.md
-│   └── agent-philosophy.md
-│
-└── README.md           # This file
+.github/workflows/wiki-sync.yml
 ```
 
----
+The workflow:
 
-# **🏆 Certificates Earned**
-This repo tracks all certificates earned along the AWS Machine Learning/Data Scientist Specialty path, including:
+1. Pulls the GitHub wiki  
+2. Splits pages into context‑aware chunks  
+3. Generates Markdown  
+4. Opens an automated PR to update `/knowledge`  
 
-- AWS Certified AI Practitioner - Foundational
-- AWS Certified Cloud Practitioner - Foundational
-- AWS Certified Machine Learning Engineer - Associate
-- AWS Certified Solutions Architect - Associate
-- AWS Certified Developer - Associate
-- AWS Certified Data Engineer - Associate
-- AWS Certified Solutions Architect - Professional
-- AWS Certified DevOps Engineer - Professional
-- AWS Certified Machine Learning - Specialty
+This demonstrates:
 
-A full certificate tracker lives in the wiki.
+- automated documentation pipelines  
+- RAG‑ready content generation  
+- clean separation of human‑authored vs. machine‑generated artifacts  
+- reproducible knowledge ingestion  
 
 ---
 
-# **📘 Wiki**
-The wiki contains the day‑by‑day roadmap, certificate tracker, and progress logs.
+## **/scripts**
+Developer tools supporting local testing and secure dev flows.
+
+Notable scripts:
+
+- `gen-dev-cookies.ps1` — Generate signed CloudFront cookies  
+- `open-dev.ps1` — Launch Edge and inject cookies via CDP  
+- `set-cf-cookies.js` — Node tool for CDP WebSocket cookie injection  
+
+Requirements:
+
+- PowerShell 7+  
+- Node.js ≥ 22.12  
+- Microsoft Edge (for CDP flows)
+
+This directory demonstrates developer experience design and secure local testing workflows.
 
 ---
 
-# **🎯 Goal**
-By March 15, 2026, I will be fully prepared to interview for:
+## **/.github/workflows**
+CI/CD automation for the entire system.
 
-- **AI Infrastructure Engineer**  
-- **Senior MLOps Engineer**  
-- **AI Platform Engineer** 
+Key workflows:
 
-These roles align directly with my background in DevOps, automation, cloud architecture, and emerging AI workflows — and this project serves as a public, interactive demonstration of those skills.
+- **deploy-frontend.yml** — Builds and deploys the SPA + frontend IaC  
+- **deploy-backend.yml** — Builds and deploys the Lambda runtime + backend IaC  
+- **wiki-sync.yml** — Syncs the GitHub wiki into `/knowledge` via automated PR  
+- **deploy-knowledge.yml** — Uploads `/knowledge` to S3 and triggers Bedrock ingestion  
+
+This demonstrates multi‑pipeline orchestration, environment‑aware deploys, and automated knowledge ingestion.
+
+---
+
+# 🏡 **Repository Root Files**
+- **README.md** — High‑level summary and navigation  
+- **LICENSE** and other metadata files  
+
+---
+
+# ⚡ **Developer Quick Notes**
+- **Node.js** — Use Node ≥ 22.12 for Vite compatibility  
+- **PowerShell** — Use PowerShell 7+ (`pwsh`)  
+- **Edge/CDP** — Launch Edge with `--remote-debugging-port=9222` for cookie helpers  
+
+---
+
+# 📘 **Documentation**
+All canonical documentation — architecture, runbooks, workflows, governance — lives in the wiki:
+
+**https://github.com/BeefAISoftware/Mr.Beefy/wiki**
+
+The wiki is the source of truth.  
+Automation transforms it into `/knowledge`.  
+Mr. Beefy learns from the result.
 
 ---

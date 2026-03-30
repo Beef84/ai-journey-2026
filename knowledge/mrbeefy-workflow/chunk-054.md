@@ -1,5 +1,3 @@
-[Source: Mrbeefy Workflow | Section: 10.2 CloudFront]
+[Source: Mrbeefy Workflow]
 
-### **10.2 CloudFront**
-- Cache hit/miss metrics
-- Optional standard logs
+# **10. Monitoring Workflow**

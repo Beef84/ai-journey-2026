@@ -1,6 +1,6 @@
-[Source: Mrbeefy Status | Section: Overview]
+[Source: Mrbeefy Status | Section: 2. The dedicated KB pipeline handles ingestion between deploys > Inputs]
 
-## **Overview**
-Chat responses now stream token-by-token from Bedrock to the browser. Instead of waiting for the full response to generate, users see words appear progressively — the same typing effect used by modern AI chat interfaces.
-
----
+### **Inputs**
+- `/knowledge` directory  
+- SSM parameter: `mrbeefy.kb.bucket_name`  
+- SSM parameter: KB ID

@@ -1,6 +1,6 @@
 [Source: Mrbeefy Status | Section: Overview]
 
 ## **Overview**
-The platform now supports two fully isolated environments within the same AWS account using Terraform workspaces: `default` (prod) and `dev`. Alongside this, the API backend — previously reachable by anyone who discovered the URL — is protected in both environments.
+The dev environment setup — which previously required several manual steps involving npm packages and DevTools copy-paste — is now fully automated via two scripts. Additional fixes resolved CloudFront key rotation deadlocks, Knowledge Base bootstrapping failures, and a PowerShell encoding bug.
 
 ---

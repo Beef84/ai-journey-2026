@@ -1,10 +1,8 @@
-[Source: Mrbeefy Status | Section: 2. Auto‑Scrolling Message Container]
+[Source: Mrbeefy Status | Section: What Changed > Lambda Handler]
 
-## **2. Auto‑Scrolling Message Container**
-A new scroll anchor ensures the chat always snaps to the latest message. This mirrors modern messaging apps and prevents the user from manually scrolling after every response.
-
-- Smooth scroll behavior  
-- No layout jumpiness  
-- Works for both user and assistant messages  
-
----
+### **Lambda Handler**
+- Replaced the standard handler with `awslambda.streamifyResponse`
+- Bedrock chunks are piped directly to the response stream as they arrive
+- Output formatted as Server-Sent Events: `data: {"token": "..."}\n\n`
+- Final sentinel: `data: [DONE]\n\n`
+- Content-Type set to `text/event-stream`

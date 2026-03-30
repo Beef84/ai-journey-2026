@@ -1,38 +1,30 @@
-[Source: Mrbeefy Workflow | Section: 9.8 Generate a Signed Cookie for Browser Access (Dev only)]
+[Source: Mrbeefy Workflow | Section: 9.8 Open Dev in Browser with Signed Cookies (Dev only)]
 
-## **9.8 Generate a Signed Cookie for Browser Access** *(Dev only)*
+## **9.8 Open Dev in Browser with Signed Cookies** *(Dev only)*
 
-> **What this does:** Produces three cookie values that grant your browser access to `dev.mrbeefy.academy`. Without them, CloudFront returns 403. The cookies expire after the window you set — regenerate them when they do.
+> **What this does:** Generates three CloudFront signed cookies using your private key and sets them directly in Edge via Chrome DevTools Protocol — no manual copy-paste required. Cookies default to a **30-day expiry**, so you only need to re-run this when the key pair rotates (i.e., when you change the PEM and redeploy the frontend). Pushing code to dev does not require new cookies.
 
-Install the signing tool (one time):
+**Requirements:** Node.js, `openssl.exe` (included with Git for Windows), AWS CLI configured.
+
+Run from PowerShell in the repo root:
+
+```powershell
+powershell -File scripts/open-dev.ps1 -PrivateKeyPath "C:\path\to\dev-cf-private.pem"
+```
+
+Or from Git Bash:
+
 ```bash
-npm install -g aws-cloudfront-sign
+bash scripts/open-dev.sh /c/path/to/dev-cf-private.pem
 ```
 
-Generate the cookies. Replace `YOUR_KEY_PAIR_ID` with the value from step 9.7:
-```bash
-CF_KEY_PAIR_ID="YOUR_KEY_PAIR_ID"
+The script:
+1. Looks up the CloudFront key pair ID from AWS
+2. Signs a custom policy using openssl
+3. Launches a fresh Edge instance with remote debugging enabled (separate profile — does not affect your normal Edge session)
+4. Sets the three cookies via CDP WebSocket
+5. Navigates Edge to `https://dev.mrbeefy.academy`
 
-node -e "
-const cf = require('aws-cloudfront-sign');
-const cookies = cf.getSignedCookies('https://dev.mrbeefy.academy/*', {
-  keypairId: '$CF_KEY_PAIR_ID',
-  privateKeyPath: './cf-dev-private.pem',
-  expireTime: Math.floor(Date.now() / 1000) + 86400  // 24 hours
-});
-console.log(JSON.stringify(cookies, null, 2));
-"
-```
-
-The output will look like:
-```json
-{
-  "CloudFront-Policy": "eyJTdGF0ZW...",
-  "CloudFront-Signature": "nqX3Td...",
-  "CloudFront-Key-Pair-Id": "APKA..."
-}
-```
-
-Copy all three values for the next step.
+**To generate cookies only** (without opening Edge), use `scripts/gen-dev-cookies.sh` or `scripts/gen-dev-cookies.ps1` — they print the values and a ready-to-use curl command.
 
 ---

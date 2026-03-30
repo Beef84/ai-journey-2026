@@ -1,8 +1,6 @@
-[Source: Mrbeefy Status | Section: What Was Not Changed]
+[Source: Mrbeefy Status | Section: What Changed > PowerShell 5.1 Encoding Fix]
 
-## **What Was Not Changed**
-- Prod (`mrbeefy.academy`) remains publicly accessible — unchanged behavior for end users
-- No existing resource names, state, or configurations were modified for the `default` workspace
-- The `gateway_secret` variable is the only new input required for a prod re-apply
+### **PowerShell 5.1 Encoding Fix**
+PowerShell 5.1 reads `.ps1` files using the system ANSI code page (Windows-1252) rather than UTF-8. The em dash character (`—`, U+2014) encodes to bytes `E2 80 94` in UTF-8; byte `0x94` maps to `"` (right double quotation mark) in Windows-1252, which PowerShell 5.1 treats as a string terminator. This caused silent string truncation mid-line and cascading parse errors. All scripts now use only ASCII characters.
 
 ---

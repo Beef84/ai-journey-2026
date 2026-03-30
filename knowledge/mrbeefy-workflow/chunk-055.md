@@ -1,7 +1,5 @@
-[Source: Mrbeefy Workflow | Section: 10.3 Bedrock]
+[Source: Mrbeefy Workflow | Section: 10.1 CloudWatch]
 
-### **10.3 Bedrock**
-- KB ingestion job status
-- Agent invocation metrics
-
----
+### **10.1 CloudWatch**
+- Lambda logs
+- CloudFront access logs (optional)

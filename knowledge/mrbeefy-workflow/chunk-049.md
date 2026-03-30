@@ -1,6 +1,11 @@
 [Source: Mrbeefy Workflow]
 
-# Copy this value for step 9.8
+# Frontend
+cd frontend/IaC
+terraform workspace new dev   # first time only
+terraform workspace select dev
+terraform apply \
+  -var="cloudfront_public_key_pem=$(cat /path/to/dev-cf-public.pem)"
 ```
 
 ---

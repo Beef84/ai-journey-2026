@@ -1,11 +1,14 @@
-[Source: Mrbeefy Status]
+[Source: Mrbeefy Status | Section: 3. Improved Input Experience]
 
-# **🚀 Impact**
-These updates transform the frontend from a functional prototype into a polished, branded interface:
+## **3. Improved Input Experience**
+The message input area has been rebuilt for a more natural chat workflow:
 
-- Strong visual identity tied directly to the Beef AI Software brand
-- Cohesive dark palette that feels intentional, not default
-- Typography that reinforces the hand-crafted, engineering-first personality
-- A chat experience that is product-ready and visually distinctive
+- **Enter → send**
+- **Shift+Enter → newline**
+- **Auto‑resizing textarea** that grows with content
+- **Consistent padding and spacing**
+- **Predictable keyboard behavior**
+
+This makes the UI feel responsive and intuitive during longer prompts.
 
 ---

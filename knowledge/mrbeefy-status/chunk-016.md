@@ -1,13 +1,6 @@
-[Source: Mrbeefy Status]
+[Source: Mrbeefy Status | Section: Overview]
 
-# **🎯 Why This Pipeline Exists**
-Previously, the only way to refresh the Knowledge Base was to run the backend deployment pipeline. This created several problems:
-
-- Documentation changes required a full backend deploy  
-- Ingestion was tightly coupled to Terraform outputs  
-- Failures in the KB ingest path could block backend releases  
-- The KB could not be updated independently or frequently  
-
-The new pipeline solves all of these issues by giving the KB its own lifecycle.
+## **Overview**
+The platform now supports two fully isolated environments within the same AWS account using Terraform workspaces: `default` (prod) and `dev`. Alongside this, the API backend — previously reachable by anyone who discovered the URL — is protected in both environments.
 
 ---

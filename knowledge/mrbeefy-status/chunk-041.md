@@ -1,7 +1,6 @@
-[Source: Mrbeefy Status | Section: 4. Message Bubble Redesign > User Messages]
+[Source: Mrbeefy Status | Section: Cost Impact]
 
-### **User Messages**
-- Right-aligned
-- Muted teal bubble (`rgba(61,107,107,0.75)`)
-- Teal border
-- Light teal text
+## **Cost Impact**
+Zero. Streaming does not change token count, request count, or total bytes transferred. Bedrock, Lambda, and CloudFront costs are identical to the non-streaming implementation. The only cost change is the removal of API Gateway, which saves $1.00/million requests — negligible at personal/portfolio scale but eliminates one service entirely.
+
+---

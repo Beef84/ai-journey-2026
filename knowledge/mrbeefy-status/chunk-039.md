@@ -1,14 +1,6 @@
-[Source: Mrbeefy Status | Section: 3. Improved Input Experience]
+[Source: Mrbeefy Status | Section: What Changed > Infrastructure]
 
-## **3. Improved Input Experience**
-The message input area has been rebuilt for a more natural chat workflow:
-
-- **Enter → send**
-- **Shift+Enter → newline**
-- **Auto‑resizing textarea** that grows with content
-- **Consistent padding and spacing**
-- **Predictable keyboard behavior**
-
-This makes the UI feel responsive and intuitive during longer prompts.
-
----
+### **Infrastructure**
+- API Gateway removed — replaced with Lambda Function URL (`invoke_mode = RESPONSE_STREAM`)
+- `compress = false` set on the `/chat` CloudFront behavior — required to prevent response buffering
+- No API Gateway stages, CORS config, or routes needed — the Function URL is a direct HTTPS endpoint consumed only by CloudFront

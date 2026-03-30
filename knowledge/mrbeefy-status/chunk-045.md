@@ -1,7 +1,15 @@
-[Source: Mrbeefy Status | Section: 7. Typography: Permanent Marker + Nunito]
+[Source: Mrbeefy Status | Section: 1. Markdown Rendering for Agent Responses]
 
-## **7. Typography: Permanent Marker + Nunito**
-- **Permanent Marker** (Google Fonts) for the page title and section headings — matches the brush-lettered logo style
-- **Nunito** for body text and UI elements — clean, readable, and friendly
+## **1. Markdown Rendering for Agent Responses**
+The UI now uses a Markdown renderer to display assistant messages. This enables:
+
+- **Bold and italic text**
+- **Headings**
+- **Lists**
+- **Multi‑paragraph responses**
+- **Code blocks**
+- **Readable formatting for long answers**
+
+This dramatically improves clarity and makes the agent feel more expressive and professional.
 
 ---

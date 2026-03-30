@@ -1,3 +1,3 @@
-[Source: Mrbeefy Status]
+[Source: Mrbeefy Status | Section: What Changed]
 
-# **⚙️ How the System Works Now**
+## **What Changed**

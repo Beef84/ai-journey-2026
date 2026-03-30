@@ -1,6 +1,16 @@
-[Source: Mrbeefy Status | Section: Cost Impact]
+[Source: Mrbeefy Status | Section: Dedicated KB ingestion]
 
-## **Cost Impact**
-Zero. Streaming does not change token count, request count, or total bytes transferred. Bedrock, Lambda, and CloudFront costs are identical to the non-streaming implementation. The only cost change is the removal of API Gateway, which saves $1.00/million requests — negligible at personal/portfolio scale but eliminates one service entirely.
+### **Dedicated KB ingestion**
+- Allows rapid iteration on documentation  
+- Avoids unnecessary backend deploys  
+- Keeps the KB fresh even when the backend is stable  
+- Reduces risk by isolating ingestion failures from backend releases  
+
+Together, they create a **dual‑path ingestion model**:
+
+- **Backend deploy → full system refresh**  
+- **KB pipeline → documentation‑only refresh**  
+
+This mirrors real‑world AI infra patterns where knowledge updates and infrastructure updates move at different speeds.
 
 ---

@@ -1,22 +1,19 @@
 [Source: Mrbeefy Workflow]
 
 # Extract the public key from it
-openssl rsa -pubout -in cf-dev-private.pem -out cf-dev-public.pem
+openssl rsa -pubout -in dev-cf-private.pem -out dev-cf-public.pem
 ```
 
-Now open `cf-dev-public.pem` and paste its entire contents into `frontend/IaC/terraform.tfvars`:
+**Add the public key as a GitHub secret:**
 
-```hcl
-gateway_secret      = "your-secret"
-function_url_domain = ""
-cloudfront_public_key_pem = <<EOT
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhki...
-(full contents of cf-dev-public.pem)
------END PUBLIC KEY-----
-EOT
-```
+Go to: **GitHub repo → Settings → Secrets and Variables → Actions → New repository secret**
 
-> `cf-dev-public.pem` is not a secret — it goes into CloudFront via Terraform. `cf-dev-private.pem` is a secret — keep it safe and never commit it.
+| Secret Name | Value |
+|---|---|
+| `DEV_CF_PUBLIC_KEY` | Full contents of `dev-cf-public.pem` (including `-----BEGIN PUBLIC KEY-----` header/footer) |
+
+The CI/CD frontend pipeline reads this secret and passes it to Terraform when deploying the dev environment.
+
+> `dev-cf-public.pem` is not a secret — it goes into CloudFront via Terraform. `dev-cf-private.pem` is a secret — keep it safe and never commit it. The repo `.gitignore` excludes all `*.pem` files.
 
 ---

@@ -1,13 +1,11 @@
-[Source: Mrbeefy Status | Section: What Changed > Dev Access via Signed Cookies]
+[Source: Mrbeefy Status | Section: What Changed > Knowledge Base Auto-Bootstrap (`backend/cli/create_kb.ps1`)]
 
-### **Dev Access via Signed Cookies**
-The dev CloudFront distribution requires a valid CloudFront signed cookie for every request. This means:
+### **Knowledge Base Auto-Bootstrap (`backend/cli/create_kb.ps1`)**
+The `deploy-backend` CI/CD pipeline now auto-creates the Bedrock Knowledge Base for any environment where it does not yet exist. The script is idempotent:
 
-- Only the developer (who holds the RSA private key) can generate valid cookies
-- The public key is uploaded to CloudFront via Terraform — not a secret
-- The private key lives locally and is never committed
-- Unauthenticated requests receive a 403
+1. Creates the S3 Vectors bucket (euclidean, float32, 1024 dimensions)
+2. Creates the vector index with the correct metadata keys
+3. Creates the Bedrock Knowledge Base using `indexArn`
+4. Creates the data source with `chunkingStrategy = NONE`
 
-See the Workflow wiki for the full setup guide.
-
----
+All steps use `--cli-input-json file://` with temp files to avoid PowerShell JSON quoting issues. UTF-8 encoding uses `New-Object System.Text.UTF8Encoding $false` to suppress the BOM that breaks the AWS CLI JSON parser.

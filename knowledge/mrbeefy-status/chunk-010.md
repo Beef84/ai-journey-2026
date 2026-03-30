@@ -1,11 +1,14 @@
-[Source: Mrbeefy Status | Section: What Changed > Lambda Function URL Protected by Secret Header]
+[Source: Mrbeefy Status | Section: What Changed > Signed Cookie Automation (`scripts/open-dev.ps1` / `scripts/open-dev.sh`)]
 
-### **Lambda Function URL Protected by Secret Header**
-API Gateway was replaced by a Lambda Function URL (required for SSE streaming). The raw Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is publicly reachable by default. It is now protected by a shared secret:
+### **Signed Cookie Automation (`scripts/open-dev.ps1` / `scripts/open-dev.sh`)**
+Cookie generation and browser injection are now a single command. The scripts:
 
-- CloudFront injects an `x-cloudfront-secret` header on every request it forwards to the Function URL origin
-- Lambda validates this header and returns 403 for any request missing it
-- Direct Function URL access without the secret is rejected immediately — no Bedrock call is made
-- The secret lives in Terraform state and GitHub secrets — it is never committed to the repository
+- Look up the current CloudFront key pair ID from AWS automatically
+- Sign a custom policy using `openssl` (no npm packages required)
+- Launch Edge with remote debugging (separate profile — does not affect the normal session)
+- Set all three cookies directly in Edge via Chrome DevTools Protocol WebSocket
+- Navigate to `dev.mrbeefy.academy`
 
-This applies to both prod and dev.
+Cookies default to a **30-day expiry**. Since the key pair ID only changes when the PEM is rotated and the frontend is redeployed, the script only needs to be re-run on that rare event — not on every code push.
+
+Supporting scripts `gen-dev-cookies.sh` and `gen-dev-cookies.ps1` produce the cookie values and a curl command for cases where the automated approach is not needed.

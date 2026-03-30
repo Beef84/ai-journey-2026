@@ -1,14 +1,15 @@
-[Source: Mrbeefy Status]
+[Source: Mrbeefy Status | Section: 1. Backend still performs ingestion — but only during deploys]
 
-# **🚀 Impact**
-The addition of the dedicated KB ingestion pipeline provides:
+## **1. Backend still performs ingestion — but only during deploys**
+The backend pipeline continues to:
 
-- Faster documentation iteration  
-- Safer ingestion cycles  
-- Clear separation of concerns  
-- Reduced coupling between infra and knowledge  
-- A more resilient and maintainable architecture  
+- Deploy infrastructure  
+- Publish the knowledge bucket name to SSM  
+- Associate the KB with the agent  
+- Trigger a full ingestion as part of a release  
 
-The backend still owns ingestion during deploys, but the KB pipeline now owns ingestion during day‑to‑day updates — exactly the right division of responsibilities.
+This ensures that every backend deploy results in a fully refreshed KB.
+
+**But this is no longer the only ingestion path.**
 
 ---

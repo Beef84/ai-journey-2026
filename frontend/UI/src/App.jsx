@@ -127,7 +127,7 @@ function App() {
                                         isStreaming && i === messages.length - 1 ? " streaming" : ""
                                     }`}
                                 >
-                                    <ReactMarkdown>{m.text}</ReactMarkdown>
+                                    <ReactMarkdown>{m.text.replace(/([^\n])\n([^\n])/g, '$1\n\n$2')}</ReactMarkdown>
                                 </div>
                             ))}
 

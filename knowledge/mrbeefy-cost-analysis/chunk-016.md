@@ -1,9 +1,9 @@
-[Source: Mrbeefy Cost Analysis | Section: 5.4 Nova Pro Over Claude for Agent Reasoning]
+[Source: Mrbeefy Cost Analysis | Section: 5.4 Claude 3.5 Haiku for Agent Reasoning]
 
-## **5.4 Nova Pro Over Claude for Agent Reasoning**
+## **5.4 Claude 3.5 Haiku for Agent Reasoning**
 
-Claude models (Sonnet, Haiku) have higher per-token costs than Nova Pro. At ~$0.0022/request with Nova Pro, Claude Haiku would be slightly cheaper (~$0.0008–0.001/request) but Nova Pro produces higher-quality, more structured responses for agent workflows.
+Claude 3.5 Haiku was chosen because it offers strong reasoning quality for agent workflows at low cost. At ~$0.0008/1K input tokens and ~$0.004/1K output tokens, it is cost-effective for a portfolio-scale deployment.
 
-**Decision:** Nova Pro. Quality over marginal per-request savings at this scale.
+**Decision:** Claude 3.5 Haiku. Strong quality at low cost; native Bedrock integration via cross-region inference profile.
 
 ---

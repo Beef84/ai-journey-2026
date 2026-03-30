@@ -1,6 +1,7 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Cloud, Containers & Infrastructure‑as‑Code]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Architecture, Modernization & Scalability]
 
-### Cloud, Containers & Infrastructure‑as‑Code
-- Built IaC tooling for Azure provisioning using Bicep, ARM, Azure CLI, PowerShell, and Bash, enabling consistent, repeatable environment creation.
-- Supported production container workloads running on Azure Container Apps and OpenShift, including troubleshooting, diagnostics, and performance tuning.
-- Improved scalability and runtime stability of containerized services through configuration hardening, resource tuning, and environment‑specific deployment patterns.
+### Architecture, Modernization & Scalability
+- Decoupled a legacy monolith into independently deployable Business Capabilities, each delivered through vertical repositories containing their own database, services, APIs, UI, and automated tests — improving scalability, maintainability, and deployment safety.
+- Converted .NET Framework applications and libraries to .NET 6, documenting modernization patterns and establishing repeatable upgrade practices for other teams.
+- Delivered microservices, REST APIs, and SQL Server–backed backend systems, improving performance, reliability, and long‑term maintainability.
+- Designed and enforced architectural patterns for LaunchDarkly usage, including .NET and Angular wrappers that standardized naming conventions, integration patterns, and rollout safety across distributed systems.

@@ -1,7 +1,6 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Leadership & Cross‑Team Collaboration]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Observability, Reliability & Production Ownership]
 
-### Leadership & Cross‑Team Collaboration
-- Mentored engineers, shaped engineering practices, and guided architectural decisions across multiple teams.
-- Partnered with platform, cloud, and product groups to align shared services, integration standards, and modernization strategies.
-
----
+### Observability, Reliability & Production Ownership
+- Owned LaunchDarkly integrations, improving observability, rollout safety, and feature‑flag governance across distributed systems.
+- Participated in incident response and root‑cause analysis, driving durable fixes across application, integration, and infrastructure layers.
+- Improved system reliability through diagnostics, performance tuning, and targeted refactoring of backend services.

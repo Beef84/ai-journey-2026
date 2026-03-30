@@ -1,14 +1,11 @@
-[Source: Mrbeefy Design Decisions | Section: 13.4 Multi-Environment Strategy: Terraform Workspaces]
+[Source: Mrbeefy Design Decisions | Section: 12.7 Message Bubble Design]
 
-## **13.4 Multi-Environment Strategy: Terraform Workspaces**
+## **12.7 Message Bubble Design**
+User and assistant messages have distinct visual treatments:
 
-Terraform workspaces were chosen over separate directories or separate accounts because:
+- **User:** right-aligned, teal-tinted bubble with teal border
+- **Assistant:** left-aligned, dark bubble with subtle teal border
 
-- **Same account:** No cross-account IAM complexity for a personal project
-- **Workspace-aware naming:** `terraform.workspace` drives the resource prefix, keeping dev and prod fully isolated by name
-- **Automatic state isolation:** Each workspace gets its own state key in S3 with no extra configuration
-- **Minimal code duplication:** One set of Terraform files serves all environments
-
-The `default` workspace maps to prod, preserving all existing resource names with no migration needed.
+Both support Markdown formatting and long-form content.
 
 ---

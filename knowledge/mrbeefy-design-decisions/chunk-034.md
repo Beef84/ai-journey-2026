@@ -1,7 +1,15 @@
-[Source: Mrbeefy Design Decisions | Section: 13.2 Secret Management: terraform.tfvars (Gitignored)]
+[Source: Mrbeefy Design Decisions | Section: 12.5 Dark Theme with Teal Accent Palette]
 
-## **13.2 Secret Management: terraform.tfvars (Gitignored)**
+## **12.5 Dark Theme with Teal Accent Palette**
+The site uses a dark theme derived directly from the logo's color palette:
 
-The `gateway_secret` value is set via `terraform.tfvars` in each IaC directory. These files are gitignored and never committed. The value is stored in Terraform state (already encrypted at rest in S3 with DynamoDB locking) and injected into the Lambda environment by Terraform.
+- **Background:** pure black (`#000`)
+- **Shell:** dark teal-tinted (`rgba(12,18,18,0.88)`) with a subtle teal border
+- **Content card:** slightly lifted dark teal (`rgba(22,36,36,0.97)`) — distinct from the background without being obviously colored
+- **Accent:** `#5b9090` — sampled from the "BEEF AI SOFTWARE" logo text
+- **User bubble:** muted teal (`rgba(61,107,107,0.75)`)
+- **Assistant bubble:** near-black with teal border
 
-This avoids SSM costs and complexity for a personal project while keeping the secret out of source control.
+This palette creates a cohesive, branded aesthetic that flows directly from the logo.
+
+---

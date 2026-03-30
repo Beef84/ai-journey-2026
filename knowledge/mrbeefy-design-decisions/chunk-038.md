@@ -1,14 +1,7 @@
-[Source: Mrbeefy Design Decisions | Section: 11.4 Non‑Destructive S3 Sync]
+[Source: Mrbeefy Design Decisions | Section: 13.2 Secret Management: terraform.tfvars (Gitignored)]
 
-## **11.4 Non‑Destructive S3 Sync**
-The KB pipeline intentionally avoids destructive sync flags.
+## **13.2 Secret Management: terraform.tfvars (Gitignored)**
 
-This prevents:
+The `gateway_secret` value is set via `terraform.tfvars` in each IaC directory. These files are gitignored and never committed. The value is stored in Terraform state (already encrypted at rest in S3 with DynamoDB locking) and injected into the Lambda environment by Terraform.
 
-- Metadata loss  
-- Embedding corruption  
-- Ingestion failures caused by missing files  
-
-Only new or updated files are uploaded, preserving the integrity of the vector store.
-
----
+This avoids SSM costs and complexity for a personal project while keeping the secret out of source control.

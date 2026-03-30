@@ -11,4 +11,4 @@
    - Embeds the query using Titan V2
    - Queries the S3 Vector Store
    - Retrieves relevant documents
-3. The agent generates a response using Nova Pro, streamed back in chunks.
+3. The agent generates a response using Claude 3.5 Haiku, streamed back in chunks.

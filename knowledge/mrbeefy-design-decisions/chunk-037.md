@@ -1,18 +1,25 @@
 [Source: Mrbeefy Design Decisions]
 
-# **14. Final Summary**
-
-The completed architecture reflects a coherent set of engineering principles and the mature system that emerged from them. Every layer of Mr. Beefy was shaped by intentional choices: keeping infrastructure declarative, keeping dynamic state out of Terraform, minimizing Lambda responsibilities, letting Bedrock handle intelligence, routing everything through CloudFront, and using CI/CD to manage all lifecycle operations. These principles ensured a system that is simple, explicit, secure by default, and easy to evolve.
-
-The resulting platform is now fully aligned with those goals — including the multi-environment model and security controls added after initial production deployment:
-
-- **Infrastructure** remains declarative, stable, and reproducible  
-- **Dynamic operations** such as agent aliasing and KB ingestion are handled cleanly by CI/CD  
-- **Knowledge ingestion** is decoupled, safe, and independently deployable through a dedicated pipeline  
-- **The frontend** is polished, expressive, and aligned with modern chat UX patterns  
-- **The agent** is backed by a reliable retrieval pipeline and high‑quality embeddings  
-- **The system** as a whole is maintainable, cost‑efficient, and ready for long‑term evolution  
-
-This final summary closes the document and captures both the philosophy that guided the architecture and the production‑ready system that resulted from it.
+## **12.8 Minimal Scrollbar**
+A modern, unobtrusive scrollbar with a teal thumb matches the accent palette without drawing attention.
 
 ---
+
+# **13. Security Design Decisions**
+
+## **13.1 Lambda Function URL Protection: CloudFront Secret Header**
+
+The raw Lambda Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is publicly reachable by default. Anyone who discovers the URL can POST to it and invoke Bedrock directly, bypassing CloudFront entirely.
+
+**Approach chosen:** CloudFront injects a shared secret as the `x-cloudfront-secret` custom header on every request forwarded to the Function URL origin. Lambda checks for this header before doing anything else and returns 403 if it is absent or wrong.
+
+**Alternatives considered:**
+
+| Option | Why rejected |
+|---|---|
+| Lambda Function URL `authorization_type = "AWS_IAM"` | Requires SigV4-signed requests — cannot be called directly from the browser |
+| Lambda authorizer (separate function) | Adds cold start and billing surface for a simple secret check |
+| WAF on Function URL | Not supported — WAF cannot be attached to Lambda Function URLs |
+| IP allowlist | CloudFront edge IPs change constantly and are not suitable for static allowlists |
+
+The secret header is simple, free, and effective for a single-API use case.

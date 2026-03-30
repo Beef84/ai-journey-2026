@@ -2,9 +2,9 @@
 
 # **1. Per-Service Cost Breakdown**
 
-## **1.1 Amazon Bedrock — Nova Pro (Dominant Cost)**
+## **1.1 Amazon Bedrock — Claude 3.5 Haiku (Dominant Cost)**
 
-Nova Pro is the primary cost driver. It is charged per token regardless of caching or streaming.
+Claude 3.5 Haiku is the primary cost driver. It is charged per token regardless of caching or streaming.
 
 | Metric | Rate |
 |---|---|

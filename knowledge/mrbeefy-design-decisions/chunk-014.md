@@ -1,13 +1,8 @@
-[Source: Mrbeefy Design Decisions | Section: 6.3 Knowledge Base as the First Source of Truth]
+[Source: Mrbeefy Design Decisions | Section: 6.2 Titan V2 for Embeddings]
 
-## **6.3 Knowledge Base as the First Source of Truth**
-The agent is instructed to:
+## **6.2 Titan V2 for Embeddings**
+Titan V2 was chosen because:
 
-- Always search the KB first  
-- Only answer from KB when relevant  
-- Avoid hallucination  
-- Fall back to out-of-domain only when KB is empty  
-
-This ensures accuracy and consistency.
-
----
+- High-quality text embeddings  
+- Native integration with S3 Vector Store  
+- Optimized for retrieval tasks

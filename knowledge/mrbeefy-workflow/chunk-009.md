@@ -3,15 +3,17 @@
 # **4. Knowledge Base Workflow**
 
 ### **4.1 KB File Management**
-1. Machine‑readable KB files are stored in a dedicated folder in the repository.  
-2. CI/CD uploads these files to the Knowledge Base S3 bucket.
+KB files are generated from the GitHub wiki using a standalone two-pass chunker (`scripts/chunker.py`):
 
-### **4.2 Ingestion Workflow**
-**Exact behavior (no vague phrasing):**
+**Pass 1 — Build sections:** Parses each wiki page by heading, capturing the full heading hierarchy as a context prefix (`[Source: X | Section: Y]`) on every chunk.
 
-1. CI/CD calls the Bedrock Knowledge Base ingestion API to start a new ingestion job.  
-2. Bedrock performs the ingestion process:
-   - Reads documents from the KB S3 bucket  
-   - Generates embeddings using Titan V2  
-   - Writes vectors to the S3 Vector Store  
-   - Updates the vector index
+**Pass 2 — Merge undersized sections:** Sections below 200 content characters are merged forward into the next sibling. Header-only sections (heading line with no body) are always merged. Merges never cross `##` boundaries. After merging, the prefix is promoted to the common ancestor heading.
+
+Constants: `MAX_CHARS = 2000`, `MIN_CONTENT_CHARS = 200`, `OVERLAP_CHARS = 150`.
+
+The chunker is called by `wiki-sync.yml` on every wiki update:
+```bash
+python3 scripts/chunker.py --wiki-dir wiki --out-dir knowledge
+```
+
+It is also reusable by other projects via `--wiki-dir` and `--out-dir` flags.

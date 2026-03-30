@@ -7,4 +7,4 @@
 ### **6. Bedrock Agent**
 - Searches Knowledge Base
 - Retrieves relevant documents
-- Generates response via Nova Pro (streamed)
+- Generates response via Claude 3.5 Haiku (streamed)

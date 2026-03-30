@@ -1,33 +1,17 @@
-[Source: Mrbeefy Workflow]
+[Source: Mrbeefy Workflow | Section: 9.5 First-Time Production Deploy Sequence]
 
-# Review the plan, type "yes" when prompted
-```
+## **9.5 First-Time Production Deploy Sequence**
 
-**Step 3 — Capture the Lambda Function URL domain:**
+> **Why this order matters:** The frontend Terraform needs the Lambda Function URL domain as an input variable. That value only exists after the backend is deployed. Do backend first, capture the output, then deploy frontend. After this first time, CI/CD handles the handoff via SSM automatically.
+
+**Step 1 — Initialize and select the prod workspace (default):**
 ```bash
-terraform output function_url_domain
-
-# Output looks like: abc123xyz.lambda-url.us-east-1.on.aws
-
-# Copy this value — you need it in the next step
-```
-
-**Step 4 — Update the frontend tfvars with the captured domain:**
-
-Open `frontend/IaC/terraform.tfvars` and fill in the value:
-```hcl
-gateway_secret      = "your-secret"
-function_url_domain = "abc123xyz.lambda-url.us-east-1.on.aws"
-```
-
-**Step 5 — Deploy the frontend:**
-```bash
-cd frontend/IaC
+cd backend/IaC
 terraform init
+terraform workspace list        # confirm "default" exists
 terraform workspace select default
-terraform apply
 ```
 
-After this first successful deploy, the backend pipeline writes `function_url_domain` to SSM on every run. The frontend pipeline reads it from SSM. You never need to copy it manually again.
-
----
+**Step 2 — Deploy the backend:**
+```bash
+terraform apply

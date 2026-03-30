@@ -1,21 +1,16 @@
-[Source: Mrbeefy Design Decisions]
+[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege]
 
-## **9.3 CloudFront + S3 Hosting**
-Provides:
+# **8. IAM Design Decisions**
 
-- Global caching  
-- Instant invalidation  
-- Zero server maintenance  
-- Strong security posture  
+## **8.1 Least Privilege**
+Each role has only the permissions required for its function.
 
----
+### **Lambda Role**
+- Logging  
+- `bedrock:InvokeAgent`
 
-# **10. Deployment Design Decisions**
-
-## **10.1 Terraform for Infrastructure**
-Ensures:
-
-- Reproducibility  
-- Version control  
-- Clear diffs  
-- Safe rollbacks
+### **Agent Execution Role**
+- Model invocation  
+- KB retrieval  
+- S3 read access  
+- Vector store operations

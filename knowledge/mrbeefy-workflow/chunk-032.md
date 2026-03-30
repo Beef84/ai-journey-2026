@@ -1,17 +1,19 @@
 [Source: Mrbeefy Workflow]
 
-# **10. Monitoring Workflow**
+# Git Bash
+bash scripts/gen-dev-cookies.sh /c/path/to/dev-cf-private.pem
+```
 
-### **10.1 CloudWatch**
-- Lambda logs
-- CloudFront access logs (optional)
+Then open Edge, navigate to `https://dev.mrbeefy.academy`, open **DevTools** (`F12`) → **Application** → **Cookies** → `https://dev.mrbeefy.academy`, and add each cookie:
 
-### **10.2 CloudFront**
-- Cache hit/miss metrics
-- Optional standard logs
+| Name | Value | Domain | Path | Secure |
+|---|---|---|---|---|
+| `CloudFront-Policy` | (from script output) | `dev.mrbeefy.academy` | `/` | ✓ |
+| `CloudFront-Signature` | (from script output) | `dev.mrbeefy.academy` | `/` | ✓ |
+| `CloudFront-Key-Pair-Id` | (from script output) | `dev.mrbeefy.academy` | `/` | ✓ |
 
-### **10.3 Bedrock**
-- KB ingestion job status
-- Agent invocation metrics
+Hard-refresh (`Ctrl+Shift+R`).
+
+> **When to re-run:** Only when the CloudFront public key is rotated (new PEM generated + frontend redeployed). Pushing code to dev does not invalidate cookies.
 
 ---

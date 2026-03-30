@@ -1,10 +1,4 @@
-[Source: Mrbeefy Status | Section: 4. Message Bubble Redesign]
+[Source: Mrbeefy Status | Section: What Changed > Retrieval Count: 15]
 
-## **4. Message Bubble Redesign**
-User and assistant messages have distinct visual treatments derived from the brand palette:
-
-### **User Messages**
-- Right-aligned
-- Muted teal bubble (`rgba(61,107,107,0.75)`)
-- Teal border
-- Light teal text
+### **Retrieval Count: 15**
+Lambda now passes `numberOfResults: 15` to Bedrock via `sessionState.knowledgeBaseConfigurations` in `InvokeAgentCommand`. Previously the default was lower, causing the agent to miss relevant context on multi-part questions.

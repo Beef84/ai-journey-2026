@@ -1,22 +1,9 @@
-[Source: Mrbeefy Workflow]
+[Source: Mrbeefy Workflow | Section: 9.6 Generate RSA Key Pair for Dev Signed Cookies (Dev only)]
 
-# Generate a 2048-bit RSA private key
-openssl genrsa -out dev-cf-private.pem 2048
+## **9.6 Generate RSA Key Pair for Dev Signed Cookies** *(Dev only)*
 
-# Extract the public key from it
-openssl rsa -pubout -in dev-cf-private.pem -out dev-cf-public.pem
-```
+> **What this is:** The dev CloudFront distribution rejects all requests that don't carry a valid signed cookie. You sign cookies with your private key. CloudFront verifies them using the public key uploaded via Terraform. The private key never leaves your machine — not in the repo, not in AWS.
 
-**Add the public key as a GitHub secret:**
+Run once from any directory. Store the private key in a secure local folder.
 
-Go to: **GitHub repo → Settings → Secrets and Variables → Actions → New repository secret**
-
-| Secret Name | Value |
-|---|---|
-| `DEV_CF_PUBLIC_KEY` | Full contents of `dev-cf-public.pem` (including `-----BEGIN PUBLIC KEY-----` header/footer) |
-
-The CI/CD frontend pipeline reads this secret and passes it to Terraform when deploying the dev environment.
-
-> `dev-cf-public.pem` is not a secret — it goes into CloudFront via Terraform. `dev-cf-private.pem` is a secret — keep it safe and never commit it. The repo `.gitignore` excludes all `*.pem` files.
-
----
+```bash

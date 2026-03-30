@@ -1,7 +1,9 @@
-[Source: Jordan Career Summary | Section: DevOps & CI/CD]
+[Source: Jordan Career Summary]
 
-### **DevOps & CI/CD**
-- Azure DevOps Pipelines (YAML, templates, automation modules)  
-- Git, GitHub, SCM workflows  
-- Automated deployments, release orchestration, rollback strategies  
-- Monitoring, diagnostics, incident management
+# **Technical Strengths and Focus Areas**
+
+### **Distributed Systems & Backend Platforms**
+- Microservices, event‑driven systems, REST APIs  
+- High‑throughput, low‑latency backend design  
+- SQL/NoSQL data modeling, performance tuning  
+- Messaging patterns and service‑bus architectures

@@ -10,4 +10,5 @@
 - Environment variables:
   - `AGENT_ID`
   - `AGENT_ALIAS_ID` (updated by CI/CD after alias creation)
+  - `KB_ID` (updated by CI/CD after KB setup)
   - `GATEWAY_SECRET` (set by Terraform from `terraform.tfvars`, never committed)

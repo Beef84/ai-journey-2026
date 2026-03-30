@@ -1,15 +1,11 @@
 [Source: Mrbeefy Design Decisions]
 
-## **7.2 Explicit Ingestion**
-KB ingestion is triggered manually via CI/CD because:
+# **7. Knowledge Base Design Decisions**
 
-- AWS does not auto-ingest  
-- Ingestion should be deterministic  
-- KB updates should be intentional  
+## **7.1 S3 Vector Store**
+Chosen because:
 
----
-
-# **8. IAM Design Decisions**
-
-## **8.1 Least Privilege**
-Each role has only the permissions required for its function.
+- Fully managed
+- Scales automatically
+- Integrates with Titan embeddings
+- No infrastructure to maintain

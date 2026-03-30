@@ -1,7 +1,7 @@
 [Source: Jordan Skills]
 
 ### **Containerized Production Systems**
-- Supported Docker, Kubernetes, and OpenShift workloads  
+- Supported Docker and OpenShift workloads  
 - Improved reliability and performance for mission‑critical services
 
 ### **AI Agent Platform (Mr. Beefy)**

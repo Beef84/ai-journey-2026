@@ -1,6 +1,20 @@
-[Source: Mrbeefy Design Decisions | Section: 12.2 Auto-Scrolling]
+[Source: Mrbeefy Design Decisions | Section: 11.3 SSM as the Source of Truth]
 
-## **12.2 Auto-Scrolling**
-The chat scrolls automatically to the latest message, improving conversational flow and eliminating manual scrolling after long responses.
+## **11.3 SSM as the Source of Truth**
+The backend pipeline now publishes:
+
+- KB bucket name  
+- KB ID  
+
+…into SSM parameters.
+
+The KB pipeline reads these values at runtime, ensuring:
+
+- No Terraform coupling  
+- No querying the KB for data source ARNs  
+- No brittle assumptions about resource recreation  
+- A stable, explicit contract between pipelines  
+
+SSM becomes the **canonical interface** between backend deploys and KB ingestion.
 
 ---

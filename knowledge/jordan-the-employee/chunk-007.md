@@ -1,5 +1,0 @@
-[Source: Jordan The Employee | Section: Where I see myself in 3–5 years]
-
-In the next few years, I expect to be in a Solutions Architect–type role or a similar leadership position where I can help shape engineering culture, mentor teams, and establish clear architectural direction. In parallel, I plan to continue growing my AI software company and pushing myself into new technical domains. Those two paths reinforce each other — the more I learn, the more I can bring back to my team, and the more architectural responsibility I take on, the stronger my ability becomes to build meaningful products.
-
-Ultimately, I want to be in a role where I have autonomy, where I’m trusted to lead, and where I can help create a culture built on ownership, operational excellence, high standards, and thoughtful, well‑architected systems.

@@ -1,9 +1,24 @@
-[Source: Mrbeefy Workflow | Section: 7.2 Dependency Ordering]
+[Source: Mrbeefy Workflow]
 
-### **7.2 Dependency Ordering**
-Terraform ensures:
+### **6.3 Outputs**
+- Updated infrastructure  
+- Updated KB index  
+- Updated agent alias  
+- Updated Lambda runtime  
+- Updated frontend  
 
-- ACM certificate validated before CloudFront  
-- CloudFront created before Route53 alias  
-- Lambda created before Function URL is configured
-- IAM roles created before Bedrock Agent
+---
+
+# **7. Infrastructure Provisioning Workflow**
+
+### **7.1 Terraform Apply**
+Terraform provisions:
+
+- S3 buckets
+- IAM roles
+- Lambda function definition
+- Lambda Function URL
+- CloudFront
+- Route53
+- ACM certificate
+- Bedrock Agent (DRAFT)

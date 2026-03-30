@@ -1,16 +1,9 @@
-[Source: Mrbeefy Workflow]
+[Source: Mrbeefy Workflow | Section: 7.2 Dependency Ordering]
 
-### **7.3 Outputs to CI/CD**
-Terraform outputs:
+### **7.2 Dependency Ordering**
+Terraform ensures:
 
-- Agent ID
-- KB ID
-- Lambda function name
-- Lambda Function URL domain
-- CloudFront distribution domain
-
-These values are consumed by CI/CD for dynamic operations.
-
----
-
-# **8. Security Workflow**
+- ACM certificate validated before CloudFront  
+- CloudFront created before Route53 alias  
+- Lambda created before Function URL is configured
+- IAM roles created before Bedrock Agent

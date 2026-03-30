@@ -1,11 +1,13 @@
-[Source: Mrbeefy Design Decisions]
+[Source: Mrbeefy Design Decisions | Section: 6.3 Knowledge Base as the First Source of Truth]
 
-# **7. Knowledge Base Design Decisions**
+## **6.3 Knowledge Base as the First Source of Truth**
+The agent is instructed to:
 
-## **7.1 S3 Vector Store**
-Chosen because:
+- Always search the KB first  
+- Only answer from KB when relevant  
+- Avoid hallucination  
+- Fall back to out-of-domain only when KB is empty  
 
-- Fully managed  
-- Scales automatically  
-- Integrates with Titan embeddings  
-- No infrastructure to maintain
+This ensures accuracy and consistency.
+
+---

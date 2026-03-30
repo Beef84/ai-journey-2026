@@ -1,12 +1,14 @@
-[Source: Mrbeefy Design Decisions | Section: 12.3 Improved Input Behavior]
+[Source: Mrbeefy Design Decisions | Section: 11.4 Non‑Destructive S3 Sync]
 
-## **12.3 Improved Input Behavior**
-The input box supports:
+## **11.4 Non‑Destructive S3 Sync**
+The KB pipeline intentionally avoids destructive sync flags.
 
-- Enter → send
-- Shift+Enter → newline
-- Auto-resizing
+This prevents:
 
-These changes align with modern chat UX expectations and make multi-line prompts natural to write.
+- Metadata loss  
+- Embedding corruption  
+- Ingestion failures caused by missing files  
+
+Only new or updated files are uploaded, preserving the integrity of the vector store.
 
 ---

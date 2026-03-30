@@ -152,6 +152,7 @@ resource "aws_cloudfront_public_key" "signed_cookies" {
   # can create the new key before the old one is removed from the key group.
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [encoded_key]
   }
 }
 

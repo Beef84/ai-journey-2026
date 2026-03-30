@@ -1,17 +1,18 @@
-[Source: Mrbeefy Cost Analysis | Section: 1.2 Amazon Bedrock — Titan V2 Embeddings (KB Ingestion)]
+[Source: Mrbeefy Cost Analysis | Section: 1.3 AWS Lambda]
 
-## **1.2 Amazon Bedrock — Titan V2 Embeddings (KB Ingestion)**
+## **1.3 AWS Lambda**
 
-Titan V2 is used only during KB ingestion, not during chat.
+Billed on duration × memory allocation, plus a flat per-invocation fee.
 
 | Metric | Rate |
 |---|---|
-| Embedding tokens | ~$0.00002 / 1K tokens |
+| Compute | $0.0000166667 / GB-second |
+| Invocations | $0.0000002 / request |
 
-**Per ingestion run:**
-- Current KB: ~200 chunks × ~1,200 chars each ≈ ~60,000 tokens
-- Cost per ingestion: ~$0.0012
+**Per request estimate (256MB, ~10s average duration):**
+- 0.25 GB × 10s = 2.5 GB-seconds × $0.0000166667 = **~$0.00004/request**
+- Plus invocation: $0.0000002
 
-Even running ingestion daily, this is **~$0.04/month** — essentially free.
+Lambda is **not** a meaningful cost at personal/demo scale.
 
 ---

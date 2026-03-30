@@ -1,10 +1,18 @@
-[Source: Jordan Skills | Section: Enterprise Backend Systems]
+[Source: Jordan Skills]
 
-### **Enterprise Backend Systems**
-- Multi‑service orchestration  
-- API versioning and governance  
-- Backend reliability engineering  
-- Feature‑flag integration (LaunchDarkly)  
-- Rollout safety and progressive delivery  
+### **Cloud Governance & Operations**
+- Identity and access management  
+- Environment standardization  
+- Configuration enforcement  
+- Cloud security posture awareness  
 
 ---
+
+# **3. DevOps, CI/CD, and Automation**
+
+### **CI/CD Platform Engineering**
+- Azure DevOps Pipelines (YAML, templates, reusable modules)  
+- GitHub Actions  
+- Release orchestration and deployment automation  
+- Rollback strategies and safe deployment patterns  
+- Artifact management and versioning

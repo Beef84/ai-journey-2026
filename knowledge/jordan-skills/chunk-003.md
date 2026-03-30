@@ -1,11 +1,8 @@
-[Source: Jordan Skills | Section: Core Backend Development]
+[Source: Jordan Skills]
 
-### **Core Backend Development**
-- C#, .NET (explicit experience with .NET 6/7/8 and .NET Framework), ASP.NET Core  
-- REST API design and implementation  
-- Microservices and modular backend architectures  
-- Event‑driven and message‑driven systems  
-- High‑throughput, low‑latency backend design  
-- SQL Server (advanced), NoSQL concepts  
-- Data modeling, indexing, performance tuning  
-- SOA patterns and enterprise service architectures
+# **2. Cloud, Infrastructure, and Platform Engineering**
+
+### **Cloud Platforms**
+- Azure (App Service, API Management, Functions, Container Apps, Azure SQL, Cosmos DB, Data Factory, Service Bus, Key Vault)  
+- Cloud‑agnostic patterns applicable to AWS/GCP  
+- AWS (Bedrock, Lambda, API Gateway, CloudFront OAC, S3, SNS/SQS, DynamoDB, OpenSearch, Step Functions, SageMaker, Bedrock Agents)

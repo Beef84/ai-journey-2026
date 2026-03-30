@@ -1,17 +1,11 @@
 [Source: Mrbeefy Workflow]
 
-# **1. Overview**
+# **2. Frontend Delivery Workflow**
 
-The Mr. Beefy platform operates through coordinated workflows across:
+### **2.1 Build**
+1. The React application is compiled into a static asset bundle.  
+2. Output includes `index.html`, JavaScript bundles, CSS, and static assets.
 
-- **Frontend delivery**  
-- **API request handling**  
-- **Lambda compute execution**  
-- **Bedrock Agent orchestration**  
-- **Knowledge Base retrieval**  
-- **CI/CD automation**  
-- **Infrastructure provisioning**
-
-Each workflow below describes the exact sequence of operations and the responsibilities of each component.
-
----
+### **2.2 Deployment**
+1. CI/CD uploads the build artifacts to the S3 frontend bucket.  
+2. CI/CD issues a CloudFront invalidation to propagate updates globally.

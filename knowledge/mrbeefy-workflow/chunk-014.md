@@ -1,9 +1,24 @@
-[Source: Mrbeefy Workflow | Section: 3.7 Browser Receives Tokens in Real Time]
+[Source: Mrbeefy Workflow]
 
-### **3.7 Browser Receives Tokens in Real Time**
-1. The browser reads the response via `fetch` + `ReadableStream`.
-2. Each SSE line is parsed and the token appended to the assistant message bubble immediately.
-3. A blinking cursor is shown while streaming is in progress.
-4. When `[DONE]` arrives, the cursor is removed and the send button is re-enabled.
+### **6.3 Outputs**
+- Updated infrastructure  
+- Updated KB index  
+- Updated agent alias  
+- Updated Lambda runtime  
+- Updated frontend  
 
 ---
+
+# **7. Infrastructure Provisioning Workflow**
+
+### **7.1 Terraform Apply**
+Terraform provisions:
+
+- S3 buckets
+- IAM roles
+- Lambda function definition
+- Lambda Function URL
+- CloudFront
+- Route53
+- ACM certificate
+- Bedrock Agent (DRAFT)

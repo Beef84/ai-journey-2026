@@ -1,6 +1,14 @@
-[Source: Mrbeefy Status | Section: Cost Impact]
+[Source: Mrbeefy Status | Section: 3. Improved Input Experience]
 
-## **Cost Impact**
-Zero. Streaming does not change token count, request count, or total bytes transferred. Bedrock, Lambda, and CloudFront costs are identical to the non-streaming implementation. The only cost change is the removal of API Gateway, which saves $1.00/million requests — negligible at personal/portfolio scale but eliminates one service entirely.
+## **3. Improved Input Experience**
+The message input area has been rebuilt for a more natural chat workflow:
+
+- **Enter → send**
+- **Shift+Enter → newline**
+- **Auto‑resizing textarea** that grows with content
+- **Consistent padding and spacing**
+- **Predictable keyboard behavior**
+
+This makes the UI feel responsive and intuitive during longer prompts.
 
 ---

@@ -1,11 +1,11 @@
-[Source: Mrbeefy Status | Section: What Changed > Lambda Function URL Protected by Secret Header]
+[Source: Mrbeefy Status | Section: What Changed > Knowledge Base Auto-Bootstrap (`backend/cli/create_kb.ps1`)]
 
-### **Lambda Function URL Protected by Secret Header**
-API Gateway was replaced by a Lambda Function URL (required for SSE streaming). The raw Function URL (`https://{id}.lambda-url.us-east-1.on.aws`) is publicly reachable by default. It is now protected by a shared secret:
+### **Knowledge Base Auto-Bootstrap (`backend/cli/create_kb.ps1`)**
+The `deploy-backend` CI/CD pipeline now auto-creates the Bedrock Knowledge Base for any environment where it does not yet exist. The script is idempotent:
 
-- CloudFront injects an `x-cloudfront-secret` header on every request it forwards to the Function URL origin
-- Lambda validates this header and returns 403 for any request missing it
-- Direct Function URL access without the secret is rejected immediately — no Bedrock call is made
-- The secret lives in Terraform state and GitHub secrets — it is never committed to the repository
+1. Creates the S3 Vectors bucket (euclidean, float32, 1024 dimensions)
+2. Creates the vector index with the correct metadata keys
+3. Creates the Bedrock Knowledge Base using `indexArn`
+4. Creates the data source with `chunkingStrategy = NONE`
 
-This applies to both prod and dev.
+All steps use `--cli-input-json file://` with temp files to avoid PowerShell JSON quoting issues. UTF-8 encoding uses `New-Object System.Text.UTF8Encoding $false` to suppress the BOM that breaks the AWS CLI JSON parser.

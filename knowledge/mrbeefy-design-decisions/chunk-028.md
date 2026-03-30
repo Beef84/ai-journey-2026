@@ -1,7 +1,12 @@
-[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege > Agent Execution Role]
+[Source: Mrbeefy Design Decisions | Section: 12.3 Improved Input Behavior]
 
-### **Agent Execution Role**
-- Model invocation  
-- KB retrieval  
-- S3 read access  
-- Vector store operations
+## **12.3 Improved Input Behavior**
+The input box supports:
+
+- Enter → send
+- Shift+Enter → newline
+- Auto-resizing
+
+These changes align with modern chat UX expectations and make multi-line prompts natural to write.
+
+---

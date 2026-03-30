@@ -1,11 +1,6 @@
-[Source: Mrbeefy Architecture | Section: 4.1 Lambda Function]
+[Source: Mrbeefy Architecture | Section: 6.2 Vector Store]
 
-## **4.1 Lambda Function**
-- Runtime: **Node.js 20.x**
-- Handler: `index.handler`
-- Timeout: 30 seconds
-- Deployed via CI/CD (zip artifact)
-- Environment variables:
-  - `AGENT_ID`
-  - `AGENT_ALIAS_ID` (updated by CI/CD after alias creation)
-  - `GATEWAY_SECRET` (set by Terraform from `terraform.tfvars`, never committed)
+## **6.2 Vector Store**
+- Backed by **S3 Vector Store**  
+- Embedding model: **amazon.titan-embed-text-v2:0**  
+- Index created and managed by Bedrock

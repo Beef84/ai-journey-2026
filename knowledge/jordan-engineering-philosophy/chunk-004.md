@@ -1,20 +1,18 @@
 [Source: Jordan Engineering Philosophy]
 
-# **3. Favor Explicitness Over Convention**
+# **4. Design for Observability First**
 
-Defaults hide behavior.  
-Hidden behavior becomes hidden bugs.
+A system without visibility is a system waiting to fail.
 
-So I make everything explicit:
+I design with observability as a first‑class requirement:
 
-- Regions  
-- Permissions  
-- Routing paths  
-- Origin mappings  
-- Environment variables  
-- Deployment steps  
-- Ingestion triggers  
+- Lambda logs  
+- API Gateway access logs  
+- API Gateway execution logs  
+- CloudFront metrics  
+- KB ingestion status  
+- Bedrock invocation metrics  
 
-Explicit systems are easier to reason about, easier to debug, and easier to evolve.
+If something goes wrong, I want the system to tell me *exactly* where and why.
 
 ---

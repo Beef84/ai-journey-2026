@@ -1,19 +1,4 @@
-[Source: Mrbeefy Design Decisions | Section: 2.2 CI/CD Owns Dynamic Lifecycle]
+[Source: Mrbeefy Design Decisions | Section: 3.2 Single Endpoint: `POST /chat`]
 
-## **2.2 CI/CD Owns Dynamic Lifecycle**
-GitHub Actions handles:
-
-- KB ingestion  
-- Agent alias creation (if missing)  
-- Lambda environment variable updates  
-- Deployment of Lambda code  
-- Uploading KB files  
-
-This ensures:
-
-- No stale alias IDs  
-- No Terraform drift  
-- No accidental recreation of agents  
-- Clean, predictable updates  
-
----
+## **3.2 Single Endpoint: `POST /chat`**
+The system exposes only one route. This keeps the attack surface minimal, the contract simple, and the frontend integration straightforward. The Function URL receives all requests; Lambda routes internally by HTTP method if needed.

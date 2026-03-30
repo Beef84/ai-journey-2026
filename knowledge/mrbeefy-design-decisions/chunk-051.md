@@ -1,11 +1,7 @@
-[Source: Mrbeefy Design Decisions | Section: 12.7 Message Bubble Design]
+[Source: Mrbeefy Design Decisions | Section: 13.2 Secret Management: terraform.tfvars (Gitignored)]
 
-## **12.7 Message Bubble Design**
-User and assistant messages have distinct visual treatments:
+## **13.2 Secret Management: terraform.tfvars (Gitignored)**
 
-- **User:** right-aligned, teal-tinted bubble with teal border
-- **Assistant:** left-aligned, dark bubble with subtle teal border
+The `gateway_secret` value is set via `terraform.tfvars` in each IaC directory. These files are gitignored and never committed. The value is stored in Terraform state (already encrypted at rest in S3 with DynamoDB locking) and injected into the Lambda environment by Terraform.
 
-Both support Markdown formatting and long-form content.
-
----
+This avoids SSM costs and complexity for a personal project while keeping the secret out of source control.

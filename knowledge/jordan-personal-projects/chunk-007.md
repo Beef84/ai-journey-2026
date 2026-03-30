@@ -1,4 +1,4 @@
-[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Overview]
+[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Scalability and planes]
 
-### Overview
-I’m currently designing the multi‑tenant architecture for Your Life, a SaaS platform built around the idea that every user should have their own private digital universe supported by persistent AI agents that carry context forward. Because the platform spans private, collaborative, community, and public layers, multi‑tenancy and distributed system design are central to every decision I make. The system is evolving with privacy, isolation, and predictable scaling as first‑class architectural principles.
+### Scalability and planes
+Scalability is handled by structuring the platform into independently scalable planes. The Control Plane manages identity, tenant metadata, and provisioning. The Tenant Plane handles user‑facing application logic and API surfaces. The AI Plane processes ingestion, summarization, vector search, and AI enabled features like transcription, translation, recognition, and generation capabilities. Each plane scales horizontally based on its own workload characteristics, which prevents bottlenecks and keeps the system efficient as usage grows.

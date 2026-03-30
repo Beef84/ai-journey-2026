@@ -1,4 +1,9 @@
-[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer]
+[Source: Jordan Career Summary]
 
-## Dick’s Sporting Goods — Software Engineer
-**Oct 2012 – Aug 2017**
+# **Technical Strengths and Focus Areas**
+
+### **Distributed Systems & Backend Platforms**
+- Microservices, event‑driven systems, REST APIs  
+- High‑throughput, low‑latency backend design  
+- SQL/NoSQL data modeling, performance tuning  
+- Messaging patterns and service‑bus architectures

@@ -1,14 +1,7 @@
-[Source: Mrbeefy Cost Analysis]
+[Source: Mrbeefy Cost Analysis | Section: 4.2 Architecture Change: API Gateway → Lambda Function URL]
 
-# **2. Monthly Cost Estimates by Usage Tier**
+## **4.2 Architecture Change: API Gateway → Lambda Function URL**
 
-| Tier | Chat Requests/Month | Bedrock | Lambda | CloudFront | Route53 | **Total** |
-|---|---|---|---|---|---|---|
-| Idle | 0 | $0.00 | $0.00 | $0.00 | $0.50 | **~$0.50** |
-| Light | 100 | $0.22 | $0.004 | <$0.01 | $0.50 | **~$0.75** |
-| Medium | 1,000 | $2.20 | $0.04 | $0.05 | $0.50 | **~$2.80** |
-| Heavy | 10,000 | $22.00 | $0.40 | $0.30 | $0.50 | **~$23.00** |
+Streaming required replacing API Gateway with a Lambda Function URL. API Gateway HTTP API buffers the complete Lambda response before forwarding it — true SSE streaming is impossible through it.
 
-**Bedrock is 90%+ of cost at any meaningful usage level.** Everything else is noise.
-
----
+Lambda Function URL with `invoke_mode = RESPONSE_STREAM` enables chunked transfer directly from Lambda to CloudFront to browser with no buffering.

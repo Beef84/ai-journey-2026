@@ -1,17 +1,17 @@
 [Source: Jordan Engineering Philosophy]
 
-# **8. Build for the Future, Not the Moment**
+# **9. Prioritize Clarity Over Cleverness**
 
-I design systems with tomorrow in mind:
+Clever code breaks.  
+Clear code lasts.
 
-- Modular repo structure  
-- Clear separation of concerns  
-- Extensible architecture  
-- Clean documentation  
-- Predictable workflows  
-- Scalable patterns  
+I choose:
 
-Mr. Beefy isn’t a one‑off project.  
-It’s a foundation for future agents, future tools, and future automation.
+- Readability over shortcuts  
+- Explicit logic over magic  
+- Predictability over novelty  
+- Maintainability over cleverness  
+
+A system should be understandable by anyone who inherits it — including future me.
 
 ---

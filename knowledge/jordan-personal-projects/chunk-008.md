@@ -1,4 +1,4 @@
-[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Isolation and data boundaries]
+[Source: Jordan Personal Projects | Section: Deep Dive Into the Multi-tenant architecture of Your Life > Cost, tooling, and infrastructure]
 
-### Isolation and data boundaries
-To enforce tenant isolation, I’m using tenant‑scoped S3 prefixes, vector‑database namespaces, and row‑level isolation in relational storage. The ingestion pipeline is also tenant‑scoped, so transcription, chunking, summarization, and embedding workloads remain fully separated even though they run on shared compute. This gives each user a private data boundary without the operational and financial overhead of dedicated per‑tenant infrastructure.
+### Cost, tooling, and infrastructure
+Cost is a constant consideration, especially with AI workloads. I use Claude in planning mode to run cost analyses on architectural options, comparing compute footprints, storage patterns, and ingestion throughput under different scaling models. This helps me validate whether a design is financially viable before I commit to it. I’m also building the infrastructure using CDK‑driven CloudFormation stacks, which allows me to model, test, and refine the architecture programmatically while keeping costs visible and predictable.

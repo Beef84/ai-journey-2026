@@ -17,5 +17,3 @@ Order is flexible but Developer – Associate and ML Engineer – Associate are 
 12. Other specialty as appropriate
 
 ---
-
-This version preserves the goals you added and organizes them into a coherent, shareable form focused on certifications, career moves, company formation, patents, product launches, and long‑term R&D.

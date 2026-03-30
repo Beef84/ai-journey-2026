@@ -15,3 +15,7 @@ I specialize in **distributed systems**, **backend service design**, and **cloud
 - **Infrastructure‑as‑Code** using Bicep, ARM, scripting (PowerShell, Bash), and Terraform concepts  
 - **Cloud provisioning, governance, and environment automation** across Azure and cloud‑agnostic patterns applicable to AWS/GCP  
 - **Observability, diagnostics, rollout safety, and incident response** for real‑time, high‑throughput systems  
+
+Across my roles, I’ve consistently delivered **large‑scale, high‑impact engineering initiatives using Agile practices**.
+
+---

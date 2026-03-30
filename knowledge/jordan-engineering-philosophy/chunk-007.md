@@ -1,23 +1,21 @@
 [Source: Jordan Engineering Philosophy]
 
-# **6. Build for Reproducibility**
+# **7. Embrace Iteration and Continuous Learning**
 
-If I can’t destroy the entire system and rebuild it cleanly, then the architecture isn’t good enough.
+I don’t cling to initial assumptions.  
+If I discover a better way, I pivot.
 
-Reproducibility means:
+This project evolved because I allowed it to:
 
-- No manual console changes  
-- No hidden configuration  
-- No untracked state  
-- No one‑off fixes  
+- Restructure the architecture  
+- Rewrite IaC  
+- Redesign IAM roles  
+- Rebuild the frontend routing  
+- Rework the agent lifecycle  
+- Refine the KB ingestion flow  
 
-Everything must be:
+Every iteration made the system stronger.
 
-- Declarative  
-- Versioned  
-- Documented  
-- Automated  
-
-This ensures the system can survive time, growth, and future engineers.
+Continuous learning isn’t a slogan — it’s the engine behind every improvement.
 
 ---

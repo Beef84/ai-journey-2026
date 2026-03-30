@@ -1,8 +1,21 @@
-[Source: Mrbeefy Design Decisions | Section: 6.2 Titan V2 for Embeddings]
+[Source: Mrbeefy Design Decisions]
 
-## **6.2 Titan V2 for Embeddings**
-Titan V2 was chosen because:
+## **9.3 CloudFront + S3 Hosting**
+Provides:
 
-- High-quality text embeddings  
-- Native integration with S3 Vector Store  
-- Optimized for retrieval tasks
+- Global caching  
+- Instant invalidation  
+- Zero server maintenance  
+- Strong security posture  
+
+---
+
+# **10. Deployment Design Decisions**
+
+## **10.1 Terraform for Infrastructure**
+Ensures:
+
+- Reproducibility  
+- Version control  
+- Clear diffs  
+- Safe rollbacks

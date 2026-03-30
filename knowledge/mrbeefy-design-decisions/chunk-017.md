@@ -1,11 +1,16 @@
-[Source: Mrbeefy Design Decisions | Section: 5.3 Environment Variables]
+[Source: Mrbeefy Design Decisions | Section: 8.1 Least Privilege]
 
-## **5.3 Environment Variables**
-Lambda receives:
+### **Lambda Role**
+- Logging  
+- `bedrock:InvokeAgent`
 
-- `AGENT_ID`  
-- `AGENT_ALIAS_ID`  
+### **Agent Execution Role**
+- Model invocation  
+- KB retrieval  
+- S3 read access  
+- Vector store operations
 
-These are updated by CI/CD to avoid Terraform drift.
-
----
+### **KB Role**
+- S3 read  
+- s3vectors operations  
+- Titan embedding model invocation

@@ -1,6 +1,14 @@
-[Source: Mrbeefy Status | Section: Backend ingestion]
+[Source: Mrbeefy Status]
 
-### **Backend ingestion**
-- Ensures the KB is always correct after infra changes  
-- Guarantees the KB is aligned with the deployed agent  
-- Acts as a safety net during releases
+# **🚀 Impact**
+The addition of the dedicated KB ingestion pipeline provides:
+
+- Faster documentation iteration  
+- Safer ingestion cycles  
+- Clear separation of concerns  
+- Reduced coupling between infra and knowledge  
+- A more resilient and maintainable architecture  
+
+The backend still owns ingestion during deploys, but the KB pipeline now owns ingestion during day‑to‑day updates — exactly the right division of responsibilities.
+
+---

@@ -1,8 +1,13 @@
-[Source: Mrbeefy Governance | Section: 7.2 Code Review Requirements]
+[Source: Mrbeefy Governance | Section: 7.3 Security Review Requirements]
 
-## **7.2 Code Review Requirements**
-All changes must undergo:
+## **7.3 Security Review Requirements**
+Any change affecting:
 
-- Jordan's review 
-- CI validation  
-- Terraform plan review
+- IAM  
+- Network access  
+- KB content  
+- Agent instructions  
+
+must undergo a security review.
+
+---

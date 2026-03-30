@@ -1,6 +1,17 @@
-[Source: Mrbeefy Status | Section: What Changed > Infrastructure]
+[Source: Mrbeefy Status]
 
-### **Infrastructure**
-- API Gateway removed — replaced with Lambda Function URL (`invoke_mode = RESPONSE_STREAM`)
-- `compress = false` set on the `/chat` CloudFront behavior — required to prevent response buffering
-- No API Gateway stages, CORS config, or routes needed — the Function URL is a direct HTTPS endpoint consumed only by CloudFront
+# **✨ Major Improvements**
+
+## **1. Markdown Rendering for Agent Responses**
+The UI now uses a Markdown renderer to display assistant messages. This enables:
+
+- **Bold and italic text**
+- **Headings**
+- **Lists**
+- **Multi‑paragraph responses**
+- **Code blocks**
+- **Readable formatting for long answers**
+
+This dramatically improves clarity and makes the agent feel more expressive and professional.
+
+---

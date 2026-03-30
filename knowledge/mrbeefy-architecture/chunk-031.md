@@ -1,13 +1,10 @@
-[Source: Mrbeefy Architecture | Section: 7.1 Responsibilities]
+[Source: Mrbeefy Architecture]
 
-## **7.1 Responsibilities**
-CI/CD handles all dynamic operations:
+### **5. Lambda streams SSE chunks**
+- Each Bedrock chunk is written to the response stream immediately as `data: {"token": "..."}\n\n`
+- Browser receives and renders tokens progressively — no waiting for full response
 
-- Build Lambda bundle  
-- Deploy Terraform  
-- Upload KB files  
-- Trigger KB ingestion  
-- Associate KB with agent  
-- Create alias if missing  
-- Update Lambda environment variables (AGENT_ID, AGENT_ALIAS_ID, GATEWAY_SECRET)
-- Store `function_url_domain` in SSM for frontend pipeline consumption
+### **6. Bedrock Agent**
+- Searches Knowledge Base
+- Retrieves relevant documents
+- Generates response via Nova Pro (streamed)

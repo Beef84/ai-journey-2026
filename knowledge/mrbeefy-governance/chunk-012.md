@@ -1,13 +1,16 @@
-[Source: Mrbeefy Governance | Section: 4.1 IAM Governance]
+[Source: Mrbeefy Governance]
 
-## **4.1 IAM Governance**
-IAM roles follow strict least‑privilege rules:
+# **5. Operational Governance**
 
-- Lambda role: logging + `InvokeAgent`  
-- Agent execution role: model invocation + KB retrieval + vector store access  
-- KB role: S3 read + vector store operations + Titan embedding model  
-- CloudFront OAC: `s3:GetObject` with `AWS:SourceArn` restriction  
+## **5.1 Logging**
+- Lambda logs are required
+- CloudFront logs are optional but recommended
 
-No role may be expanded without explicit justification.
+Logs must not contain:
+
+- Secrets  
+- Credentials  
+- AWS account identifiers  
+- Sensitive personal data  
 
 ---

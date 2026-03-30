@@ -1,9 +1,8 @@
-[Source: Mrbeefy Governance | Section: 7.1 Documentation Requirements]
+[Source: Mrbeefy Governance | Section: 7.2 Code Review Requirements]
 
-## **7.1 Documentation Requirements**
-All architectural changes must be documented in:
+## **7.2 Code Review Requirements**
+All changes must undergo:
 
-- Architecture wiki  
-- Design decisions wiki  
-- Workflow wiki  
-- Governance wiki
+- Jordan's review 
+- CI validation  
+- Terraform plan review

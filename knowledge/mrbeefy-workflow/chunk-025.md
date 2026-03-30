@@ -1,11 +1,9 @@
-[Source: Mrbeefy Workflow | Section: 6.2 Pipeline Steps]
+[Source: Mrbeefy Workflow | Section: 9.6 Generate RSA Key Pair for Dev Signed Cookies (Dev only)]
 
-### **6.2 Pipeline Steps**
-1. Build Lambda bundle.  
-2. Deploy Terraform.  
-3. Upload KB files to the KB S3 bucket.  
-4. **Start a Knowledge Base ingestion job using the Bedrock ingestion API.**  
-5. Associate the KB with the agent if needed.  
-6. Create the agent alias if missing.  
-7. Update Lambda environment variables: `AGENT_ID`, `AGENT_ALIAS_ID`, `GATEWAY_SECRET`.
-8. Write `function_url_domain` and `knowledge_bucket` to SSM Parameter Store for downstream pipeline consumption.
+## **9.6 Generate RSA Key Pair for Dev Signed Cookies** *(Dev only)*
+
+> **What this is:** The dev CloudFront distribution rejects all requests that don't carry a valid signed cookie. You sign cookies with your private key. CloudFront verifies them using the public key uploaded via Terraform. The private key never leaves your machine — not in the repo, not in AWS.
+
+Run once from any directory. Store the private key in a secure local folder.
+
+```bash

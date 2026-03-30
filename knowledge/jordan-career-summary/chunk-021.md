@@ -1,6 +1,5 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Cloud, Containers & Infrastructure‑as‑Code]
+[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > Mobile, Device & Edge Integrations]
 
-### Cloud, Containers & Infrastructure‑as‑Code
-- Built IaC tooling for Azure provisioning using Bicep, ARM, Azure CLI, PowerShell, and Bash, enabling consistent, repeatable environment creation.
-- Supported production container workloads running on Azure Container Apps and OpenShift, including troubleshooting, diagnostics, and performance tuning.
-- Improved scalability and runtime stability of containerized services through configuration hardening, resource tuning, and environment‑specific deployment patterns.
+### Mobile, Device & Edge Integrations
+- Built Windows and Android mobile applications enabling store associates to generate and print signs directly from handheld devices, integrating with mobile printers for real‑time, in‑aisle signage updates.
+- Leveraged mobile‑device experience to contribute to an RFID‑based firearm inventory solution, designing scanning workflows and integrating mobile data capture with backend systems.

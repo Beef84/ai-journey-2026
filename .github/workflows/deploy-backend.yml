@@ -262,7 +262,7 @@ jobs:
       run: |
         aws lambda update-function-configuration \
           --function-name ${{ steps.tfout.outputs.function_name }} \
-          --environment "Variables={AGENT_ID=${{ steps.tfout.outputs.agent_id }},AGENT_ALIAS_ID=${{ steps.create_or_update_alias.outputs.alias_id }},GATEWAY_SECRET=$GATEWAY_SECRET}"
+          --environment "Variables={AGENT_ID=${{ steps.tfout.outputs.agent_id }},AGENT_ALIAS_ID=${{ steps.create_or_update_alias.outputs.alias_id }},KB_ID=${{ steps.kb.outputs.kb_id }},GATEWAY_SECRET=$GATEWAY_SECRET}"
 
     # -----------------------------
     # Write Outputs to SSM Parameter Store

@@ -1,8 +1,18 @@
-[Source: Mrbeefy Workflow | Section: 5.3 Versioning]
+[Source: Mrbeefy Workflow | Section: 9.4 Verify .gitignore Covers the Secret Files]
 
-### **5.3 Versioning**
-- Bedrock automatically creates implicit versions.  
-- Terraform does not manage versions or aliases.  
-- CI/CD ensures the alias always points to the correct version.
+## **9.4 Verify .gitignore Covers the Secret Files**
+
+> **Why:** If `terraform.tfvars` is accidentally committed, the gateway secret is exposed in git history. Verify this before running any git commands.
+
+In both `backend/IaC/` and `frontend/IaC/`, confirm `.gitignore` contains at minimum:
+
+```
+terraform.tfvars
+.terraform/
+*.tfstate
+*.tfstate.backup
+```
+
+If these lines are missing, add them before doing anything else.
 
 ---

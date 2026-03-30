@@ -70,7 +70,17 @@ export const handler = awslambda.streamifyResponse(async (event: any, responseSt
             agentId,
             agentAliasId: aliasId,
             sessionId: "web-" + Date.now().toString(),
-            inputText
+            inputText,
+            sessionState: {
+                knowledgeBaseConfigurations: [{
+                    knowledgeBaseId: process.env.KB_ID,
+                    retrievalConfiguration: {
+                        vectorSearchConfiguration: {
+                            numberOfResults: 15
+                        }
+                    }
+                }]
+            }
         });
 
         console.log("Sending InvokeAgentCommand:", { agentId, aliasId, inputText });

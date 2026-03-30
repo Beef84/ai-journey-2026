@@ -1,12 +1,6 @@
-[Source: Mrbeefy Architecture | Section: 2.2 CloudFront Distribution > Behaviors]
+[Source: Mrbeefy Architecture | Section: 3.2 Gateway Secret]
 
-### **Behaviors**
-- **Default behavior** → S3 frontend  
-- **Ordered behavior**:
-  - `path_pattern = "/chat"`  
-  - Allowed methods:  
-    `GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE`  
-  - Cached methods:  
-    `GET, HEAD`  
-  - Cache policy: API no‑cache policy  
-  - Origin request policy: forwards `Content-Type` header + all query strings
+## **3.2 Gateway Secret**
+CloudFront injects `x-cloudfront-secret` as a custom header on every request forwarded to the Function URL origin. Lambda checks this header before doing anything else and returns 403 if it is absent or wrong.
+
+The raw Function URL (`https://<id>.lambda-url.us-east-1.on.aws`) is publicly reachable by anyone who discovers it, but without the secret header every request is rejected immediately.

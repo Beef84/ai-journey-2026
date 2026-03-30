@@ -1,10 +1,11 @@
-[Source: Jordan Skills | Section: Infrastructure‑as‑Code (IaC)]
+[Source: Jordan Skills]
 
-### **Infrastructure‑as‑Code (IaC)**
-- Bicep  
-- ARM templates  
-- Terraform concepts and patterns  
-- CDK / CloudFormation  
-- Modular IaC design  
-- Environment provisioning and configuration governance  
-- Cloud resource automation and lifecycle management
+# **5. Frontend & UI Integration**
+
+### **Frontend Technologies**
+- Razor Pages  
+- ASP.NET Core MVC  
+- React (SPA architecture)  
+- TypeScript/JavaScript fundamentals  
+- UI integration with serverless backends  
+- API consumption and state management

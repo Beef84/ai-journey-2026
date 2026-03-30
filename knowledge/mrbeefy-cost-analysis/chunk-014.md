@@ -1,5 +1,9 @@
-[Source: Mrbeefy Cost Analysis | Section: 4.1 What Changed]
+[Source: Mrbeefy Cost Analysis | Section: 5.2 Serverless-Only Architecture]
 
-## **4.1 What Changed**
+## **5.2 Serverless-Only Architecture**
 
-SSE streaming is fully implemented. The Lambda handler now pipes Bedrock chunks directly to the browser as they arrive, giving the typing effect seen in modern AI chat interfaces. Users see words appear progressively rather than waiting for the full response.
+No EC2 instances, no containers, no NAT gateways, no VPC. All services (Lambda, Bedrock, S3, CloudFront) are fully managed serverless offerings with zero idle cost except Route53 ($0.50/month fixed).
+
+**Decision:** Serverless-only. Cost is proportional to usage. Idle cost is $0.50/month.
+
+---

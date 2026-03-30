@@ -1,17 +1,15 @@
-[Source: Mrbeefy Design Decisions | Section: 5.2 Minimal Responsibility]
+[Source: Mrbeefy Design Decisions]
 
-## **5.2 Minimal Responsibility**
-Lambda does not:
+## **7.2 Explicit Ingestion**
+KB ingestion is triggered manually via CI/CD because:
 
-- Perform retrieval  
-- Perform embeddings  
-- Manage KB ingestion  
-- Manage agent versions  
+- AWS does not auto-ingest  
+- Ingestion should be deterministic  
+- KB updates should be intentional  
 
-Lambda only:
+---
 
-- Accepts user input  
-- Calls Bedrock Agent Runtime  
-- Returns the response  
+# **8. IAM Design Decisions**
 
-This keeps the function small, predictable, and low-maintenance.
+## **8.1 Least Privilege**
+Each role has only the permissions required for its function.

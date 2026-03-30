@@ -1,14 +1,15 @@
-[Source: Mrbeefy Workflow | Section: 7.3 Outputs to CI/CD]
+[Source: Mrbeefy Workflow]
 
-### **7.3 Outputs to CI/CD**
-Terraform outputs:
+## **9.9 Manual Cookie Setup (Fallback)** *(Dev only)*
 
-- Agent ID
-- KB ID
-- Lambda function name
-- Lambda Function URL domain
-- CloudFront distribution domain
+If the automated script is unavailable, set cookies manually via DevTools.
 
-These values are consumed by CI/CD for dynamic operations.
+Run the generator to get the values:
 
----
+```powershell
+
+# PowerShell 7+ (pwsh) — required; gen-dev-cookies.ps1 uses .NET RSA APIs not available in Windows PowerShell 5.1
+pwsh -File scripts/gen-dev-cookies.ps1 -PrivateKeyPath "C:\path\to\dev-cf-private.pem"
+```
+
+```bash

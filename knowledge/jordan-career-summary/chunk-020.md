@@ -1,7 +1,6 @@
-[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > Architecture, Modernization & Scalability]
+[Source: Jordan Career Summary | Section: Dick’s Sporting Goods — Software Engineer > Distributed Systems, Data Flow & Performance]
 
-### Architecture, Modernization & Scalability
-- Decoupled a legacy monolith into independently deployable Business Capabilities, each delivered through vertical repositories containing their own database, services, APIs, UI, and automated tests — improving scalability, maintainability, and deployment safety.
-- Converted .NET Framework applications and libraries to .NET 6, documenting modernization patterns and establishing repeatable upgrade practices for other teams.
-- Delivered microservices, REST APIs, and SQL Server–backed backend systems, improving performance, reliability, and long‑term maintainability.
-- Designed and enforced architectural patterns for LaunchDarkly usage, including .NET and Angular wrappers that standardized naming conventions, integration patterns, and rollout safety across distributed systems.
+### Distributed Systems, Data Flow & Performance
+- Designed the backend workflow that orchestrated template metadata, pricing data, and rendering logic into final printable PDF signage — effectively a distributed pipeline with multiple integration points.
+- Tuned SQL Server queries, caching patterns, and service interactions to support high‑volume, time‑sensitive signage generation across hundreds of stores.
+- Ensured the platform scaled reliably during peak retail cycles, balancing performance, cost, and operational constraints.

@@ -1,18 +1,22 @@
 [Source: Jordan Engineering Philosophy]
 
-# **1. Build Systems That Tell the Truth**
+# **2. Separate Declarative and Dynamic Concerns**
 
-I don’t build systems that rely on luck, hidden behavior, or wishful thinking.  
-I build systems that behave predictably, transparently, and consistently.
+This is one of my core engineering beliefs.
 
-That means:
+- **Infrastructure‑as‑Code (IaC)** owns static, long‑lived infrastructure  
+- **CI/CD** owns dynamic, versioned, stateful operations  
+- **Runtime** owns execution, not configuration  
 
-- No hidden state  
-- No silent failures  
-- No magical defaults  
-- No accidental coupling  
-- No “mystery behavior”  
+Mixing these responsibilities creates drift, brittleness, and unpredictable deployments.
 
-If a system can’t explain itself through logs, metrics, and deterministic behavior, it’s not ready for production.
+By separating them:
+
+- Infrastructure stays reproducible  
+- Agent lifecycle stays flexible  
+- Deployments stay clean  
+- Debugging stays sane  
+
+This principle shaped the entire Mr. Beefy architecture.
 
 ---

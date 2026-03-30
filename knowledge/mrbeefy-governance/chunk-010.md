@@ -1,13 +1,8 @@
-[Source: Mrbeefy Governance | Section: 3.3 Knowledge Base Updates]
+[Source: Mrbeefy Governance | Section: 4.4 Secret Governance]
 
-## **3.3 Knowledge Base Updates**
-KB updates follow a strict workflow:
-
-1. Update machine‑readable KB files in the repo  
-2. CI/CD uploads files to the KB S3 bucket  
-3. CI/CD starts a new ingestion job  
-4. Bedrock updates the vector index  
-
-Manual ingestion is not permitted.
-
----
+## **4.4 Secret Governance**
+- `gateway_secret` is set in `terraform.tfvars` (gitignored) in both `backend/IaC/` and `frontend/IaC/`
+- The same value must be used in both stacks
+- The secret lives in Terraform state, which is encrypted at rest in S3
+- The CloudFront signed-cookie private key is stored only on the developer's local machine and is never committed
+- `terraform.tfvars` files must be added to `.gitignore` — committing them exposes the secret

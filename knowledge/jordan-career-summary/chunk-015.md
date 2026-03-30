@@ -1,6 +1,6 @@
-[Source: Jordan Career Summary | Section: Dick's Sporting Goods — Production incident: signage system > Investigation and root cause]
+[Source: Jordan Career Summary | Section: UPMC — Senior Software Engineer > CI/CD, Automation & Platform Engineering]
 
-### Investigation and root cause
-I started by combing through the logs to pinpoint exactly where the failures occurred, then reviewed that section of the code with a fine‑toothed comb. When I couldn’t find anything suspicious, I pulled in a principal developer to review the service with me, and he also couldn’t identify a flaw in the logic. At that point, we built penetration tests to generate PDFs at scale until we could reliably reproduce the failure. Once we could trigger it consistently, we still lacked a clear root cause — the logs showed the same failure pattern as production, but nothing in our code explained it.
-
-The next step was to involve the vendor of the .NET PDF library the system relied on. After sharing our logs, test results, and all the troubleshooting we had done, their support team identified the underlying issue: a Microsoft package method their library used to generate temporary files had a known problem where it failed to clean up temp files. Over time, this caused the temp directory to hit its maximum file count, which in turn caused the library to fail silently in exactly the way we were seeing.
+### CI/CD, Automation & Platform Engineering
+- Architected and delivered enterprise CI/CD platforms using Azure DevOps, YAML pipelines, and reusable automation modules adopted across engineering teams.
+- Introduced DevOps automation that improved deployment repeatability, rollback safety, and operational reliability.
+- Developed migration tooling for Azure DevOps projects, reducing manual overhead and standardizing pipeline patterns across the organization.

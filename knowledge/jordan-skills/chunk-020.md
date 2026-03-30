@@ -1,9 +1,11 @@
-[Source: Jordan Skills | Section: Frontend Technologies]
+[Source: Jordan Skills]
 
-### **Frontend Technologies**
-- Razor Pages  
-- ASP.NET Core MVC  
-- React (SPA architecture)  
-- TypeScript/JavaScript fundamentals  
-- UI integration with serverless backends  
-- API consumption and state management
+# **11. Tools, Platforms & Supporting Technologies**
+
+- GitHub, Git, Azure DevOps, CodeCommit
+- IIS, Windows Server, SQL Server Management Studio
+- PDF generation pipelines, metadata‑driven rendering systems
+- RFID workflows, mobile device integrations
+- LaunchDarkly, monitoring and observability tooling
+
+---

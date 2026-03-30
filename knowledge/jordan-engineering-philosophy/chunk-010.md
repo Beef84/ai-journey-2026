@@ -1,17 +1,18 @@
 [Source: Jordan Engineering Philosophy]
 
-# **9. Prioritize Clarity Over Cleverness**
+# **10. Treat Documentation as Part of the Architecture**
 
-Clever code breaks.  
-Clear code lasts.
+Documentation isn’t an afterthought.  
+It’s a structural component.
 
-I choose:
+I document:
 
-- Readability over shortcuts  
-- Explicit logic over magic  
-- Predictability over novelty  
-- Maintainability over cleverness  
+- Architecture  
+- Design decisions  
+- Workflows  
+- Governance  
+- Philosophy  
 
-A system should be understandable by anyone who inherits it — including future me.
+This ensures the system is not just functional — it’s teachable, explainable, and maintainable.
 
 ---

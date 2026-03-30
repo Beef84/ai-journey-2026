@@ -1,13 +1,30 @@
-[Source: Mrbeefy Design Decisions | Section: 6.3 Knowledge Base as the First Source of Truth]
+[Source: Mrbeefy Design Decisions]
 
-## **6.3 Knowledge Base as the First Source of Truth**
-The agent is instructed to:
+## **10.2 CI/CD for Dynamic Operations**
+Ensures:
 
-- Always search the KB first  
-- Only answer from KB when relevant  
-- Avoid hallucination  
-- Fall back to out-of-domain only when KB is empty  
+- No stale alias IDs  
+- No Terraform drift  
+- Clean agent lifecycle  
+- Automated KB ingestion  
 
-This ensures accuracy and consistency.
+---
+
+# **11. Knowledge Base Lifecycle Design Decisions**
+
+## **11.1 Dual‑Path Ingestion Model**
+The system now supports two ingestion paths:
+
+1. **Backend Deployment Ingestion**  
+   - Runs automatically during backend deploys  
+   - Ensures the KB is refreshed whenever infrastructure or agent configuration changes  
+   - Acts as a safety net to guarantee consistency after releases  
+
+2. **Dedicated KB Ingestion Pipeline**  
+   - Runs independently of backend deploys  
+   - Allows documentation updates to be ingested without requiring a backend rollout  
+   - Provides a safe, isolated ingestion workflow  
+
+This separation reflects the reality that **knowledge evolves faster than infrastructure**.
 
 ---

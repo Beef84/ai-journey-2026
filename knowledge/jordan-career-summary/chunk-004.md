@@ -1,3 +1,6 @@
-[Source: Jordan Career Summary | Section: Most recent accomplishments (last two jobs)]
+[Source: Jordan Career Summary | Section: Most recent accomplishments (last two jobs) > Dick's Sporting Goods — RFID Firearms & Footwear Systems (most recent accomplishment)]
 
-## Most recent accomplishments (last two jobs)
+### Dick's Sporting Goods — RFID Firearms & Footwear Systems (most recent accomplishment)
+My most recent accomplishment at Dick's Sporting Goods was implementing an RFID‑based firearms management system that dramatically improved the speed and accuracy of required inventory tracking in stores. Firearms sellers must perform multiple compliance checks each day, and the existing manual process was slow and error‑prone. I provided senior developer guidance to the Firearms Management team across their entire stack, including the .NET and SQL Server backend, the ASP.NET/C# intranet application, the Windows CE and Android mobile applications, and the integrations with Motorola’s proprietary RFID‑scanning software.
+
+I also served as the lead engineer responsible for architecting the RFID solution for the shoe department. I took the technical and operational lessons learned from the firearms RFID project—such as optimizing tag‑read reliability, refining data‑flow patterns between mobile devices and backend services, and improving how inventory events were captured and reconciled—and used them to design a more streamlined, efficient workflow for footwear inventory. We had just completed the first store implementation when I moved on to UPMC.

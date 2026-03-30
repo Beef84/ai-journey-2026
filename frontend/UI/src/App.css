@@ -203,7 +203,11 @@ body {
     }
 
     .message p {
-        margin: 0 0 8px 0;
+        margin: 0 0 14px 0;
+    }
+
+    .message p:last-child {
+        margin-bottom: 0;
     }
 
     .message ul {

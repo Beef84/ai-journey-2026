@@ -1,12 +1,24 @@
+# Update Knowledge Base
+# Environment-aware: main branch -> prod, dev branch -> dev.
+# Manual dispatch allows choosing the target environment explicitly.
+
 name: Update Knowledge Base
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
     paths:
       - "knowledge/**"
   workflow_dispatch:
     inputs:
+      environment:
+        description: "Target environment"
+        required: true
+        default: "prod"
+        type: choice
+        options:
+          - prod
+          - dev
       reason:
         description: "Why are you manually deploying?"
         required: false
@@ -16,9 +28,28 @@ jobs:
   ingest-knowledge:
     runs-on: ubuntu-latest
 
+    env:
+      # Derive environment: manual input takes priority, then branch name, default to prod.
+      DEPLOY_ENV: ${{ inputs.environment || (github.ref_name == 'dev' && 'dev') || 'prod' }}
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    # -----------------------------
+    # Resolve Environment
+    # -----------------------------
+    - name: Resolve Environment
+      id: env
+      run: |
+        if [ "$DEPLOY_ENV" = "dev" ]; then
+          echo "ssm_prefix=/mrbeefy-dev"  >> $GITHUB_OUTPUT
+          echo "kb_name=mrbeefy-dev-kb"   >> $GITHUB_OUTPUT
+        else
+          echo "ssm_prefix=/mrbeefy"      >> $GITHUB_OUTPUT
+          echo "kb_name=mrbeefy-kb"       >> $GITHUB_OUTPUT
+        fi
+        echo "Deploying to: $DEPLOY_ENV"
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -34,12 +65,12 @@ jobs:
       id: kb
       run: |
         BUCKET=$(aws ssm get-parameter \
-          --name "/mrbeefy/knowledge_bucket" \
+          --name "${{ steps.env.outputs.ssm_prefix }}/knowledge_bucket" \
           --query "Parameter.Value" \
           --output text)
 
         if [ -z "$BUCKET" ]; then
-          echo "ERROR: Could not load knowledge bucket from SSM."
+          echo "ERROR: Could not load knowledge bucket from SSM (${{ steps.env.outputs.ssm_prefix }}/knowledge_bucket)."
           exit 1
         fi
 
@@ -69,11 +100,11 @@ jobs:
       id: lookup
       run: |
         KB_ID=$(aws bedrock-agent list-knowledge-bases \
-          --query "knowledgeBaseSummaries[?name=='mrbeefy-kb'] | [0].knowledgeBaseId" \
+          --query "knowledgeBaseSummaries[?name=='${{ steps.env.outputs.kb_name }}'] | [0].knowledgeBaseId" \
           --output text)
 
         if [ -z "$KB_ID" ] || [ "$KB_ID" = "None" ]; then
-          echo "ERROR: Knowledge Base 'mrbeefy-kb' not found."
+          echo "ERROR: Knowledge Base '${{ steps.env.outputs.kb_name }}' not found."
           exit 1
         fi
 
@@ -92,4 +123,4 @@ jobs:
     # Done
     # -----------------------------
     - name: Knowledge Update Complete
-      run: echo "Knowledge Base updated and ingestion triggered."
+      run: echo "Knowledge Base (${{ env.DEPLOY_ENV }}) updated and ingestion triggered."

@@ -80,10 +80,10 @@ $ExpiryDisplay = [DateTimeOffset]::FromUnixTimeSeconds($Expiry).UtcDateTime.ToSt
 
 Write-Host ""
 Write-Host "========================================="
-Write-Host " CloudFront Signed Cookies — dev env"
+Write-Host " CloudFront Signed Cookies - dev env"
 Write-Host "========================================="
 Write-Host " Domain  : $Domain"
-Write-Host " Expires : $ExpiryDisplay UTC (+$($ExpiryHours)h)"
+Write-Host (" Expires : " + $ExpiryDisplay + " UTC (+" + $ExpiryHours + "h)")
 Write-Host " Key ID  : $KeyPairId"
 Write-Host ""
 Write-Host "--- Browser (DevTools -> Application -> Cookies -> https://$Domain) ---"

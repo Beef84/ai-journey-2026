@@ -2,9 +2,9 @@
 
 # **Jordan Oberrath — Expanded Career Summary**
 
-I, Jordan Oberrath currently works at UPMC as a Senior Software Engineer.
+I, Jordan Oberrath currently work at Industrial Electric Manufacturing (IEM) as a DevOps Engineer - Digital Applications. I started this job April 27, 2026. Just prior to starting at IEM I worked at UPMC as a Senior Software Engineer.
 
-I am a Senior Software Engineer at UPMC with more than a decade of hands‑on experience architecting, automating, and operating **production‑grade distributed systems** across healthcare, retail, federal contracting, and enterprise environments. My career has been defined by building **high‑reliability backend platforms**, designing **scalable cloud architectures**, and delivering **mission‑critical CI/CD and infrastructure automation** that supports large engineering organizations.
+I am a Senior DevOps and Software Engineer with more than a decade of hands‑on experience architecting, automating, and operating **production‑grade distributed systems** across healthcare, retail, federal contracting, and enterprise environments. My career has been defined by building **high‑reliability backend platforms**, designing **scalable cloud architectures**, and delivering **mission‑critical CI/CD and infrastructure automation** that supports large engineering organizations.
 
 I specialize in **distributed systems**, **backend service design**, and **cloud‑native engineering**, with deep technical expertise in:
 
